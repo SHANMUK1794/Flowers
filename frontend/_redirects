@@ -1,0 +1,13 @@
+/frontend/pages/:page /pages/:page 301
+/frontend/:splat /:splat 301
+/shop /pages/shop.html 200
+/subscriptions /pages/subscriptions.html 200
+/events /pages/events.html 200
+/contact /pages/contact.html 200
+/admin /pages/admin.html 200
+/checkout /pages/checkout.html 200
+/login /pages/login.html 200
+/signup /pages/signup.html 200
+/about /pages/about.html 200
+/how-it-works /pages/how-it-works.html 200
+/dashboard /pages/dashboard.html 200

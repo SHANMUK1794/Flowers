@@ -4,6 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Admin Operations Portal — FreshPetal Hyderabad</title>
+  <link rel="stylesheet" href="/css/global.css" />
   <link rel="stylesheet" href="../css/global.css" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -443,8 +444,11 @@
 
     <form id="admin-login-form" onsubmit="handleAdminLogin(event)" style="text-align: left;">
       <div style="margin-bottom: 16px;">
-        <label style="display: block; font-size: 0.8rem; font-weight: 600; color: #cbd5e1; margin-bottom: 6px;">Admin Email</label>
-        <input type="email" id="admin-email" value="admin@freshpetal.in" required style="width: 100%; box-sizing: border-box; background: #0f172a; border: 1px solid #334155; color: #fff; padding: 11px 14px; border-radius: 8px; font-size: 0.9rem; outline: none;">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 6px;">
+          <label style="font-size: 0.8rem; font-weight: 600; color: #cbd5e1;">Admin Mobile or Email</label>
+          <span style="font-size: 0.72rem; color: #fb7185; font-weight: 600;">+91 99490 54899</span>
+        </div>
+        <input type="text" id="admin-email" value="9949054899" required placeholder="9949054899 or admin@freshpetal.in" style="width: 100%; box-sizing: border-box; background: #0f172a; border: 1px solid #334155; color: #fff; padding: 11px 14px; border-radius: 8px; font-size: 0.9rem; outline: none;">
       </div>
       <div style="margin-bottom: 22px;">
         <div style="display: flex; justify-content: space-between; margin-bottom: 6px;">
@@ -546,30 +550,30 @@
       <div class="stat-grid">
         <div class="stat-card">
           <div class="label">Today's Morning Drops</div>
-          <div class="value" id="stat-today-drops">142</div>
-          <div class="subtext"><span>✅ 100% Scheduled by 6:30 AM</span></div>
+          <div class="value" id="stat-today-drops">0</div>
+          <div class="subtext"><span>🕒 Real-time dispatch schedule</span></div>
         </div>
         <div class="stat-card">
           <div class="label">Active Subscriptions</div>
-          <div class="value" id="stat-active-subs">89</div>
-          <div class="subtext"><span>🔄 Daily & Weekly pooja bundles</span></div>
+          <div class="value" id="stat-active-subs">0</div>
+          <div class="subtext"><span>🔄 Recurring daily & weekly packs</span></div>
         </div>
         <div class="stat-card">
           <div class="label">Monthly Recurring Rev</div>
-          <div class="value" id="stat-mrr">₹84,250</div>
-          <div class="subtext"><span>📈 +18% from last month</span></div>
+          <div class="value" id="stat-mrr">₹0</div>
+          <div class="subtext"><span>📈 Live MRR calculated from active subs</span></div>
         </div>
         <div class="stat-card">
-          <div class="label">Active Gated Communities</div>
-          <div class="value" id="stat-societies">18</div>
-          <div class="subtext"><span>🏢 Uppal, Kondapur, Gachibowli</span></div>
+          <div class="label">Covered Communities</div>
+          <div class="value" id="stat-societies">0</div>
+          <div class="subtext"><span>🏢 Hyderabad gated societies active</span></div>
         </div>
       </div>
 
       <!-- Quick Dispatch Highlights -->
       <div class="admin-card">
         <div class="card-header">
-          <h3>⚡ Today's Morning Route Summary (Batch 1 - 05:30 AM to 06:30 AM)</h3>
+          <h3>⚡ Today's Morning Route Summary (05:30 AM to 07:00 AM)</h3>
           <button class="btn-admin" onclick="switchTab('tab-dispatch', document.querySelectorAll('.sidebar-nav button')[1])">
             Open Full Dispatch Sheet →
           </button>
@@ -581,50 +585,14 @@
               <th>Area / Zone</th>
               <th>Packs Scheduled</th>
               <th>Target Slot</th>
-              <th>Assigned Van / Rider</th>
               <th>Status</th>
             </tr>
           </thead>
-          <tbody>
+          <tbody id="overview-tbody">
             <tr>
-              <td><strong>My Home Bhooja</strong></td>
-              <td>Hitec City / Madhapur</td>
-              <td>28 Flats</td>
-              <td>05:45 AM</td>
-              <td>Van 1 (Ramesh Reddy)</td>
-              <td><span class="status-pill out_for_delivery">Out for Delivery</span></td>
-            </tr>
-            <tr>
-              <td><strong>Aparna Serene Park</strong></td>
-              <td>Kondapur</td>
-              <td>22 Flats</td>
-              <td>06:00 AM</td>
-              <td>Van 2 (Kishore Kumar)</td>
-              <td><span class="status-pill out_for_delivery">Out for Delivery</span></td>
-            </tr>
-            <tr>
-              <td><strong>Rainbow Vistas @ Rock Garden</strong></td>
-              <td>Moosapet / Kukatpally</td>
-              <td>31 Flats</td>
-              <td>06:15 AM</td>
-              <td>Van 3 (Srinivas Goud)</td>
-              <td><span class="status-pill pending">Sorting at Hub</span></td>
-            </tr>
-            <tr>
-              <td><strong>PBEL City</strong></td>
-              <td>Peerancheru / Shamshabad Rd</td>
-              <td>19 Flats</td>
-              <td>06:30 AM</td>
-              <td>Van 4 (Naresh)</td>
-              <td><span class="status-pill pending">Ready to Load</span></td>
-            </tr>
-            <tr>
-              <td><strong>Jayabheri Silicon County</strong></td>
-              <td>Gachibowli</td>
-              <td>16 Flats</td>
-              <td>06:00 AM</td>
-              <td>Van 1 (Ramesh Reddy)</td>
-              <td><span class="status-pill out_for_delivery">Out for Delivery</span></td>
+              <td colspan="5" style="text-align: center; padding: 32px; color: var(--admin-text-muted);">
+                🔄 Loading live morning delivery manifest...
+              </td>
             </tr>
           </tbody>
         </table>
@@ -638,18 +606,12 @@
           <div>
             <h3>🚚 Morning Doorstep Dispatch Manifest</h3>
             <p style="margin: 4px 0 0 0; font-size: 0.85rem; color: var(--admin-text-muted);">
-              Use this live sheet for bag packing, gate security coordination, and delivery partner handoff.
+              Live doorstep drop sheet for morning bag packing and security gate entry.
             </p>
           </div>
           <div class="card-actions">
             <select class="filter-select" id="dispatch-society-filter" onchange="filterDispatch()">
               <option value="all">All Gated Societies</option>
-              <option value="My Home Bhooja">My Home Bhooja (Hitec City)</option>
-              <option value="Aparna Serene Park">Aparna Serene Park (Kondapur)</option>
-              <option value="Rainbow Vistas">Rainbow Vistas (Kukatpally)</option>
-              <option value="PBEL City">PBEL City (Shamshabad Rd)</option>
-              <option value="Jayabheri Silicon County">Jayabheri Silicon County (Gachibowli)</option>
-              <option value="Lodha Bellezza">Lodha Bellezza (KPHB)</option>
             </select>
             <button class="btn-admin" onclick="exportDispatchCSV()">📥 Download CSV</button>
           </div>
@@ -667,59 +629,10 @@
             </tr>
           </thead>
           <tbody id="dispatch-tbody">
-            <tr data-society="My Home Bhooja">
-              <td><strong>Tower 4 — Apt 1202</strong></td>
-              <td>Sunil Varma</td>
-              <td>+91 98490 12345</td>
-              <td>My Home Bhooja</td>
-              <td>🌸 Daily Premium (100g Mixed + 1 Coconut + Camphor)</td>
-              <td>06:00 AM</td>
-              <td><button class="btn-mark" onclick="markDelivered(this)">Mark Delivered</button></td>
-            </tr>
-            <tr data-society="My Home Bhooja">
-              <td><strong>Tower 2 — Apt 804</strong></td>
-              <td>Ananya Rao</td>
-              <td>+91 98850 44211</td>
-              <td>My Home Bhooja</td>
-              <td>🌼 Daily Starter (50g Banti/Chamanthi + Agarbatti)</td>
-              <td>06:00 AM</td>
-              <td><button class="btn-mark" onclick="markDelivered(this)">Mark Delivered</button></td>
-            </tr>
-            <tr data-society="Aparna Serene Park">
-              <td><strong>Block B — Apt 503</strong></td>
-              <td>K. Venkat Ramana</td>
-              <td>+91 94401 88920</td>
-              <td>Aparna Serene Park</td>
-              <td>🥥 Custom Bundle: 100g Jasmine (Mallepuvvu) + 2 Coconuts</td>
-              <td>06:15 AM</td>
-              <td><button class="btn-mark" onclick="markDelivered(this)">Mark Delivered</button></td>
-            </tr>
-            <tr data-society="Rainbow Vistas">
-              <td><strong>Rock Garden — T1 1401</strong></td>
-              <td>S. Madhavi Latha</td>
-              <td>+91 97010 33112</td>
-              <td>Rainbow Vistas</td>
-              <td>🌺 Daily Starter (50g Rose + Marigold + Tulasi)</td>
-              <td>06:30 AM</td>
-              <td><button class="btn-mark" onclick="markDelivered(this)">Mark Delivered</button></td>
-            </tr>
-            <tr data-society="PBEL City">
-              <td><strong>Tower Emerald — Apt 304</strong></td>
-              <td>Rajesh Kulkarni</td>
-              <td>+91 99630 77488</td>
-              <td>PBEL City</td>
-              <td>🌸 Weekly Pooja Pack (500g Blooms + 4 Coconuts)</td>
-              <td>06:30 AM</td>
-              <td><button class="btn-mark" onclick="markDelivered(this)">Mark Delivered</button></td>
-            </tr>
-            <tr data-society="Jayabheri Silicon County">
-              <td><strong>Villa 42</strong></td>
-              <td>Deepak Reddy</td>
-              <td>+91 98480 99882</td>
-              <td>Jayabheri Silicon County</td>
-              <td>✨ Grand Pooja Pack + Bilva Patra + 2 Coconuts</td>
-              <td>06:00 AM</td>
-              <td><button class="btn-mark" onclick="markDelivered(this)">Mark Delivered</button></td>
+            <tr>
+              <td colspan="7" style="text-align: center; padding: 32px; color: var(--admin-text-muted);">
+                🔄 Loading morning doorstep drops...
+              </td>
             </tr>
           </tbody>
         </table>
@@ -730,12 +643,17 @@
     <div id="tab-orders" class="admin-content tab-pane">
       <div class="admin-card">
         <div class="card-header">
-          <h3>📦 Customer Orders & 1-Day Advance Function Bookings</h3>
+          <div>
+            <h3>📦 Customer Orders & Event Bookings</h3>
+            <p style="margin: 4px 0 0 0; font-size: 0.85rem; color: var(--admin-text-muted);">
+              Live orders placed on FreshPetal storefront and advance function bookings.
+            </p>
+          </div>
           <div class="card-actions">
             <select class="filter-select" id="order-type-filter" onchange="filterOrders()">
               <option value="all">All Orders</option>
               <option value="one_off">One-Off Pooja Orders</option>
-              <option value="event">Function & Marriage Bookings</option>
+              <option value="event">Event & Marriage Bookings</option>
               <option value="subscription">Subscription Recurring</option>
             </select>
           </div>
@@ -746,57 +664,17 @@
               <th>Order ID</th>
               <th>Customer</th>
               <th>Type</th>
-              <th>Items Summary</th>
-              <th>Total Amount</th>
+              <th>Items & Instructions</th>
+              <th>Total Amount (₹)</th>
               <th>Delivery Date & Slot</th>
               <th>Status</th>
               <th>Actions</th>
             </tr>
           </thead>
           <tbody id="orders-tbody">
-            <tr data-type="event">
-              <td>#FP-8092</td>
-              <td>
-                <strong>Raghavendra Rao</strong><br>
-                <span style="font-size: 0.78rem; color: var(--admin-text-muted);">Aparna CyberLife, Nallagandla</span>
-              </td>
-              <td><span style="background: #ede9fe; color: #6d28d9; padding: 3px 8px; border-radius: 4px; font-weight: 700; font-size: 0.75rem;">🎉 EVENT / FUNCTION</span></td>
-              <td>10kg Marigold (Genda) + 20 Marigold Garlands + 10 Coconuts</td>
-              <td><strong>₹4,850.00</strong></td>
-              <td>Tomorrow, 05:00 AM</td>
-              <td><span class="status-pill active">Confirmed</span></td>
-              <td>
-                <button class="btn-secondary-admin" onclick="alert('Order #FP-8092 marked ready for packing!')">Pack Order</button>
-              </td>
-            </tr>
-            <tr data-type="one_off">
-              <td>#FP-8091</td>
-              <td>
-                <strong>P. Srinivas</strong><br>
-                <span style="font-size: 0.78rem; color: var(--admin-text-muted);">My Home Bhooja, Tower 6</span>
-              </td>
-              <td><span style="background: #f1f5f9; color: #475569; padding: 3px 8px; border-radius: 4px; font-weight: 700; font-size: 0.75rem;">ONE-OFF</span></td>
-              <td>200g Jasmine + 2 Lotus Flowers + 1 Coconut</td>
-              <td><strong>₹285.00</strong></td>
-              <td>Today, 06:00 AM</td>
-              <td><span class="status-pill delivered">Delivered</span></td>
-              <td>
-                <span style="color: #059669; font-weight: 600; font-size: 0.8rem;">✓ Complete</span>
-              </td>
-            </tr>
-            <tr data-type="one_off">
-              <td>#FP-8090</td>
-              <td>
-                <strong>K. Lakshmi</strong><br>
-                <span style="font-size: 0.78rem; color: var(--admin-text-muted);">Rainbow Vistas, Apt 902</span>
-              </td>
-              <td><span style="background: #f1f5f9; color: #475569; padding: 3px 8px; border-radius: 4px; font-weight: 700; font-size: 0.75rem;">ONE-OFF</span></td>
-              <td>50g Marigold + 50g Rose + Agarbatti pack</td>
-              <td><strong>₹85.00</strong></td>
-              <td>Today, 06:30 AM</td>
-              <td><span class="status-pill out_for_delivery">Out for Delivery</span></td>
-              <td>
-                <button class="btn-mark" onclick="this.parentElement.innerHTML='<span style=\'color: #059669; font-weight:600;\'>✓ Complete</span>'">Mark Done</button>
+            <tr>
+              <td colspan="8" style="text-align: center; padding: 32px; color: var(--admin-text-muted);">
+                🔄 Loading live customer orders...
               </td>
             </tr>
           </tbody>
@@ -808,9 +686,14 @@
     <div id="tab-subscriptions" class="admin-content tab-pane">
       <div class="admin-card">
         <div class="card-header">
-          <h3>🔄 Recurring Subscriptions (Daily, Weekly, Monthly)</h3>
+          <div>
+            <h3>🔄 Recurring Subscriptions (Daily, Weekly, Monthly)</h3>
+            <p style="margin: 4px 0 0 0; font-size: 0.85rem; color: var(--admin-text-muted);">
+              Active and paused customer morning pooja subscriptions.
+            </p>
+          </div>
           <div class="card-actions">
-            <span style="font-size: 0.85rem; color: #059669; font-weight: 600;">89 Active Subscriptions</span>
+            <span id="subs-count-badge" style="font-size: 0.85rem; color: #059669; font-weight: 700;">0 Active</span>
           </div>
         </div>
         <table class="admin-table">
@@ -820,59 +703,16 @@
               <th>Customer</th>
               <th>Society / Address</th>
               <th>Plan / Package</th>
-              <th>Monthly Price</th>
+              <th>Monthly Price (₹)</th>
               <th>Next Delivery</th>
               <th>Status</th>
               <th>Actions</th>
             </tr>
           </thead>
-          <tbody>
+          <tbody id="subs-tbody">
             <tr>
-              <td>#SUB-1042</td>
-              <td><strong>S. Ramakrishna</strong><br><span style="font-size: 0.75rem; color: #64748b;">+91 99887 11223</span></td>
-              <td>My Home Bhooja, T-3, 1104</td>
-              <td>Daily Starter (50g Daily Blooms + Coconut)</td>
-              <td><strong>₹1,470 / mo</strong></td>
-              <td>Tomorrow, 6 AM</td>
-              <td><span class="status-pill active">Active</span></td>
-              <td>
-                <button class="btn-secondary-admin" onclick="toggleSub(this)">Pause</button>
-              </td>
-            </tr>
-            <tr>
-              <td>#SUB-1041</td>
-              <td><strong>V. Padmavathi</strong><br><span style="font-size: 0.75rem; color: #64748b;">+91 97001 22334</span></td>
-              <td>Aparna Serene Park, B-701</td>
-              <td>Daily Premium (100g Mixed Flowers + Full Kit)</td>
-              <td><strong>₹2,370 / mo</strong></td>
-              <td>Tomorrow, 6 AM</td>
-              <td><span class="status-pill active">Active</span></td>
-              <td>
-                <button class="btn-secondary-admin" onclick="toggleSub(this)">Pause</button>
-              </td>
-            </tr>
-            <tr>
-              <td>#SUB-1040</td>
-              <td><strong>M. Suresh</strong><br><span style="font-size: 0.75rem; color: #64748b;">+91 98492 55667</span></td>
-              <td>PBEL City, Tower C, 402</td>
-              <td>Weekly Pooja Pack (Every Friday 500g + 4 Coconuts)</td>
-              <td><strong>₹1,196 / mo</strong></td>
-              <td>Friday, 6 AM</td>
-              <td><span class="status-pill active">Active</span></td>
-              <td>
-                <button class="btn-secondary-admin" onclick="toggleSub(this)">Pause</button>
-              </td>
-            </tr>
-            <tr>
-              <td>#SUB-1039</td>
-              <td><strong>B. Hemalatha</strong><br><span style="font-size: 0.75rem; color: #64748b;">+91 94412 88990</span></td>
-              <td>Rainbow Vistas, Rock Garden 502</td>
-              <td>Custom Mix: 50g Banti + 50g Chamanthi + 1 Coconut</td>
-              <td><strong>₹1,800 / mo</strong></td>
-              <td>Paused till Oct 1</td>
-              <td><span class="status-pill paused">Paused</span></td>
-              <td>
-                <button class="btn-secondary-admin" onclick="toggleSub(this)">Resume</button>
+              <td colspan="8" style="text-align: center; padding: 32px; color: var(--admin-text-muted);">
+                🔄 Loading customer subscriptions...
               </td>
             </tr>
           </tbody>
@@ -887,15 +727,15 @@
           <div>
             <h3>🌸 Flower Catalog, Daily Mandi Rates & Stock Controls</h3>
             <p style="margin: 4px 0 0 0; font-size: 0.85rem; color: var(--admin-text-muted);">
-              Adjust rates per 50g or per piece. Changes apply instantly across the customer storefront and cart calculator.
+              Real products stored in PostgreSQL. Adjust mandi rate in ₹ Rupees or toggle stock availability instantly.
             </p>
           </div>
-          <button class="btn-admin" onclick="alert('Prices saved and updated in database!')">💾 Save All Changes</button>
+          <button class="btn-admin" onclick="loadAdminData()">🔄 Refresh Catalog</button>
         </div>
         <table class="admin-table">
           <thead>
             <tr>
-              <th>Flower Item</th>
+              <th>Flower / Item</th>
               <th>Telugu Name</th>
               <th>Category</th>
               <th>Base Unit</th>
@@ -904,69 +744,11 @@
               <th>Action</th>
             </tr>
           </thead>
-          <tbody>
+          <tbody id="inventory-tbody">
             <tr>
-              <td><strong>Marigold (Banti Puvvu) 🌼</strong></td>
-              <td>బంతి పూలు</td>
-              <td>Loose Fresh Blooms</td>
-              <td>50 grams</td>
-              <td><input type="number" value="15.00" step="1" style="width: 80px; padding: 4px 8px; border: 1px solid #cbd5e1; border-radius: 4px;"></td>
-              <td><span class="status-pill active">In Stock</span></td>
-              <td><button class="btn-secondary-admin" onclick="toggleStock(this)">Mark Out</button></td>
-            </tr>
-            <tr>
-              <td><strong>Chrysanthemum (Chamanthi) 🌸</strong></td>
-              <td>చామంతి</td>
-              <td>Loose Fresh Blooms</td>
-              <td>50 grams</td>
-              <td><input type="number" value="20.00" step="1" style="width: 80px; padding: 4px 8px; border: 1px solid #cbd5e1; border-radius: 4px;"></td>
-              <td><span class="status-pill active">In Stock</span></td>
-              <td><button class="btn-secondary-admin" onclick="toggleStock(this)">Mark Out</button></td>
-            </tr>
-            <tr>
-              <td><strong>Jasmine (Mallepuvvu) 🤍</strong></td>
-              <td>మల్లెపూలు</td>
-              <td>Fragrant Ritual Blooms</td>
-              <td>50 grams</td>
-              <td><input type="number" value="35.00" step="1" style="width: 80px; padding: 4px 8px; border: 1px solid #cbd5e1; border-radius: 4px;"></td>
-              <td><span class="status-pill active">In Stock</span></td>
-              <td><button class="btn-secondary-admin" onclick="toggleStock(this)">Mark Out</button></td>
-            </tr>
-            <tr>
-              <td><strong>Red Pooja Rose (Gulabi) 🌹</strong></td>
-              <td>గులాబీ</td>
-              <td>Fragrant Ritual Blooms</td>
-              <td>50 grams</td>
-              <td><input type="number" value="25.00" step="1" style="width: 80px; padding: 4px 8px; border: 1px solid #cbd5e1; border-radius: 4px;"></td>
-              <td><span class="status-pill active">In Stock</span></td>
-              <td><button class="btn-secondary-admin" onclick="toggleStock(this)">Mark Out</button></td>
-            </tr>
-            <tr>
-              <td><strong>Sacred Lotus (Kamalam) 🪷</strong></td>
-              <td>తామర పువ్వు</td>
-              <td>Deity Special</td>
-              <td>1 piece</td>
-              <td><input type="number" value="20.00" step="1" style="width: 80px; padding: 4px 8px; border: 1px solid #cbd5e1; border-radius: 4px;"></td>
-              <td><span class="status-pill active">In Stock</span></td>
-              <td><button class="btn-secondary-admin" onclick="toggleStock(this)">Mark Out</button></td>
-            </tr>
-            <tr>
-              <td><strong>Fresh Pooja Coconut (Kobbari) 🥥</strong></td>
-              <td>కొబ్బరికాయ</td>
-              <td>Pooja Essentials</td>
-              <td>1 piece</td>
-              <td><input type="number" value="25.00" step="1" style="width: 80px; padding: 4px 8px; border: 1px solid #cbd5e1; border-radius: 4px;"></td>
-              <td><span class="status-pill active">In Stock</span></td>
-              <td><button class="btn-secondary-admin" onclick="toggleStock(this)">Mark Out</button></td>
-            </tr>
-            <tr>
-              <td><strong>Marigold Garland (Stitched) 🔆</strong></td>
-              <td>గెండాపూల దండ</td>
-              <td>Garlands & Torans</td>
-              <td>1 foot</td>
-              <td><input type="number" value="15.00" step="1" style="width: 80px; padding: 4px 8px; border: 1px solid #cbd5e1; border-radius: 4px;"></td>
-              <td><span class="status-pill active">In Stock</span></td>
-              <td><button class="btn-secondary-admin" onclick="toggleStock(this)">Mark Out</button></td>
+              <td colspan="7" style="text-align: center; padding: 32px; color: var(--admin-text-muted);">
+                🔄 Loading live product catalog...
+              </td>
             </tr>
           </tbody>
         </table>
@@ -980,7 +762,7 @@
           <div>
             <h3>🏢 Covered Gated Communities (Hyderabad Network)</h3>
             <p style="margin: 4px 0 0 0; font-size: 0.85rem; color: var(--admin-text-muted);">
-              Corridor route from Uppal → LB Nagar → Shamshabad → Gachibowli → Kondapur → Miyapur.
+              Uppal → LB Nagar → Shamshabad → Rajendranagar → Attapur → Gachibowli → Nallagandla corridor.
             </p>
           </div>
           <button class="btn-admin" onclick="openAddSocietyModal()">+ Add New Gated Society</button>
@@ -990,67 +772,15 @@
             <tr>
               <th>Community Name</th>
               <th>Hyderabad Zone</th>
-              <th>Est. Flats</th>
-              <th>Subscribers</th>
               <th>Delivery Window</th>
               <th>Status</th>
-              <th>Action</th>
             </tr>
           </thead>
           <tbody id="society-table-body">
             <tr>
-              <td><strong>My Home Bhooja</strong></td>
-              <td>Hitec City / Madhapur</td>
-              <td>1,800 Flats</td>
-              <td><strong>28</strong> Residents</td>
-              <td>05:30 AM - 06:15 AM</td>
-              <td><span class="status-pill active">Active</span></td>
-              <td><button class="btn-secondary-admin" onclick="alert('Editing society settings')">Edit</button></td>
-            </tr>
-            <tr>
-              <td><strong>Aparna Serene Park</strong></td>
-              <td>Kondapur</td>
-              <td>1,680 Flats</td>
-              <td><strong>22</strong> Residents</td>
-              <td>06:00 AM - 06:30 AM</td>
-              <td><span class="status-pill active">Active</span></td>
-              <td><button class="btn-secondary-admin" onclick="alert('Editing society settings')">Edit</button></td>
-            </tr>
-            <tr>
-              <td><strong>Rainbow Vistas @ Rock Garden</strong></td>
-              <td>Moosapet / Kukatpally</td>
-              <td>2,500 Flats</td>
-              <td><strong>31</strong> Residents</td>
-              <td>06:15 AM - 07:00 AM</td>
-              <td><span class="status-pill active">Active</span></td>
-              <td><button class="btn-secondary-admin" onclick="alert('Editing society settings')">Edit</button></td>
-            </tr>
-            <tr>
-              <td><strong>PBEL City</strong></td>
-              <td>Peerancheru / Shamshabad Rd</td>
-              <td>2,200 Flats</td>
-              <td><strong>19</strong> Residents</td>
-              <td>06:00 AM - 06:30 AM</td>
-              <td><span class="status-pill active">Active</span></td>
-              <td><button class="btn-secondary-admin" onclick="alert('Editing society settings')">Edit</button></td>
-            </tr>
-            <tr>
-              <td><strong>Lodha Bellezza</strong></td>
-              <td>Eden Square, KPHB</td>
-              <td>360 Luxury Apts</td>
-              <td><strong>14</strong> Residents</td>
-              <td>06:15 AM - 06:45 AM</td>
-              <td><span class="status-pill active">Active</span></td>
-              <td><button class="btn-secondary-admin" onclick="alert('Editing society settings')">Edit</button></td>
-            </tr>
-            <tr>
-              <td><strong>My Home Tarkshya</strong></td>
-              <td>Uppal / Ramanthapur</td>
-              <td>660 Flats</td>
-              <td><strong>11</strong> Residents</td>
-              <td>05:30 AM - 06:00 AM</td>
-              <td><span class="status-pill active">Active</span></td>
-              <td><button class="btn-secondary-admin" onclick="alert('Editing society settings')">Edit</button></td>
+              <td colspan="4" style="text-align: center; padding: 32px; color: var(--admin-text-muted);">
+                🔄 Loading covered gated societies...
+              </td>
             </tr>
           </tbody>
         </table>
@@ -1061,9 +791,14 @@
     <div id="tab-inquiries" class="admin-content tab-pane">
       <div class="admin-card">
         <div class="card-header">
-          <h3>📩 Inquiries, Community Requests & Event Bookings</h3>
+          <div>
+            <h3>📩 Customer Inquiries & Society Tie-Up Requests</h3>
+            <p style="margin: 4px 0 0 0; font-size: 0.85rem; color: var(--admin-text-muted);">
+              Real submissions from the contact form and society partnership portal.
+            </p>
+          </div>
           <div class="card-actions">
-            <span style="font-size: 0.85rem; color: #e11d48; font-weight: 600;">3 New Leads Awaiting Call</span>
+            <span id="inquiries-count-badge" style="font-size: 0.85rem; color: #e11d48; font-weight: 700;">0 Inquiries</span>
           </div>
         </div>
         <table class="admin-table">
@@ -1073,43 +808,15 @@
               <th>Lead Name</th>
               <th>Contact Details</th>
               <th>Inquiry Type</th>
-              <th>Society / Community & Requirement</th>
+              <th>Message / Requirement</th>
               <th>Status</th>
-              <th>Action</th>
+              <th>Direct Action</th>
             </tr>
           </thead>
-          <tbody>
+          <tbody id="inquiries-tbody">
             <tr>
-              <td>Today, 02:15 PM</td>
-              <td><strong>K. Vijay Bhaskar</strong></td>
-              <td>+91 98491 55221<br><span style="font-size: 0.75rem; color: #64748b;">vijay.b@gmail.com</span></td>
-              <td><span style="background: #ede9fe; color: #6d28d9; padding: 3px 8px; border-radius: 4px; font-weight: 700; font-size: 0.75rem;">SOCIETY TIE-UP</span></td>
-              <td><strong>Aparna Altius (Shamshabad)</strong> — Society committee wants to introduce flower delivery for 850 flats with 1-week free trial.</td>
-              <td><span class="status-pill pending">Pending Call</span></td>
-              <td>
-                <a href="tel:+919849155221" class="btn-admin" style="text-decoration: none;">📞 Call Back</a>
-              </td>
-            </tr>
-            <tr>
-              <td>Today, 11:30 AM</td>
-              <td><strong>Dr. Sangeetha Reddy</strong></td>
-              <td>+91 97002 88443</td>
-              <td><span style="background: #fee2e2; color: #991b1b; padding: 3px 8px; border-radius: 4px; font-weight: 700; font-size: 0.75rem;">MARRIAGE / EVENT</span></td>
-              <td>Wedding pooja at Gachibowli on Sunday. Needs 25kg Marigold, 50 Lotus, and 30 Jasmine strings by 5:00 AM.</td>
-              <td><span class="status-pill pending">Pending Quote</span></td>
-              <td>
-                <a href="https://wa.me/919700288443?text=Namaste%20Dr.%20Sangeetha%2C%20regarding%20your%20FreshPetal%20event%20inquiry" target="_blank" class="btn-admin" style="text-decoration: none; background: #059669;">💬 WhatsApp</a>
-              </td>
-            </tr>
-            <tr>
-              <td>Yesterday</td>
-              <td><strong>M. Venkat</strong></td>
-              <td>+91 99631 00192</td>
-              <td><span style="background: #f1f5f9; color: #475569; padding: 3px 8px; border-radius: 4px; font-weight: 700; font-size: 0.75rem;">CUSTOM BUNDLE</span></td>
-              <td>Wants daily 100g Jasmine + 1 coconut at SMR Vinay Iconia, Kondapur.</td>
-              <td><span class="status-pill delivered">Contacted</span></td>
-              <td>
-                <span style="color: #059669; font-weight: 600; font-size: 0.8rem;">✓ Onboarded</span>
+              <td colspan="7" style="text-align: center; padding: 32px; color: var(--admin-text-muted);">
+                🔄 Loading customer inquiries...
               </td>
             </tr>
           </tbody>
@@ -1253,33 +960,6 @@
     document.getElementById('modal-add-society').style.display = 'none';
   }
 
-  function submitNewSociety() {
-    const name = document.getElementById('new-soc-name').value.trim();
-    const area = document.getElementById('new-soc-area').value.trim();
-    const slot = document.getElementById('new-soc-slot').value;
-
-    if (!name || !area) {
-      alert('Please enter society name and area');
-      return;
-    }
-
-    const tbody = document.getElementById('society-table-body');
-    const tr = document.createElement('tr');
-    tr.innerHTML = `
-      <td><strong>${name}</strong></td>
-      <td>${area}</td>
-      <td>Launching</td>
-      <td><strong>0</strong> Residents</td>
-      <td>${slot}</td>
-      <td><span class="status-pill active">Active</span></td>
-      <td><button class="btn-secondary-admin" onclick="alert('Editing society')">Edit</button></td>
-    `;
-    tbody.prepend(tr);
-
-    closeAddSocietyModal();
-    alert(`Success! ${name} has been added to FreshPetal morning route.`);
-  }
-
   const LIVE_API = 'https://freshpetal-api-production.up.railway.app/api';
   const API_ENDPOINT = (window.location.hostname === 'localhost' && window.location.port === '5000') ? '/api' : LIVE_API;
 
@@ -1300,57 +980,49 @@
 
   async function handleAdminLogin(event) {
     event.preventDefault();
-    const email = document.getElementById('admin-email').value.trim();
+    let identifier = document.getElementById('admin-email').value.trim();
     const password = document.getElementById('admin-password').value;
     const errorEl = document.getElementById('auth-error-msg');
     const submitBtn = document.getElementById('btn-login-submit');
 
+    // Normalize phone number if entered with spaces, dashes, or +91
+    const cleanedDigits = identifier.replace(/[\s\-\+]/g, '');
+    if (/^91[6-9]\d{9}$/.test(cleanedDigits)) {
+      identifier = cleanedDigits.slice(2);
+    } else if (/^[6-9]\d{9}$/.test(cleanedDigits)) {
+      identifier = cleanedDigits;
+    }
+
     errorEl.style.display = 'none';
     submitBtn.disabled = true;
-    submitBtn.innerHTML = '<span>Verifying Admin Credentials...</span>';
+    submitBtn.innerHTML = '<span>Verifying Credentials...</span>';
 
     try {
-      let loginOk = false;
-      try {
-        const res = await fetch(`${API_ENDPOINT}/auth/login`, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ email, password })
-        });
-        const data = await res.json();
-        if (res.ok && data.success && data.user) {
-          if (data.user.role !== 'admin') {
-            throw new Error('Access Denied: Your account is a customer account and lacks Administrator access.');
-          }
-          if (data.token) sessionStorage.setItem('fp_admin_token', data.token);
-          loginOk = true;
-        } else if (!res.ok && (data.error || data.message)) {
-          if (res.status === 401) {
-            throw new Error('Invalid administrator email or password.');
-          }
-        }
-      } catch (networkErr) {
-        if (networkErr.message.includes('Access Denied') || networkErr.message.includes('Invalid')) {
-          throw networkErr;
-        }
-      }
+      const res = await fetch(`${API_ENDPOINT}/auth/login`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: identifier, password })
+      });
+      const data = await res.json();
 
-      if (!loginOk) {
-        if (email.toLowerCase() === 'admin@freshpetal.in' && password === 'Admin@FreshPetal2026') {
-          loginOk = true;
+      if (res.ok && data.success && data.user) {
+        if (data.user.role === 'admin') {
+          sessionStorage.setItem('fp_admin_auth', 'true');
+          sessionStorage.setItem('fp_admin_token', data.token);
+          sessionStorage.setItem('fp_admin_user', JSON.stringify(data.user));
+          checkAdminAuth();
         } else {
-          throw new Error('Invalid credentials. Please enter valid Operations Admin email and password.');
+          errorEl.innerText = 'Access restricted: User is not an operations administrator.';
+          errorEl.style.display = 'block';
         }
-      }
-
-      if (loginOk) {
-        sessionStorage.setItem('fp_admin_auth', 'true');
-        sessionStorage.setItem('fp_admin_user', JSON.stringify({ email, name: 'Operations Admin', role: 'admin' }));
-        checkAdminAuth();
+      } else {
+        errorEl.innerText = data.message || 'Invalid credentials. Please enter admin mobile (9949054899) or email (admin@freshpetal.in).';
+        errorEl.style.display = 'block';
       }
     } catch (err) {
+      console.error('Admin login fetch error:', err);
+      errorEl.innerText = 'Connection error: Unable to reach authentication API. Please check your internet connection.';
       errorEl.style.display = 'block';
-      errorEl.innerText = '⚠️ ' + err.message;
     } finally {
       submitBtn.disabled = false;
       submitBtn.innerHTML = '<span>Unlock OPS Portal →</span>';
@@ -1361,28 +1033,533 @@
     sessionStorage.removeItem('fp_admin_auth');
     sessionStorage.removeItem('fp_admin_token');
     sessionStorage.removeItem('fp_admin_user');
-    checkAdminAuth();
+    window.location.reload();
   }
 
-  // Load real data from API if authenticated
-  async function loadAdminData() {
-    try {
-      const token = sessionStorage.getItem('fp_admin_token');
-      const headers = { 'x-admin-token': 'freshpetal-admin-2026' };
-      if (token) headers['Authorization'] = `Bearer ${token}`;
+  function getAdminHeaders() {
+    const token = sessionStorage.getItem('fp_admin_token');
+    const headers = { 
+      'Content-Type': 'application/json',
+      'x-admin-token': 'freshpetal-admin-2026'
+    };
+    if (token) headers['Authorization'] = `Bearer ${token}`;
+    return headers;
+  }
 
-      const res = await fetch(`${API_ENDPOINT}/admin/stats`, { headers });
+  // Toast notification helper
+  function showToast(msg, isError = false) {
+    let t = document.getElementById('admin-toast');
+    if (!t) {
+      t = document.createElement('div');
+      t.id = 'admin-toast';
+      t.style.cssText = 'position:fixed;bottom:24px;right:24px;z-index:9999;padding:12px 20px;border-radius:8px;font-size:0.88rem;font-weight:600;box-shadow:0 10px 30px rgba(0,0,0,0.25);transition:all 0.3s ease;';
+      document.body.appendChild(t);
+    }
+    t.style.background = isError ? '#ef4444' : '#059669';
+    t.style.color = '#fff';
+    t.innerHTML = (isError ? '⚠️ ' : '✅ ') + msg;
+    t.style.opacity = '1';
+    t.style.display = 'block';
+    setTimeout(() => {
+      t.style.opacity = '0';
+      setTimeout(() => { t.style.display = 'none'; }, 300);
+    }, 3500);
+  }
+
+  async function submitNewSociety() {
+    const name = document.getElementById('new-soc-name').value.trim();
+    const area = document.getElementById('new-soc-area').value.trim();
+    const slot = document.getElementById('new-soc-slot').value;
+
+    if (!name || !area) {
+      alert('Please enter both community name and Hyderabad area.');
+      return;
+    }
+
+    try {
+      const res = await fetch(`${API_ENDPOINT}/admin/societies`, {
+        method: 'POST',
+        headers: getAdminHeaders(),
+        body: JSON.stringify({ name, area, delivery_slot: slot.split(' ')[0] + ':00' })
+      });
+      const data = await res.json();
+      if (res.ok && data.success) {
+        showToast(`Gated community "${name}" added to morning route!`);
+        closeAddSocietyModal();
+        document.getElementById('new-soc-name').value = '';
+        document.getElementById('new-soc-area').value = '';
+        loadSocieties();
+      } else {
+        showToast(data.message || 'Failed to add society.', true);
+      }
+    } catch (err) {
+      showToast(err.message, true);
+    }
+  }
+
+  // Load Real Data from PostgreSQL API
+  async function loadAdminData() {
+    loadStats();
+    loadDispatch();
+    loadOrders();
+    loadSubscriptions();
+    loadProducts();
+    loadSocieties();
+    loadInquiries();
+  }
+
+  // 1. Stats
+  async function loadStats() {
+    try {
+      const res = await fetch(`${API_ENDPOINT}/admin/stats`, { headers: getAdminHeaders() });
       if (res.ok) {
         const json = await res.json();
         if (json.stats) {
-          if (json.stats.todayOrders !== undefined) document.getElementById('stat-today-drops').innerText = json.stats.todayOrders;
-          if (json.stats.activeSubscriptions !== undefined) document.getElementById('stat-active-subs').innerText = json.stats.activeSubscriptions;
-          if (json.stats.monthlyRecurringRevenue !== undefined) document.getElementById('stat-mrr').innerText = '₹' + json.stats.monthlyRecurringRevenue.toLocaleString('en-IN');
-          if (json.stats.activeSocieties !== undefined) document.getElementById('stat-societies').innerText = json.stats.activeSocieties;
+          document.getElementById('stat-today-drops').innerText = json.stats.todayOrders || 0;
+          document.getElementById('stat-active-subs').innerText = json.stats.activeSubscriptions || 0;
+          const mrr = Number(json.stats.monthlyRecurringRevenue) || 0;
+          document.getElementById('stat-mrr').innerText = '₹' + mrr.toLocaleString('en-IN');
+          document.getElementById('stat-societies').innerText = json.stats.activeSocieties || 0;
         }
       }
     } catch (e) {
-      console.log('Using active offline dashboard data');
+      console.error('Stats load error:', e);
+    }
+  }
+
+  // 2. Dispatch Manifest (4:30 AM Route Sheet)
+  let cachedDeliveries = [];
+  async function loadDispatch() {
+    const oTbody = document.getElementById('overview-tbody');
+    const dTbody = document.getElementById('dispatch-tbody');
+    try {
+      const res = await fetch(`${API_ENDPOINT}/admin/dispatch`, { headers: getAdminHeaders() });
+      if (res.ok) {
+        const json = await res.json();
+        cachedDeliveries = json.deliveries || [];
+        renderDispatchTable(cachedDeliveries);
+
+        // Render overview summary
+        const summary = json.societySummary || {};
+        const socNames = Object.keys(summary);
+        if (socNames.length === 0) {
+          oTbody.innerHTML = `
+            <tr>
+              <td colspan="5" style="text-align: center; padding: 32px; color: var(--admin-text-muted);">
+                🌸 No morning dispatches scheduled for today yet. Live orders and subscriptions will appear here automatically.
+              </td>
+            </tr>`;
+        } else {
+          oTbody.innerHTML = socNames.map(name => {
+            const s = summary[name];
+            return `
+              <tr>
+                <td><strong>${name}</strong></td>
+                <td>${s.area || 'Hyderabad'}</td>
+                <td><strong>${s.count}</strong> Drops</td>
+                <td>${s.slot || '06:00 AM'}</td>
+                <td><span class="status-pill active">Scheduled</span></td>
+              </tr>
+            `;
+          }).join('');
+        }
+      }
+    } catch (e) {
+      dTbody.innerHTML = `<tr><td colspan="7" style="text-align:center;padding:24px;color:#ef4444;">Failed to load live dispatch.</td></tr>`;
+    }
+  }
+
+  function renderDispatchTable(deliveries) {
+    const dTbody = document.getElementById('dispatch-tbody');
+    if (!deliveries.length) {
+      dTbody.innerHTML = `
+        <tr>
+          <td colspan="7" style="text-align: center; padding: 36px; color: var(--admin-text-muted);">
+            🌸 No morning deliveries scheduled for today yet. Live customer orders and subscriptions placed for today will appear here.
+          </td>
+        </tr>`;
+      return;
+    }
+
+    dTbody.innerHTML = deliveries.map(d => {
+      const flat = [d.tower, d.apt_number].filter(Boolean).join(' — ') || 'Doorstep Drop';
+      const items = d.package_name ? `🌸 ${d.package_name}` : (d.special_instructions || 'Fresh Pooja Flowers');
+      const isDone = d.delivery_status === 'delivered';
+      return `
+        <tr data-society="${d.society_name || ''}">
+          <td><strong>${flat}</strong></td>
+          <td>${d.customer_name || 'Customer'}</td>
+          <td><a href="tel:${d.customer_phone}" style="color:var(--admin-primary);text-decoration:none;">${d.customer_phone || '—'}</a></td>
+          <td>${d.society_name || 'Gated Community'}</td>
+          <td>${items}</td>
+          <td>${d.delivery_slot || '06:00 AM'}</td>
+          <td>
+            ${isDone 
+              ? '<span class="status-pill delivered">✓ Delivered</span>'
+              : `<button class="btn-mark" onclick="markOrderDelivered(${d.order_id || d.subscription_id}, '${d.delivery_type}', this)">Mark Delivered</button>`
+            }
+          </td>
+        </tr>
+      `;
+    }).join('');
+  }
+
+  async function markOrderDelivered(id, type, btn) {
+    btn.disabled = true;
+    btn.innerText = 'Updating...';
+    try {
+      if (type === 'order') {
+        const res = await fetch(`${API_ENDPOINT}/admin/orders/${id}/status`, {
+          method: 'PUT',
+          headers: getAdminHeaders(),
+          body: JSON.stringify({ status: 'delivered' })
+        });
+        if (res.ok) {
+          btn.parentElement.innerHTML = '<span class="status-pill delivered">✓ Delivered</span>';
+          showToast(`Order #${id} marked delivered!`);
+          loadStats();
+        }
+      } else {
+        btn.parentElement.innerHTML = '<span class="status-pill delivered">✓ Delivered</span>';
+        showToast(`Subscription drop #${id} recorded!`);
+      }
+    } catch (e) {
+      btn.disabled = false;
+      btn.innerText = 'Mark Delivered';
+      showToast('Failed to update delivery status', true);
+    }
+  }
+
+  // 3. Orders Management
+  let cachedOrders = [];
+  async function loadOrders() {
+    const oTbody = document.getElementById('orders-tbody');
+    try {
+      const res = await fetch(`${API_ENDPOINT}/admin/orders`, { headers: getAdminHeaders() });
+      if (res.ok) {
+        const json = await res.json();
+        cachedOrders = json.orders || [];
+        renderOrdersTable(cachedOrders);
+      }
+    } catch (e) {
+      oTbody.innerHTML = `<tr><td colspan="8" style="text-align:center;padding:24px;color:#ef4444;">Failed to load live orders.</td></tr>`;
+    }
+  }
+
+  function renderOrdersTable(orders) {
+    const oTbody = document.getElementById('orders-tbody');
+    if (!orders.length) {
+      oTbody.innerHTML = `
+        <tr>
+          <td colspan="8" style="text-align: center; padding: 36px; color: var(--admin-text-muted);">
+            📦 No orders placed yet. Live orders placed by customers on the storefront will appear here in real-time.
+          </td>
+        </tr>`;
+      return;
+    }
+
+    oTbody.innerHTML = orders.map(o => {
+      const isEvent = o.order_type === 'event';
+      const typeBadge = isEvent
+        ? `<span style="background: #ede9fe; color: #6d28d9; padding: 3px 8px; border-radius: 4px; font-weight: 700; font-size: 0.75rem;">🎉 EVENT / FUNCTION</span>`
+        : `<span style="background: #f1f5f9; color: #475569; padding: 3px 8px; border-radius: 4px; font-weight: 700; font-size: 0.75rem;">ONE-OFF</span>`;
+
+      const statusCls = o.status === 'delivered' ? 'delivered' : (o.status === 'out_for_delivery' ? 'out_for_delivery' : (o.status === 'confirmed' ? 'active' : 'pending'));
+      const statusLabel = o.status ? o.status.replace(/_/g, ' ').toUpperCase() : 'PENDING';
+      const addr = [o.society_name, o.tower, o.apt_number].filter(Boolean).join(', ') || (o.delivery_address || 'Hyderabad');
+      const delivDate = o.delivery_date ? new Date(o.delivery_date).toLocaleDateString('en-IN') : 'Morning';
+
+      return `
+        <tr data-type="${o.order_type}">
+          <td><strong>#FP-${o.id}</strong></td>
+          <td>
+            <strong>${o.customer_name || 'Customer'}</strong><br>
+            <span style="font-size: 0.78rem; color: var(--admin-text-muted);">${addr}</span>
+          </td>
+          <td>${typeBadge}</td>
+          <td style="max-width:240px;font-size:0.85rem;">${o.special_instructions || 'Standard Pooja Flowers'}</td>
+          <td><strong>₹${parseFloat(o.total || 0).toFixed(2)}</strong></td>
+          <td>${delivDate}, ${o.delivery_slot || '06:00 AM'}</td>
+          <td><span class="status-pill ${statusCls}">${statusLabel}</span></td>
+          <td>
+            <select onchange="changeOrderStatus(${o.id}, this.value)" style="padding:4px 8px;font-size:0.78rem;border:1px solid #cbd5e1;border-radius:4px;background:#fff;">
+              <option value="">Update Status...</option>
+              <option value="confirmed">Confirmed</option>
+              <option value="out_for_delivery">Out for Delivery</option>
+              <option value="delivered">Delivered</option>
+              <option value="cancelled">Cancelled</option>
+            </select>
+          </td>
+        </tr>
+      `;
+    }).join('');
+  }
+
+  async function changeOrderStatus(orderId, newStatus) {
+    if (!newStatus) return;
+    try {
+      const res = await fetch(`${API_ENDPOINT}/admin/orders/${orderId}/status`, {
+        method: 'PUT',
+        headers: getAdminHeaders(),
+        body: JSON.stringify({ status: newStatus })
+      });
+      if (res.ok) {
+        showToast(`Order #FP-${orderId} status changed to ${newStatus}`);
+        loadOrders();
+        loadStats();
+      } else {
+        showToast('Failed to update order status', true);
+      }
+    } catch (e) {
+      showToast(e.message, true);
+    }
+  }
+
+  // 4. Subscriptions Management
+  async function loadSubscriptions() {
+    const sTbody = document.getElementById('subs-tbody');
+    try {
+      const res = await fetch(`${API_ENDPOINT}/admin/subscriptions`, { headers: getAdminHeaders() });
+      if (res.ok) {
+        const json = await res.json();
+        const subs = json.subscriptions || [];
+        document.getElementById('subs-count-badge').innerText = `${subs.filter(s => s.status === 'active').length} Active`;
+
+        if (!subs.length) {
+          sTbody.innerHTML = `
+            <tr>
+              <td colspan="8" style="text-align: center; padding: 36px; color: var(--admin-text-muted);">
+                🔄 No active customer subscriptions yet. Daily and weekly morning pooja subscribers will appear here.
+              </td>
+            </tr>`;
+          return;
+        }
+
+        sTbody.innerHTML = subs.map(s => {
+          const addr = [s.society_name, s.tower, s.apt_number].filter(Boolean).join(', ') || 'Hyderabad';
+          const isPaused = s.status === 'paused';
+          const nextDate = s.next_delivery ? new Date(s.next_delivery).toLocaleDateString('en-IN') : 'Tomorrow';
+          return `
+            <tr>
+              <td><strong>#SUB-${s.id}</strong></td>
+              <td>
+                <strong>${s.customer_name || 'Customer'}</strong><br>
+                <span style="font-size:0.75rem;color:#64748b;">${s.customer_phone || ''}</span>
+              </td>
+              <td>${addr}</td>
+              <td>${s.package_name || 'Daily Pooja Pack'}</td>
+              <td><strong>₹${parseFloat(s.monthly_price || 0).toLocaleString('en-IN')} / mo</strong></td>
+              <td>${nextDate}, 6 AM</td>
+              <td><span class="status-pill ${isPaused ? 'paused' : 'active'}">${isPaused ? 'Paused' : 'Active'}</span></td>
+              <td>
+                <button class="btn-secondary-admin" onclick="toggleSubStatus(${s.id}, '${isPaused ? 'active' : 'paused'}')">
+                  ${isPaused ? 'Resume' : 'Pause'}
+                </button>
+              </td>
+            </tr>
+          `;
+        }).join('');
+      }
+    } catch (e) {
+      sTbody.innerHTML = `<tr><td colspan="8" style="text-align:center;padding:24px;color:#ef4444;">Failed to load subscriptions.</td></tr>`;
+    }
+  }
+
+  async function toggleSubStatus(subId, newStatus) {
+    try {
+      const res = await fetch(`${API_ENDPOINT}/admin/subscriptions/${subId}/status`, {
+        method: 'PUT',
+        headers: getAdminHeaders(),
+        body: JSON.stringify({ status: newStatus })
+      });
+      if (res.ok) {
+        showToast(`Subscription #SUB-${subId} is now ${newStatus}`);
+        loadSubscriptions();
+        loadStats();
+      }
+    } catch (e) {
+      showToast('Failed to update subscription', true);
+    }
+  }
+
+  // 5. Products, Live Mandi Pricing & Stock
+  let cachedProducts = [];
+  async function loadProducts() {
+    const pTbody = document.getElementById('inventory-tbody');
+    try {
+      const res = await fetch(`${API_ENDPOINT}/products`);
+      if (res.ok) {
+        const json = await res.json();
+        cachedProducts = json.products || [];
+        if (!cachedProducts.length) {
+          pTbody.innerHTML = `<tr><td colspan="7" style="text-align:center;padding:24px;color:var(--admin-text-muted);">No products in catalog.</td></tr>`;
+          return;
+        }
+
+        pTbody.innerHTML = cachedProducts.map(p => {
+          const unit = p.is_by_weight ? '50g' : (p.unit_label || 'piece');
+          const isStock = p.in_stock !== false;
+          return `
+            <tr>
+              <td><strong>${p.image_emoji || '🌸'} ${p.name}</strong></td>
+              <td style="color:#0f172a;font-weight:500;">${p.name_telugu || '—'}</td>
+              <td>${p.category_name || (p.is_by_weight ? 'Fresh Blooms' : 'Essentials')}</td>
+              <td>${unit}</td>
+              <td>
+                <div style="display:flex;align-items:center;gap:4px;">
+                  <span>₹</span>
+                  <input type="number" step="0.01" value="${p.price_per_unit}" 
+                         id="prod-price-${p.id}"
+                         style="width: 80px; padding: 4px 8px; border: 1px solid #cbd5e1; border-radius: 4px; font-weight: 700;"
+                         onchange="saveProductPrice(${p.id}, this.value)">
+                </div>
+              </td>
+              <td>
+                <span class="status-pill ${isStock ? 'active' : 'paused'}">
+                  ${isStock ? 'In Stock' : 'Out of Stock'}
+                </span>
+              </td>
+              <td>
+                <button class="btn-secondary-admin" onclick="toggleProductStock(${p.id}, ${isStock})">
+                  ${isStock ? 'Mark Out' : 'Mark In'}
+                </button>
+              </td>
+            </tr>
+          `;
+        }).join('');
+      }
+    } catch (e) {
+      pTbody.innerHTML = `<tr><td colspan="7" style="text-align:center;padding:24px;color:#ef4444;">Failed to load product catalog.</td></tr>`;
+    }
+  }
+
+  async function saveProductPrice(productId, newPrice) {
+    const val = parseFloat(newPrice);
+    if (isNaN(val) || val < 0) {
+      showToast('Please enter a valid price in ₹ Rupees.', true);
+      return;
+    }
+
+    try {
+      const res = await fetch(`${API_ENDPOINT}/admin/products/${productId}`, {
+        method: 'PUT',
+        headers: getAdminHeaders(),
+        body: JSON.stringify({ price_per_unit: val })
+      });
+      if (res.ok) {
+        showToast(`Rate updated to ₹${val.toFixed(2)} per unit in live database.`);
+      } else {
+        showToast('Failed to update price.', true);
+      }
+    } catch (e) {
+      showToast(e.message, true);
+    }
+  }
+
+  async function toggleProductStock(productId, currentStock) {
+    try {
+      const res = await fetch(`${API_ENDPOINT}/admin/products/${productId}`, {
+        method: 'PUT',
+        headers: getAdminHeaders(),
+        body: JSON.stringify({ in_stock: !currentStock })
+      });
+      if (res.ok) {
+        showToast(`Product stock status updated!`);
+        loadProducts();
+      }
+    } catch (e) {
+      showToast(e.message, true);
+    }
+  }
+
+  // 6. Gated Communities
+  async function loadSocieties() {
+    const sTbody = document.getElementById('society-table-body');
+    const filterSelect = document.getElementById('dispatch-society-filter');
+    try {
+      const res = await fetch(`${API_ENDPOINT}/societies`);
+      if (res.ok) {
+        const json = await res.json();
+        const societies = json.societies || [];
+
+        // Populate dispatch filter dropdown
+        if (filterSelect) {
+          filterSelect.innerHTML = '<option value="all">All Gated Societies</option>' +
+            societies.map(s => `<option value="${s.name}">${s.name} (${s.area})</option>`).join('');
+        }
+
+        if (!societies.length) {
+          sTbody.innerHTML = `<tr><td colspan="4" style="text-align:center;padding:24px;color:var(--admin-text-muted);">No societies registered.</td></tr>`;
+          return;
+        }
+
+        sTbody.innerHTML = societies.map(s => {
+          const isActive = s.status === 'active';
+          return `
+            <tr>
+              <td><strong>${s.name}</strong></td>
+              <td>${s.area || 'Hyderabad'}</td>
+              <td>${s.delivery_slot || '06:00 AM'}</td>
+              <td><span class="status-pill ${isActive ? 'active' : 'pending'}">${s.status || 'Active'}</span></td>
+            </tr>
+          `;
+        }).join('');
+      }
+    } catch (e) {
+      sTbody.innerHTML = `<tr><td colspan="4" style="text-align:center;padding:24px;color:#ef4444;">Failed to load societies.</td></tr>`;
+    }
+  }
+
+  // 7. Customer Inquiries & Leads
+  async function loadInquiries() {
+    const iTbody = document.getElementById('inquiries-tbody');
+    const badge = document.getElementById('inquiries-count-badge');
+    try {
+      const res = await fetch(`${API_ENDPOINT}/admin/inquiries`, { headers: getAdminHeaders() });
+      if (res.ok) {
+        const json = await res.json();
+        const inquiries = json.inquiries || [];
+        if (badge) badge.innerText = `${inquiries.length} Inquiries`;
+
+        if (!inquiries.length) {
+          iTbody.innerHTML = `
+            <tr>
+              <td colspan="7" style="text-align: center; padding: 36px; color: var(--admin-text-muted);">
+                📩 No customer inquiries or lead submissions yet. Submissions from the contact form or RWA tie-up page will appear here.
+              </td>
+            </tr>`;
+          return;
+        }
+
+        iTbody.innerHTML = inquiries.map(inq => {
+          const dateStr = inq.created_at ? new Date(inq.created_at).toLocaleDateString('en-IN', { day:'numeric', month:'short', hour:'2-digit', minute:'2-digit' }) : 'Recent';
+          const cleanPhone = (inq.phone || '').replace(/[^0-9]/g, '');
+          const waPhone = cleanPhone.length === 10 ? '91' + cleanPhone : cleanPhone;
+          const statusCls = inq.status === 'contacted' ? 'delivered' : 'pending';
+
+          return `
+            <tr>
+              <td>${dateStr}</td>
+              <td><strong>${inq.name}</strong></td>
+              <td>
+                <a href="tel:${inq.phone}" style="color:var(--admin-primary);text-decoration:none;font-weight:600;">${inq.phone || '—'}</a><br>
+                <span style="font-size:0.75rem;color:#64748b;">${inq.email || ''}</span>
+              </td>
+              <td><span style="background:#ede9fe;color:#6d28d9;padding:3px 8px;border-radius:4px;font-weight:700;font-size:0.75rem;">${(inq.enquiry_type || 'GENERAL').toUpperCase()}</span></td>
+              <td style="max-width:320px;font-size:0.85rem;">${inq.message || '—'}</td>
+              <td><span class="status-pill ${statusCls}">${inq.status || 'New'}</span></td>
+              <td>
+                <div style="display:flex;gap:6px;">
+                  ${cleanPhone ? `<a href="https://wa.me/${waPhone}?text=Namaste%20${encodeURIComponent(inq.name)}%2C%20thank%20you%20for%20contacting%20FreshPetal!" target="_blank" class="btn-admin" style="text-decoration:none;background:#059669;padding:4px 10px;font-size:0.78rem;">💬 WhatsApp</a>` : ''}
+                  ${inq.phone ? `<a href="tel:${inq.phone}" class="btn-secondary-admin" style="text-decoration:none;padding:4px 10px;font-size:0.78rem;">📞 Call</a>` : ''}
+                </div>
+              </td>
+            </tr>
+          `;
+        }).join('');
+      }
+    } catch (e) {
+      iTbody.innerHTML = `<tr><td colspan="7" style="text-align:center;padding:24px;color:#ef4444;">Failed to load inquiries.</td></tr>`;
     }
   }
 

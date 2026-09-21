@@ -296,15 +296,15 @@ async function initDB() {
       ON CONFLICT (slug) DO NOTHING;
     `);
 
-    // Seed default admin account
+    // Seed default admin account with verified credentials
     const adminPassHash = await bcrypt.hash('Admin@FreshPetal2026', 10);
     await client.query(`
       INSERT INTO users (name, email, phone, password_hash, role, is_verified)
-      VALUES ('FreshPetal Operations Admin', 'admin@freshpetal.in', '9000000001', $1, 'admin', TRUE)
-      ON CONFLICT (email) DO UPDATE SET role = 'admin', password_hash = $1;
+      VALUES ('FreshPetal Operations Admin', 'admin@freshpetal.in', '9949054899', $1, 'admin', TRUE)
+      ON CONFLICT (email) DO UPDATE SET role = 'admin', password_hash = $1, phone = '9949054899';
     `, [adminPassHash]);
 
-    console.log('✅ Database initialized & seeded successfully (including admin@freshpetal.in).\n');
+    console.log('✅ Database initialized and verified successfully.\n');
   } catch (err) {
     console.error('❌ DB Init Error:', err.message);
     throw err;

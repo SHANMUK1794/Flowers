@@ -6,6 +6,7 @@
   <title>My Dashboard — FreshPetal</title>
   <meta name="description" content="Manage your FreshPetal subscriptions, view order history and update your delivery preferences." />
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg'><text y='32' font-size='32'>🌸</text></svg>" />
+  <link rel="stylesheet" href="/css/global.css" />
   <link rel="stylesheet" href="../css/global.css" />
   <style>
     .sub-card-dash {
@@ -55,6 +56,16 @@
             <div class="dash-nav-item" onclick="showTab('profile', this)"><span class="dash-nav-icon">👤</span> My Profile</div>
             <div class="dash-nav-item" onclick="Auth.logout()"><span class="dash-nav-icon">🚪</span> Sign Out</div>
           </nav>
+
+          <!-- Support Card -->
+          <div style="margin-top:20px;background:var(--cream);border:1px solid var(--border-light);border-radius:var(--radius-md);padding:16px;">
+            <div style="font-size:0.82rem;font-weight:700;color:var(--text);margin-bottom:4px;">Need Delivery Help?</div>
+            <div style="font-size:0.75rem;color:var(--text-muted);margin-bottom:10px;">Hyderabad Morning Support:</div>
+            <div style="display:flex;flex-direction:column;gap:8px;">
+              <a href="https://wa.me/919949054899?text=Hi%20FreshPetal!%20Need%20help%20with%20my%20delivery." target="_blank" class="btn btn-sm btn-whatsapp" style="padding:6px 12px;font-size:0.78rem;text-decoration:none;display:inline-block;text-align:center;">💬 WhatsApp Us</a>
+              <a href="tel:+919949054899" class="btn btn-sm btn-rose-outline" style="padding:6px 12px;font-size:0.78rem;text-decoration:none;display:inline-block;text-align:center;">📞 +91 99490 54899</a>
+            </div>
+          </div>
         </aside>
 
         <!-- Content -->
@@ -159,7 +170,7 @@
 
   <div id="footer-mount"></div>
 
-  <script src="../js/app.js"></script>
+  <script src="/js/app.js"></script>
   <script>
     // Guard: must be logged in
     if (!Auth.isLoggedIn()) window.location.href = 'login.html?redirect=dashboard.html';

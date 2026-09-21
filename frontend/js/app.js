@@ -21,7 +21,7 @@ const Auth = {
   async logout() {
     await api.post('/auth/logout');
     this.clearSession();
-    window.location.href = '/frontend/pages/login.html';
+    window.location.href = '/pages/login.html';
   }
 };
 
@@ -139,12 +139,12 @@ function updateCartBadges() {
 function renderHeader(activePage = '') {
   const user = Auth.getUser();
   const navLinks = [
-    { href: '/frontend/index.html',                 label: 'Home',          key: 'home' },
-    { href: '/frontend/pages/shop.html',            label: 'Shop Flowers',  key: 'shop' },
-    { href: '/frontend/pages/subscriptions.html',   label: 'Subscriptions', key: 'subscriptions' },
-    { href: '/frontend/pages/events.html',          label: 'Events',        key: 'events' },
-    { href: '/frontend/pages/about.html',           label: 'About Us',      key: 'about' },
-    { href: '/frontend/pages/contact.html',         label: 'Contact',       key: 'contact' },
+    { href: '/index.html',                 label: 'Home',          key: 'home' },
+    { href: '/pages/shop.html',            label: 'Shop Flowers',  key: 'shop' },
+    { href: '/pages/subscriptions.html',   label: 'Subscriptions', key: 'subscriptions' },
+    { href: '/pages/events.html',          label: 'Events',        key: 'events' },
+    { href: '/pages/about.html',           label: 'About Us',      key: 'about' },
+    { href: '/pages/contact.html',         label: 'Contact',       key: 'contact' },
   ];
 
   const navHtml = navLinks.map(l =>
@@ -156,19 +156,19 @@ function renderHeader(activePage = '') {
   ).join('');
 
   const authActions = user
-    ? `<a href="/frontend/pages/dashboard.html" class="btn btn-rose-outline btn-sm header-cta">👤 ${user.name.split(' ')[0]}</a>`
-    : `<a href="/frontend/pages/login.html" class="btn btn-rose btn-sm header-cta">Login / Sign Up</a>`;
+    ? `<a href="/pages/dashboard.html" class="btn btn-rose-outline btn-sm header-cta">👤 ${user.name.split(' ')[0]}</a>`
+    : `<a href="/pages/login.html" class="btn btn-rose btn-sm header-cta">Login / Sign Up</a>`;
 
   return `
     <div class="announce-bar">
       🚚 <strong>Free Delivery</strong> on orders above ₹299 &nbsp;|&nbsp;
       Daily subscriptions from <strong>₹49/day</strong> &nbsp;|&nbsp;
       Hyderabad: Uppal to Shamshabad &nbsp;
-      <a href="/frontend/pages/shop.html">Shop Now →</a>
+      <a href="/pages/shop.html">Shop Now →</a>
     </div>
     <header class="site-header" id="site-header">
       <div class="container header-inner">
-        <a href="/frontend/index.html" class="site-logo">
+        <a href="/index.html" class="site-logo">
           <div class="logo-icon">🌸</div>
           <div>
             <span class="logo-text">FreshPetal</span>
@@ -179,7 +179,7 @@ function renderHeader(activePage = '') {
         <nav class="main-nav">${navHtml}</nav>
 
         <div class="header-actions">
-          <a href="/frontend/pages/shop.html" class="header-icon-btn" title="Shop">🛍️</a>
+          <a href="/pages/shop.html" class="header-icon-btn" title="Shop">🛍️</a>
           <button class="header-icon-btn" id="cart-header-btn" title="Cart" onclick="toggleCartDrawer()">
             🛒
             <span class="cart-badge" id="cart-badge-header" style="display:none">0</span>
@@ -196,9 +196,9 @@ function renderHeader(activePage = '') {
         <div class="mobile-nav-divider"></div>
         <div class="mobile-nav-footer">
           ${user
-            ? `<a href="/frontend/pages/dashboard.html" class="btn btn-rose btn-sm w-full">My Dashboard</a>`
-            : `<a href="/frontend/pages/login.html" class="btn btn-rose btn-sm w-full">Login</a>
-               <a href="/frontend/pages/signup.html" class="btn btn-rose-outline btn-sm w-full">Sign Up</a>`}
+            ? `<a href="/pages/dashboard.html" class="btn btn-rose btn-sm w-full">My Dashboard</a>`
+            : `<a href="/pages/login.html" class="btn btn-rose btn-sm w-full">Login</a>
+               <a href="/pages/signup.html" class="btn btn-rose-outline btn-sm w-full">Sign Up</a>`}
         </div>
       </nav>
     </header>
@@ -217,39 +217,38 @@ function renderFooter() {
             </div>
             <p class="footer-tagline">Hyderabad's trusted fresh flower & pooja essentials delivery. Serving gated communities from Uppal to Shamshabad — delivered fresh at your door every morning.</p>
             <div class="footer-social">
-              <a href="https://wa.me/919000000000" class="social-btn" target="_blank">💬</a>
-              <a href="#" class="social-btn">📸</a>
-              <a href="#" class="social-btn">📘</a>
+              <a href="https://wa.me/919949054899" class="social-btn" target="_blank" title="WhatsApp">💬</a>
+              <a href="tel:+919949054899" class="social-btn" title="Call">📞</a>
             </div>
           </div>
 
           <div>
             <h4 class="footer-heading">Shop</h4>
             <ul class="footer-links">
-              <li><a href="/frontend/pages/shop.html?cat=fresh-flowers">Fresh Flowers</a></li>
-              <li><a href="/frontend/pages/shop.html?cat=pooja-essentials">Pooja Essentials</a></li>
-              <li><a href="/frontend/pages/shop.html?cat=garlands">Garlands & Strings</a></li>
-              <li><a href="/frontend/pages/shop.html?cat=bundles">Ready Bundles</a></li>
+              <li><a href="/pages/shop.html?cat=fresh-flowers">Fresh Flowers</a></li>
+              <li><a href="/pages/shop.html?cat=pooja-essentials">Pooja Essentials</a></li>
+              <li><a href="/pages/shop.html?cat=garlands">Garlands & Strings</a></li>
+              <li><a href="/pages/shop.html?cat=bundles">Ready Bundles</a></li>
             </ul>
           </div>
 
           <div>
             <h4 class="footer-heading">Services</h4>
             <ul class="footer-links">
-              <li><a href="/frontend/pages/subscriptions.html">Daily Subscriptions</a></li>
-              <li><a href="/frontend/pages/subscriptions.html">Weekly Packages</a></li>
-              <li><a href="/frontend/pages/events.html">Events & Functions</a></li>
-              <li><a href="/frontend/pages/how-it-works.html">How It Works</a></li>
+              <li><a href="/pages/subscriptions.html">Daily Subscriptions</a></li>
+              <li><a href="/pages/subscriptions.html">Weekly Packages</a></li>
+              <li><a href="/pages/events.html">Events & Functions</a></li>
+              <li><a href="/pages/how-it-works.html">How It Works</a></li>
             </ul>
           </div>
 
           <div>
             <h4 class="footer-heading">Contact</h4>
             <ul class="footer-links">
-              <li><a href="tel:+919000000000">📞 +91 90000 00000</a></li>
-              <li><a href="https://wa.me/919000000000" target="_blank">💬 WhatsApp Us</a></li>
+              <li><a href="tel:+919949054899">📞 +91 99490 54899</a></li>
+              <li><a href="https://wa.me/919949054899?text=Namaste%20FreshPetal!" target="_blank">💬 WhatsApp (+91 99490 54899)</a></li>
               <li><a href="mailto:hello@freshpetal.in">✉️ hello@freshpetal.in</a></li>
-              <li><a href="/frontend/pages/contact.html">Contact Form</a></li>
+              <li><a href="/pages/contact.html">Contact Form</a></li>
             </ul>
             <p style="margin-top:16px;font-size:0.82rem;opacity:0.6;">Open: 5 AM – 8 PM daily<br>Delivery: Uppal to Shamshabad, Hyd</p>
           </div>
@@ -258,7 +257,7 @@ function renderFooter() {
         <div class="footer-bottom">
           <span>© 2026 FreshPetal. Made with 🌸 in Hyderabad.</span>
           <div class="footer-bottom-links">
-            <a href="/frontend/pages/admin.html" style="color: #fbbf24; font-weight: 600;">🔐 Admin Portal</a>
+            <a href="/pages/admin.html" style="color: #fbbf24; font-weight: 600;">🔐 Admin Portal</a>
             <a href="#">Privacy Policy</a>
             <a href="#">Terms of Service</a>
             <a href="#">Refund Policy</a>
@@ -309,7 +308,7 @@ function renderCartContents() {
       <div class="cart-empty">
         <div class="cart-empty-icon">🧺</div>
         <p>Your cart is empty.</p>
-        <a href="/frontend/pages/shop.html" class="btn btn-rose btn-sm mt-2" onclick="toggleCartDrawer()">Shop Now</a>
+        <a href="/pages/shop.html" class="btn btn-rose btn-sm mt-2" onclick="toggleCartDrawer()">Shop Now</a>
       </div>`;
     footer.innerHTML = '';
     return;
@@ -353,8 +352,8 @@ function renderCartContents() {
       <span>Total</span><span class="cart-total-price">₹${total.toFixed(2)}</span>
     </div>
     <div class="cart-checkout-btns">
-      <a href="/frontend/pages/checkout.html" class="btn btn-rose w-full" onclick="toggleCartDrawer()">Proceed to Checkout →</a>
-      <a href="https://wa.me/919000000000?text=${encodeURIComponent('Hi! I want to place an order:\n' + items.map(i=>`• ${i.name}: ${i.qty}${i.unit_label}`).join('\n') + `\nTotal: ₹${total.toFixed(2)}`)}"
+      <a href="/pages/checkout.html" class="btn btn-rose w-full" onclick="toggleCartDrawer()">Proceed to Checkout →</a>
+      <a href="https://wa.me/919949054899?text=${encodeURIComponent('Hi! I want to place an order:\n' + items.map(i=>`• ${i.name}: ${i.qty}${i.unit_label}`).join('\n') + `\nTotal: ₹${total.toFixed(2)}`)}"
          class="btn btn-whatsapp w-full" target="_blank">
         💬 Order via WhatsApp
       </a>

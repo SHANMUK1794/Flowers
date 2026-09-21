@@ -6,6 +6,7 @@
   <title>Login — FreshPetal Hyderabad</title>
   <meta name="description" content="Login to your FreshPetal account to manage subscriptions, track orders and customise your flower delivery." />
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg'><text y='32' font-size='32'>🌸</text></svg>" />
+  <link rel="stylesheet" href="/css/global.css" />
   <link rel="stylesheet" href="../css/global.css" />
 </head>
 <body>
@@ -42,13 +43,16 @@
           Continue with Google
         </button>
 
-        <div class="or-divider">or sign in with email</div>
+        <div class="or-divider">or sign in with email or mobile</div>
 
         <!-- Login Form -->
         <form id="login-form" onsubmit="handleLogin(event)">
           <div class="form-group">
-            <label class="form-label" for="email">Email Address</label>
-            <input type="email" class="form-control" id="email" name="email" placeholder="you@example.com" required autocomplete="email" />
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
+              <label class="form-label" for="email" style="margin-bottom:0;">Email or Mobile Number</label>
+              <span style="font-size:0.75rem;color:var(--text-muted);">Admin: 9949054899</span>
+            </div>
+            <input type="text" class="form-control" id="email" name="email" placeholder="Email or 10-digit mobile (e.g. 9949054899)" required autocomplete="username" />
             <div class="form-error" id="err-email"></div>
           </div>
 
@@ -84,7 +88,7 @@
     </div>
   </div>
 
-  <script src="../js/app.js"></script>
+  <script src="/js/app.js"></script>
   <script>
     // Redirect if already logged in
     if (Auth.isLoggedIn()) window.location.href = 'dashboard.html';
@@ -105,13 +109,30 @@
       btn.textContent = 'Signing in...';
       errGeneral.style.display = 'none';
 
-      const email    = document.getElementById('email').value.trim();
+      let identifier = document.getElementById('email').value.trim();
       const password = document.getElementById('password').value;
 
+      // Normalize phone number if entered with spaces, dashes, or +91
+      const cleaned = identifier.replace(/[\s\-\+]/g, '');
+      if (/^91[6-9]\d{9}$/.test(cleaned)) {
+        identifier = cleaned.slice(2);
+      } else if (/^[6-9]\d{9}$/.test(cleaned)) {
+        identifier = cleaned;
+      }
+
       try {
-        const data = await api.post('/auth/login', { email, password });
+        const data = await api.post('/auth/login', { email: identifier, password });
         Auth.setSession(data.token, data.user);
         showToast('Welcome back, ' + data.user.name.split(' ')[0] + '! 🌸', 'success');
+
+        if (data.user.role === 'admin') {
+          sessionStorage.setItem('fp_admin_auth', 'true');
+          sessionStorage.setItem('fp_admin_token', data.token);
+          sessionStorage.setItem('fp_admin_user', JSON.stringify(data.user));
+          setTimeout(() => window.location.href = 'admin.html', 700);
+          return;
+        }
+
         const redirect = new URLSearchParams(window.location.search).get('redirect') || 'dashboard.html';
         setTimeout(() => window.location.href = redirect, 700);
       } catch (err) {
