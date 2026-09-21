@@ -29,9 +29,9 @@ const getStats = async (_req, res) => {
       "SELECT COUNT(*) as total_societies, COUNT(*) FILTER (WHERE status = 'active') as active_societies FROM societies"
     );
 
-    // 6. Pending inquiries
+    // 6. Pending enquiries
     const inquiryQuery = await pool.query(
-      "SELECT COUNT(*) as pending_inquiries FROM contact_inquiries WHERE status = 'pending' OR status IS NULL"
+      "SELECT COUNT(*) as pending_inquiries FROM contact_enquiries WHERE status = 'new' OR status = 'pending' OR status IS NULL"
     );
 
     return sendSuccess(res, {
@@ -293,7 +293,7 @@ const createSociety = async (req, res) => {
 // GET /api/admin/inquiries
 const getInquiries = async (_req, res) => {
   try {
-    const { rows } = await pool.query('SELECT * FROM contact_inquiries ORDER BY created_at DESC');
+    const { rows } = await pool.query('SELECT * FROM contact_enquiries ORDER BY created_at DESC');
     return sendSuccess(res, { inquiries: rows });
   } catch (err) {
     console.error('getInquiries error:', err);

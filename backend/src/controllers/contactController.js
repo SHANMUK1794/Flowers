@@ -10,20 +10,18 @@ const submitInquiry = async (req, res) => {
   }
 
   try {
+    const fullMessage = [
+      message,
+      society_name ? `Society: ${society_name}` : null,
+      flat_count ? `Flats: ${flat_count}` : null,
+      event_date ? `Event Date: ${event_date}` : null
+    ].filter(Boolean).join(' | ');
+
     const { rows } = await pool.query(
-      `INSERT INTO contact_inquiries (name, phone, email, type, message, society_name, flat_count, event_date)
-       VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
+      `INSERT INTO contact_enquiries (name, email, phone, enquiry_type, message)
+       VALUES ($1, $2, $3, $4, $5)
        RETURNING id, created_at`,
-      [
-        name.trim(),
-        phone.trim(),
-        email ? email.trim() : null,
-        type,
-        message || null,
-        society_name || null,
-        flat_count ? parseInt(flat_count, 10) : null,
-        event_date || null
-      ]
+      [name.trim(), email ? email.trim() : null, phone.trim(), type, fullMessage || null]
     );
 
     return sendCreated(res, {
