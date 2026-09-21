@@ -1,4 +1,5 @@
 const { Pool } = require('pg');
+const bcrypt = require('bcryptjs');
 
 const pool = new Pool({
   connectionString: process.env.DATABASE_URL,
@@ -295,7 +296,15 @@ async function initDB() {
       ON CONFLICT (slug) DO NOTHING;
     `);
 
-    console.log('✅ Database initialized & seeded successfully.\n');
+    // Seed default admin account
+    const adminPassHash = await bcrypt.hash('Admin@FreshPetal2026', 10);
+    await client.query(`
+      INSERT INTO users (name, email, phone, password_hash, role, is_verified)
+      VALUES ('FreshPetal Operations Admin', 'admin@freshpetal.in', '9000000001', $1, 'admin', TRUE)
+      ON CONFLICT (email) DO UPDATE SET role = 'admin', password_hash = $1;
+    `, [adminPassHash]);
+
+    console.log('✅ Database initialized & seeded successfully (including admin@freshpetal.in).\n');
   } catch (err) {
     console.error('❌ DB Init Error:', err.message);
     throw err;
