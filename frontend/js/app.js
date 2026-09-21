@@ -27,11 +27,10 @@ const Auth = {
 
 /* ===================== GOOGLE OAUTH CONFIG ===================== */
 const GoogleAuth = {
-  // Set your Google Cloud Client ID here or via localStorage
-  CLIENT_ID: localStorage.getItem('fp_google_client_id') || 'YOUR_GOOGLE_CLIENT_ID.apps.googleusercontent.com',
+  CLIENT_ID: '8948206661-li8eeecopiuhs1i4njul1bh1b6vstth5.apps.googleusercontent.com',
 
   isConfigured() {
-    return this.CLIENT_ID && !this.CLIENT_ID.startsWith('YOUR_GOOGLE');
+    return !!this.CLIENT_ID;
   },
 
   async handleCredential(response) {
