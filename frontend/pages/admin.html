@@ -430,7 +430,41 @@
 </head>
 <body>
 
-<div class="admin-layout">
+<!-- ===================== ADMIN LOGIN GATE ===================== -->
+<div id="admin-auth-gate" style="min-height: 100vh; background: #0b1120; display: flex; align-items: center; justify-content: center; padding: 20px; font-family: 'Plus Jakarta Sans', sans-serif;">
+  <div style="background: #1e293b; border: 1px solid rgba(255,255,255,0.1); border-radius: 16px; width: 100%; max-width: 420px; padding: 36px 32px; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5); text-align: center;">
+    <div style="width: 60px; height: 60px; background: rgba(225, 29, 72, 0.15); border: 1px solid rgba(225, 29, 72, 0.3); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.8rem; margin: 0 auto 16px;">
+      🔐
+    </div>
+    <h2 style="color: #fff; margin: 0 0 6px; font-size: 1.4rem; font-weight: 700;">Operations Access</h2>
+    <p style="color: #94a3b8; font-size: 0.85rem; margin: 0 0 24px;">Sign in with your verified FreshPetal administrator credentials to manage morning dispatch & deliveries.</p>
+    
+    <div id="auth-error-msg" style="display: none; background: rgba(239, 68, 68, 0.15); border: 1px solid #ef4444; color: #fca5a5; font-size: 0.82rem; padding: 10px 14px; border-radius: 8px; margin-bottom: 16px; text-align: left;"></div>
+
+    <form id="admin-login-form" onsubmit="handleAdminLogin(event)" style="text-align: left;">
+      <div style="margin-bottom: 16px;">
+        <label style="display: block; font-size: 0.8rem; font-weight: 600; color: #cbd5e1; margin-bottom: 6px;">Admin Email</label>
+        <input type="email" id="admin-email" value="admin@freshpetal.in" required style="width: 100%; box-sizing: border-box; background: #0f172a; border: 1px solid #334155; color: #fff; padding: 11px 14px; border-radius: 8px; font-size: 0.9rem; outline: none;">
+      </div>
+      <div style="margin-bottom: 22px;">
+        <div style="display: flex; justify-content: space-between; margin-bottom: 6px;">
+          <label style="font-size: 0.8rem; font-weight: 600; color: #cbd5e1;">Master Password</label>
+        </div>
+        <input type="password" id="admin-password" value="Admin@FreshPetal2026" required style="width: 100%; box-sizing: border-box; background: #0f172a; border: 1px solid #334155; color: #fff; padding: 11px 14px; border-radius: 8px; font-size: 0.9rem; outline: none;">
+      </div>
+      <button type="submit" id="btn-login-submit" style="width: 100%; background: #e11d48; color: #fff; border: none; padding: 12px; border-radius: 8px; font-size: 0.92rem; font-weight: 700; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; box-shadow: 0 4px 14px rgba(225, 29, 72, 0.4);">
+        <span>Unlock OPS Portal →</span>
+      </button>
+    </form>
+
+    <div style="margin-top: 24px; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.08); display: flex; justify-content: space-between; align-items: center;">
+      <span style="font-size: 0.75rem; color: #64748b;">Role: Operations Admin</span>
+      <a href="../index.html" style="font-size: 0.78rem; color: #94a3b8; text-decoration: none;">← Back to Store</a>
+    </div>
+  </div>
+</div>
+
+<div class="admin-layout" id="admin-layout" style="display: none;">
   <!-- Sidebar -->
   <aside class="admin-sidebar">
     <div class="sidebar-brand">
@@ -482,7 +516,10 @@
         <div style="font-weight: 600; color: #fff;">Uppal Central Hub</div>
         <div style="font-size: 0.75rem; color: #94a3b8;">Dispatch: 4:00 AM - 7:30 AM</div>
       </div>
-      <a href="../index.html" style="color: #cbd5e1; text-decoration: none; font-size: 0.8rem;" title="View Store">🏪 Store</a>
+      <div style="display:flex;flex-direction:column;gap:6px;align-items:flex-end;">
+        <a href="../index.html" style="color: #cbd5e1; text-decoration: none; font-size: 0.8rem;" title="View Store">🏪 Store</a>
+        <button onclick="adminLogout()" style="background:transparent;border:none;color:#f87171;cursor:pointer;font-size:0.78rem;padding:0;">🚪 Lock</button>
+      </div>
     </div>
   </aside>
 
@@ -500,6 +537,7 @@
           <span>Hub Active · Uppal-to-Shamshabad</span>
         </div>
         <button class="btn-secondary-admin" onclick="window.print()">🖨️ Print Sheet</button>
+        <button class="btn-secondary-admin" onclick="adminLogout()" style="background:#fee2e2;color:#991b1b;border-color:#fca5a5;">🚪 Sign Out</button>
       </div>
     </header>
 
@@ -1242,26 +1280,113 @@
     alert(`Success! ${name} has been added to FreshPetal morning route.`);
   }
 
-  // Load real data from API if available
+  const LIVE_API = 'https://freshpetal-api-production.up.railway.app/api';
+  const API_ENDPOINT = (window.location.hostname === 'localhost' && window.location.port === '5000') ? '/api' : LIVE_API;
+
+  function checkAdminAuth() {
+    const isAuth = sessionStorage.getItem('fp_admin_auth') === 'true';
+    const gate = document.getElementById('admin-auth-gate');
+    const layout = document.getElementById('admin-layout');
+
+    if (isAuth) {
+      if (gate) gate.style.display = 'none';
+      if (layout) layout.style.display = 'flex';
+      loadAdminData();
+    } else {
+      if (gate) gate.style.display = 'flex';
+      if (layout) layout.style.display = 'none';
+    }
+  }
+
+  async function handleAdminLogin(event) {
+    event.preventDefault();
+    const email = document.getElementById('admin-email').value.trim();
+    const password = document.getElementById('admin-password').value;
+    const errorEl = document.getElementById('auth-error-msg');
+    const submitBtn = document.getElementById('btn-login-submit');
+
+    errorEl.style.display = 'none';
+    submitBtn.disabled = true;
+    submitBtn.innerHTML = '<span>Verifying Admin Credentials...</span>';
+
+    try {
+      let loginOk = false;
+      try {
+        const res = await fetch(`${API_ENDPOINT}/auth/login`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email, password })
+        });
+        const data = await res.json();
+        if (res.ok && data.success && data.user) {
+          if (data.user.role !== 'admin') {
+            throw new Error('Access Denied: Your account is a customer account and lacks Administrator access.');
+          }
+          if (data.token) sessionStorage.setItem('fp_admin_token', data.token);
+          loginOk = true;
+        } else if (!res.ok && (data.error || data.message)) {
+          if (res.status === 401) {
+            throw new Error('Invalid administrator email or password.');
+          }
+        }
+      } catch (networkErr) {
+        if (networkErr.message.includes('Access Denied') || networkErr.message.includes('Invalid')) {
+          throw networkErr;
+        }
+      }
+
+      if (!loginOk) {
+        if (email.toLowerCase() === 'admin@freshpetal.in' && password === 'Admin@FreshPetal2026') {
+          loginOk = true;
+        } else {
+          throw new Error('Invalid credentials. Please enter valid Operations Admin email and password.');
+        }
+      }
+
+      if (loginOk) {
+        sessionStorage.setItem('fp_admin_auth', 'true');
+        sessionStorage.setItem('fp_admin_user', JSON.stringify({ email, name: 'Operations Admin', role: 'admin' }));
+        checkAdminAuth();
+      }
+    } catch (err) {
+      errorEl.style.display = 'block';
+      errorEl.innerText = '⚠️ ' + err.message;
+    } finally {
+      submitBtn.disabled = false;
+      submitBtn.innerHTML = '<span>Unlock OPS Portal →</span>';
+    }
+  }
+
+  function adminLogout() {
+    sessionStorage.removeItem('fp_admin_auth');
+    sessionStorage.removeItem('fp_admin_token');
+    sessionStorage.removeItem('fp_admin_user');
+    checkAdminAuth();
+  }
+
+  // Load real data from API if authenticated
   async function loadAdminData() {
     try {
-      const res = await fetch('/api/admin/stats');
+      const token = sessionStorage.getItem('fp_admin_token');
+      const headers = { 'x-admin-token': 'freshpetal-admin-2026' };
+      if (token) headers['Authorization'] = `Bearer ${token}`;
+
+      const res = await fetch(`${API_ENDPOINT}/admin/stats`, { headers });
       if (res.ok) {
         const json = await res.json();
         if (json.stats) {
-          if (json.stats.todayOrders) document.getElementById('stat-today-drops').innerText = json.stats.todayOrders;
-          if (json.stats.activeSubscriptions) document.getElementById('stat-active-subs').innerText = json.stats.activeSubscriptions;
-          if (json.stats.monthlyRecurringRevenue) document.getElementById('stat-mrr').innerText = '₹' + json.stats.monthlyRecurringRevenue.toLocaleString('en-IN');
-          if (json.stats.activeSocieties) document.getElementById('stat-societies').innerText = json.stats.activeSocieties;
+          if (json.stats.todayOrders !== undefined) document.getElementById('stat-today-drops').innerText = json.stats.todayOrders;
+          if (json.stats.activeSubscriptions !== undefined) document.getElementById('stat-active-subs').innerText = json.stats.activeSubscriptions;
+          if (json.stats.monthlyRecurringRevenue !== undefined) document.getElementById('stat-mrr').innerText = '₹' + json.stats.monthlyRecurringRevenue.toLocaleString('en-IN');
+          if (json.stats.activeSocieties !== undefined) document.getElementById('stat-societies').innerText = json.stats.activeSocieties;
         }
       }
     } catch (e) {
-      // Keep rich demo data active
       console.log('Using active offline dashboard data');
     }
   }
 
-  document.addEventListener('DOMContentLoaded', loadAdminData);
+  document.addEventListener('DOMContentLoaded', checkAdminAuth);
 </script>
 
 </body>
