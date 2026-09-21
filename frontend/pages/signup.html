@@ -147,7 +147,7 @@
     </div>
   </div>
 
-  <script src="/js/app.js"></script>
+  <script src="/js/app.js?v=20260922_auth2"></script>
   <script>
     if (Auth.isLoggedIn()) window.location.href = 'dashboard.html';
     hideLoader();
@@ -246,7 +246,11 @@
     }
 
     function googleSignUp() {
-      GoogleAuth.promptLogin();
+      if (window.GoogleAuth) {
+        window.GoogleAuth.promptLogin();
+      } else {
+        showToast('Initializing Google Sign-In... please click again.', 'info');
+      }
     }
 
     function togglePwd(id) {
@@ -255,9 +259,9 @@
     }
 
     loadSocieties();
-    window.addEventListener('DOMContentLoaded', () => {
-      GoogleAuth.init('google-btn-container-signup');
-    });
+    if (window.GoogleAuth) {
+      window.GoogleAuth.init('google-btn-container-signup');
+    }
   </script>
 </body>
 </html>

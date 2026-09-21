@@ -30,7 +30,7 @@ const GoogleAuth = {
   CLIENT_ID: '8948206661-li8eeecopiuhs1i4njul1bh1b6vstth5.apps.googleusercontent.com',
 
   isConfigured() {
-    return !!this.CLIENT_ID;
+    return !!this.CLIENT_ID && !this.CLIENT_ID.startsWith('YOUR_GOOGLE');
   },
 
   async handleCredential(response) {
@@ -57,58 +57,75 @@ const GoogleAuth = {
   },
 
   init(containerId) {
-    if (typeof google === 'undefined' || !google.accounts) {
-      setTimeout(() => this.init(containerId), 250);
-      return;
-    }
+    const doInit = () => {
+      if (typeof google === 'undefined' || !google.accounts || !google.accounts.id) {
+        setTimeout(doInit, 200);
+        return;
+      }
 
-    if (!this.isConfigured()) return;
+      if (!this.isConfigured()) return;
 
-    google.accounts.id.initialize({
-      client_id: this.CLIENT_ID,
-      callback: (res) => this.handleCredential(res),
-      auto_select: false
-    });
+      try {
+        google.accounts.id.initialize({
+          client_id: this.CLIENT_ID,
+          callback: (res) => this.handleCredential(res),
+          auto_select: false,
+          cancel_on_tap_outside: true
+        });
 
-    const container = document.getElementById(containerId);
-    if (container) {
-      container.innerHTML = '';
-      google.accounts.id.renderButton(container, {
-        theme: 'outline',
-        size: 'large',
-        width: 320,
-        text: 'continue_with',
-        shape: 'pill'
-      });
+        const container = document.getElementById(containerId);
+        if (container) {
+          container.innerHTML = '';
+          google.accounts.id.renderButton(container, {
+            theme: 'outline',
+            size: 'large',
+            width: 320,
+            text: 'continue_with',
+            shape: 'pill',
+            logo_alignment: 'center'
+          });
+
+          // Once official button renders, hide custom button to avoid duplicate
+          const customBtn = document.getElementById('btn-google');
+          if (customBtn) customBtn.style.display = 'none';
+        }
+      } catch (err) {
+        console.error('Error rendering Google button:', err);
+      }
+    };
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', doInit);
+    } else {
+      doInit();
     }
   },
 
   promptLogin() {
     if (!this.isConfigured()) {
-      const cid = prompt(
-        '🌸 FreshPetal Google Sign-In Setup:\n\nPlease enter your Google Cloud OAuth Client ID:\n(e.g., 123456789-abcdef.apps.googleusercontent.com)\n\nOr create one at https://console.cloud.google.com/apis/credentials'
-      );
-      if (cid && cid.trim()) {
-        localStorage.setItem('fp_google_client_id', cid.trim());
-        this.CLIENT_ID = cid.trim();
-        showToast('Google Client ID saved! Initializing Google Sign-In...', 'success');
-        this.init('google-btn-container');
-        setTimeout(() => this.promptLogin(), 500);
-      }
+      showToast('Google Client ID is not configured.', 'error');
       return;
     }
 
-    if (typeof google !== 'undefined' && google.accounts) {
+    if (typeof google !== 'undefined' && google.accounts && google.accounts.id) {
       google.accounts.id.initialize({
         client_id: this.CLIENT_ID,
-        callback: (res) => this.handleCredential(res)
+        callback: (res) => this.handleCredential(res),
+        auto_select: false
       });
-      google.accounts.id.prompt();
+      google.accounts.id.prompt((notification) => {
+        if (notification.isNotDisplayed()) {
+          console.warn('Google One Tap suppressed:', notification.getNotDisplayedReason());
+        }
+      });
     } else {
-      showToast('Loading Google identity service...', 'info');
+      showToast('Loading Google identity service... please try in a moment.', 'info');
     }
   }
 };
+
+// Expose globally to window
+window.GoogleAuth = GoogleAuth;
 
 /* ===================== API WRAPPER ===================== */
 const api = {

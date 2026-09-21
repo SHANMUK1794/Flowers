@@ -92,7 +92,7 @@
     </div>
   </div>
 
-  <script src="/js/app.js"></script>
+  <script src="/js/app.js?v=20260922_auth2"></script>
   <script>
     // Redirect if already logged in
     if (Auth.isLoggedIn()) window.location.href = 'dashboard.html';
@@ -148,13 +148,16 @@
     }
 
     function googleSignIn() {
-      GoogleAuth.promptLogin();
+      if (window.GoogleAuth) {
+        window.GoogleAuth.promptLogin();
+      } else {
+        showToast('Initializing Google Sign-In... please click again.', 'info');
+      }
     }
 
-    // Initialize Google Button when library is ready
-    window.addEventListener('DOMContentLoaded', () => {
-      GoogleAuth.init('google-btn-container');
-    });
+    if (window.GoogleAuth) {
+      window.GoogleAuth.init('google-btn-container');
+    }
   </script>
 </body>
 </html>
