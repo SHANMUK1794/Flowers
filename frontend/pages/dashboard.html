@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>My Dashboard — FreshPetal</title>
+  <meta name="description" content="Manage your FreshPetal subscriptions, view order history and update your delivery preferences." />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg'><text y='32' font-size='32'>🌸</text></svg>" />
+  <link rel="stylesheet" href="../css/global.css" />
+  <style>
+    .sub-card-dash {
+      background:var(--white);
+      border:1px solid var(--border-light);
+      border-radius:var(--radius-md);
+      padding:24px;
+      display:flex;
+      align-items:flex-start;
+      gap:20px;
+      transition:var(--transition);
+    }
+    .sub-card-dash:hover { box-shadow:var(--shadow-sm); }
+    .sub-status-badge { padding:4px 12px; border-radius:var(--radius-full); font-size:0.72rem; font-weight:800; font-family:var(--font-head); }
+    .sub-status-badge.active { background:#DCFCE7; color:#166534; }
+    .sub-status-badge.paused { background:var(--saffron-pale); color:var(--saffron); }
+    .sub-status-badge.cancelled { background:#FEE2E2; color:#DC2626; }
+    .dash-tab { display:none; }
+    .dash-tab.active { display:block; }
+  </style>
+</head>
+<body>
+  <div id="page-loader" class="page-loader"><div class="loader-petal"></div></div>
+  <div id="header-mount"></div>
+
+  <section style="background:linear-gradient(135deg,var(--cream),var(--blush));padding:40px 0 0;">
+    <div class="container">
+      <h1 style="font-size:1.6rem;font-weight:800;">My Dashboard</h1>
+      <p style="color:var(--text-muted);margin-top:4px;" id="dash-greeting">Good morning! 🌸</p>
+    </div>
+  </section>
+
+  <section style="padding:30px 0 80px;">
+    <div class="container">
+      <div class="dashboard-layout">
+        <!-- Sidebar -->
+        <aside class="dash-sidebar">
+          <div class="dash-user-card" id="dash-user-card">
+            <div class="dash-avatar" id="dash-avatar">🌸</div>
+            <div class="dash-username" id="dash-username">Loading...</div>
+            <div class="dash-society" id="dash-society">—</div>
+          </div>
+          <nav class="dash-nav">
+            <div class="dash-nav-item active" onclick="showTab('overview', this)"><span class="dash-nav-icon">📊</span> Overview</div>
+            <div class="dash-nav-item" onclick="showTab('subscriptions', this)"><span class="dash-nav-icon">📦</span> Subscriptions</div>
+            <div class="dash-nav-item" onclick="showTab('orders', this)"><span class="dash-nav-icon">🛒</span> Order History</div>
+            <div class="dash-nav-item" onclick="showTab('profile', this)"><span class="dash-nav-icon">👤</span> My Profile</div>
+            <div class="dash-nav-item" onclick="Auth.logout()"><span class="dash-nav-icon">🚪</span> Sign Out</div>
+          </nav>
+        </aside>
+
+        <!-- Content -->
+        <div class="dash-content">
+
+          <!-- OVERVIEW -->
+          <div class="dash-tab active" id="tab-overview">
+            <div class="dash-stats">
+              <div class="stat-card">
+                <div class="stat-icon">📦</div>
+                <div class="stat-val" id="stat-subs">—</div>
+                <div class="stat-label">Active Subscriptions</div>
+              </div>
+              <div class="stat-card">
+                <div class="stat-icon">🛒</div>
+                <div class="stat-val" id="stat-orders">—</div>
+                <div class="stat-label">Total Orders</div>
+              </div>
+              <div class="stat-card">
+                <div class="stat-icon">🚚</div>
+                <div class="stat-val">6 AM</div>
+                <div class="stat-label">Next Delivery</div>
+              </div>
+            </div>
+
+            <div style="background:var(--sage-pale);border:1px solid var(--sage-light);border-radius:var(--radius-md);padding:20px;margin-bottom:24px;display:flex;align-items:center;gap:16px;">
+              <span style="font-size:2rem;">🌸</span>
+              <div>
+                <div style="font-family:var(--font-head);font-weight:800;color:var(--sage);">Tomorrow's delivery is on its way!</div>
+                <div style="font-size:0.88rem;color:var(--sage);">Fresh flowers will be at your door by 6:00 AM</div>
+              </div>
+            </div>
+
+            <div class="dash-section-title">Recent Orders</div>
+            <div id="overview-orders">
+              <div style="text-align:center;padding:40px;color:var(--text-muted);">Loading orders...</div>
+            </div>
+
+            <div style="margin-top:24px;display:flex;gap:12px;flex-wrap:wrap;">
+              <a href="shop.html" class="btn btn-rose">🌸 Shop Flowers</a>
+              <a href="subscriptions.html" class="btn btn-rose-outline">📦 Manage Plans</a>
+              <a href="events.html" class="btn btn-sage">🎊 Book Event</a>
+            </div>
+          </div>
+
+          <!-- SUBSCRIPTIONS TAB -->
+          <div class="dash-tab" id="tab-subscriptions">
+            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;">
+              <div class="dash-section-title" style="margin:0;">My Subscriptions</div>
+              <a href="subscriptions.html" class="btn btn-rose btn-sm">+ New Plan</a>
+            </div>
+            <div id="sub-list">
+              <div style="text-align:center;padding:40px;color:var(--text-muted);">Loading subscriptions...</div>
+            </div>
+          </div>
+
+          <!-- ORDERS TAB -->
+          <div class="dash-tab" id="tab-orders">
+            <div class="dash-section-title">Order History</div>
+            <div id="orders-list">
+              <div style="text-align:center;padding:40px;color:var(--text-muted);">Loading orders...</div>
+            </div>
+          </div>
+
+          <!-- PROFILE TAB -->
+          <div class="dash-tab" id="tab-profile">
+            <div class="dash-section-title">My Profile</div>
+            <div style="background:white;border-radius:var(--radius-md);padding:28px;border:1px solid var(--border-light);">
+              <form id="profile-form" onsubmit="saveProfile(event)">
+                <div class="form-row-2">
+                  <div class="form-group">
+                    <label class="form-label">Full Name</label>
+                    <input type="text" class="form-control" id="p-name" />
+                  </div>
+                  <div class="form-group">
+                    <label class="form-label">Mobile Number</label>
+                    <input type="tel" class="form-control" id="p-phone" />
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Email</label>
+                  <input type="email" class="form-control" id="p-email" disabled style="opacity:0.6;" />
+                </div>
+                <div class="form-row-2">
+                  <div class="form-group">
+                    <label class="form-label">Tower / Block</label>
+                    <input type="text" class="form-control" id="p-tower" />
+                  </div>
+                  <div class="form-group">
+                    <label class="form-label">Flat / Door No.</label>
+                    <input type="text" class="form-control" id="p-apt" />
+                  </div>
+                </div>
+                <button type="submit" class="btn btn-rose">Save Changes →</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div id="footer-mount"></div>
+
+  <script src="../js/app.js"></script>
+  <script>
+    // Guard: must be logged in
+    if (!Auth.isLoggedIn()) window.location.href = 'login.html?redirect=dashboard.html';
+
+    function showTab(name, navItem) {
+      document.querySelectorAll('.dash-tab').forEach(t => t.classList.remove('active'));
+      document.querySelectorAll('.dash-nav-item').forEach(n => n.classList.remove('active'));
+      document.getElementById(`tab-${name}`).classList.add('active');
+      navItem.classList.add('active');
+    }
+
+    async function loadDashboard() {
+      // Load user
+      try {
+        const data = await api.get('/auth/me');
+        const user = data.user;
+        const initials = user.name.split(' ').map(n => n[0]).join('').substring(0,2).toUpperCase();
+        document.getElementById('dash-avatar').textContent = initials;
+        document.getElementById('dash-username').textContent = user.name;
+        document.getElementById('dash-society').textContent = user.society_name ? `${user.society_name}, ${user.society_area || ''}` : 'No society linked';
+        document.getElementById('p-name').value  = user.name || '';
+        document.getElementById('p-phone').value = user.phone || '';
+        document.getElementById('p-email').value = user.email || '';
+        document.getElementById('p-tower').value = user.tower || '';
+        document.getElementById('p-apt').value   = user.apt_number || '';
+
+        const hour = new Date().getHours();
+        const greet = hour < 12 ? 'Good morning' : hour < 17 ? 'Good afternoon' : 'Good evening';
+        document.getElementById('dash-greeting').textContent = `${greet}, ${user.name.split(' ')[0]}! 🌸`;
+      } catch { /* offline mode */ }
+
+      // Load subscriptions
+      await loadSubs();
+      // Load orders
+      await loadOrders();
+    }
+
+    async function loadSubs() {
+      try {
+        const data = await api.get('/subscriptions');
+        const subs = data.subscriptions || [];
+        document.getElementById('stat-subs').textContent = subs.filter(s => s.status === 'active').length;
+        renderSubs(subs);
+      } catch { renderSubs([]); }
+    }
+
+    function renderSubs(subs) {
+      const el = document.getElementById('sub-list');
+      if (!subs.length) {
+        el.innerHTML = `<div style="text-align:center;padding:60px;border:2px dashed var(--border);border-radius:var(--radius-md);">
+          <div style="font-size:3rem;margin-bottom:16px;">📦</div>
+          <p style="color:var(--text-muted);">No active subscriptions yet.</p>
+          <a href="subscriptions.html" class="btn btn-rose mt-2">Browse Plans →</a>
+        </div>`;
+        return;
+      }
+      el.innerHTML = subs.map(s => `
+        <div class="sub-card-dash" style="margin-bottom:16px;">
+          <div style="font-size:2rem;">${s.icon || '📦'}</div>
+          <div style="flex:1;">
+            <div style="display:flex;align-items:center;gap:10px;margin-bottom:6px;">
+              <strong style="font-family:var(--font-head);">${s.package_name || 'Custom Plan'}</strong>
+              <span class="sub-status-badge ${s.status}">${s.status.charAt(0).toUpperCase() + s.status.slice(1)}</span>
+            </div>
+            <div style="font-size:0.85rem;color:var(--text-muted);">
+              ${s.frequency ? s.frequency.charAt(0).toUpperCase() + s.frequency.slice(1) : 'Custom'} · 
+              Started ${new Date(s.created_at).toLocaleDateString('en-IN', { day:'numeric', month:'short', year:'numeric' })}
+            </div>
+            ${s.monthly_price ? `<div style="font-family:var(--font-head);font-weight:800;color:var(--rose);margin-top:6px;">₹${s.monthly_price}/${s.frequency === 'daily' ? 'day' : s.frequency === 'weekly' ? 'week' : 'month'}</div>` : ''}
+          </div>
+          <div style="display:flex;gap:8px;flex-wrap:wrap;">
+            ${s.status === 'active'
+              ? `<button class="btn btn-sm btn-rose-outline" onclick="pauseSub(${s.id})">⏸️ Pause</button>`
+              : `<button class="btn btn-sm btn-sage" onclick="resumeSub(${s.id})">▶️ Resume</button>`}
+            <button class="btn btn-sm" style="border:1px solid #EF4444;color:#EF4444;border-radius:999px;padding:6px 14px;font-size:0.82rem;font-weight:700;cursor:pointer;background:transparent;" onclick="cancelSub(${s.id})">Cancel</button>
+          </div>
+        </div>`).join('');
+    }
+
+    async function pauseSub(id) {
+      const until = prompt('Pause until (leave empty for indefinite): [YYYY-MM-DD]');
+      try {
+        await api.patch(`/subscriptions/${id}/pause`, { pause_until: until || null });
+        showToast('⏸️ Subscription paused.', 'success');
+        loadSubs();
+      } catch (err) { showToast(err.message, 'error'); }
+    }
+
+    async function resumeSub(id) {
+      try {
+        await api.patch(`/subscriptions/${id}/resume`);
+        showToast('✅ Subscription resumed! Delivery from tomorrow.', 'success');
+        loadSubs();
+      } catch (err) { showToast(err.message, 'error'); }
+    }
+
+    async function cancelSub(id) {
+      if (!confirm('Are you sure you want to cancel this subscription?')) return;
+      try {
+        await api.patch(`/subscriptions/${id}/cancel`);
+        showToast('Subscription cancelled.', 'info');
+        loadSubs();
+      } catch (err) { showToast(err.message, 'error'); }
+    }
+
+    async function loadOrders() {
+      try {
+        const data = await api.get('/orders');
+        const orders = data.orders || [];
+        document.getElementById('stat-orders').textContent = orders.length;
+        renderOrders(orders, 'overview-orders', 3);
+        renderOrders(orders, 'orders-list', 999);
+      } catch { renderOrders([], 'overview-orders', 3); renderOrders([], 'orders-list', 999); }
+    }
+
+    function renderOrders(orders, elId, limit) {
+      const el = document.getElementById(elId);
+      if (!orders.length) {
+        el.innerHTML = `<div style="text-align:center;padding:30px;color:var(--text-muted);">No orders yet. <a href="shop.html" style="color:var(--rose);font-weight:700;">Shop now →</a></div>`;
+        return;
+      }
+      const statusColors = { pending:'#FEF9C3:#CA8A04', confirmed:'#DCFCE7:#166534', out_for_delivery:'#EDE9FE:#7C3AED', delivered:'#DCFCE7:#166534', cancelled:'#FEE2E2:#DC2626' };
+      const display = orders.slice(0, limit);
+      el.innerHTML = `<div style="overflow-x:auto;"><table class="order-table"><thead><tr><th>Order #</th><th>Items</th><th>Date</th><th>Total</th><th>Delivery</th><th>Status</th></tr></thead><tbody>
+        ${display.map(o => {
+          const [bg, color] = (statusColors[o.status] || '#F3F4F6:#374151').split(':');
+          const items = Array.isArray(o.items) ? o.items.filter(Boolean).map(i => i.name).join(', ') : '—';
+          return `<tr>
+            <td style="font-weight:700;font-family:var(--font-head);">#${o.id}</td>
+            <td style="max-width:180px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:0.82rem;">${items}</td>
+            <td>${new Date(o.created_at).toLocaleDateString('en-IN', { day:'numeric', month:'short' })}</td>
+            <td style="font-weight:700;">₹${parseFloat(o.total).toFixed(2)}</td>
+            <td>${parseFloat(o.delivery_charge) === 0 ? '<span style="color:var(--sage);font-weight:700;">FREE</span>' : `₹${o.delivery_charge}`}</td>
+            <td><span style="background:${bg};color:${color};padding:3px 10px;border-radius:999px;font-size:0.72rem;font-weight:800;font-family:var(--font-head);">${o.status.replace(/_/g,' ').toUpperCase()}</span></td>
+          </tr>`;
+        }).join('')}
+      </tbody></table></div>
+      ${orders.length > 3 && limit === 3 ? `<a href="#" onclick="showTab('orders', document.querySelector('[onclick*=orders]'))" style="font-size:0.85rem;color:var(--rose);font-weight:700;display:block;margin-top:12px;">View all ${orders.length} orders →</a>` : ''}`;
+    }
+
+    async function saveProfile(e) {
+      e.preventDefault();
+      try {
+        await api.patch('/auth/profile', {
+          name:       document.getElementById('p-name').value,
+          phone:      document.getElementById('p-phone').value,
+          tower:      document.getElementById('p-tower').value,
+          apt_number: document.getElementById('p-apt').value,
+        });
+        showToast('Profile updated! 🌸', 'success');
+      } catch (err) { showToast(err.message, 'error'); }
+    }
+
+    initPage();
+    loadDashboard();
+  </script>
+</body>
+</html>

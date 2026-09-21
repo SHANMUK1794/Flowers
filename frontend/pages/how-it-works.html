@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>How It Works — FreshPetal Hyderabad</title>
+  <meta name="description" content="Learn how FreshPetal delivers fresh flowers & pooja essentials to your Hyderabad apartment door every morning. Simple 4-step process." />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg'><text y='32' font-size='32'>🌸</text></svg>" />
+  <link rel="stylesheet" href="../css/global.css" />
+  <style>
+    .timeline { display:flex; flex-direction:column; gap:0; position:relative; }
+    .timeline::before { content:''; position:absolute; left:28px; top:0; bottom:0; width:3px; background:linear-gradient(to bottom, var(--rose), var(--sage)); border-radius:2px; }
+    .timeline-item { display:grid; grid-template-columns:56px 1fr; gap:24px; position:relative; padding-bottom:40px; }
+    .timeline-item:last-child { padding-bottom:0; }
+    .timeline-dot { width:56px; height:56px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:1.5rem; position:relative; z-index:1; flex-shrink:0; box-shadow:var(--shadow-sm); }
+    .timeline-content { padding-top:10px; }
+    .timeline-time { font-family:var(--font-head); font-size:0.78rem; font-weight:800; color:var(--rose); letter-spacing:.06em; text-transform:uppercase; margin-bottom:4px; }
+    .timeline-title { font-size:1.15rem; font-weight:800; font-family:var(--font-head); margin-bottom:8px; }
+    .timeline-desc { font-size:0.9rem; color:var(--text-muted); line-height:1.65; }
+  </style>
+</head>
+<body>
+  <div id="page-loader" class="page-loader"><div class="loader-petal"></div></div>
+  <div id="header-mount"></div>
+
+  <!-- Hero -->
+  <section style="background:linear-gradient(135deg,var(--cream),var(--blush));padding:70px 0;">
+    <div class="container text-center">
+      <span class="section-kicker">Simple Process</span>
+      <h1>How FreshPetal Works</h1>
+      <p style="color:var(--text-muted);font-size:1.05rem;max-width:520px;margin:16px auto 0;">
+        From your screen to your doorstep — in 4 simple steps. Fresh blooms before 6 AM, every morning.
+      </p>
+    </div>
+  </section>
+
+  <!-- Steps Overview -->
+  <section class="section">
+    <div class="container">
+      <div class="steps-grid">
+        <div class="step-card">
+          <div class="step-num">1</div>
+          <div class="step-icon">📱</div>
+          <div class="step-title">Choose Your Flowers</div>
+          <div class="step-desc">Pick individual flowers by weight (from 50g) or select a daily/weekly/monthly package. Price is calculated live.</div>
+        </div>
+        <div class="step-card">
+          <div class="step-num">2</div>
+          <div class="step-icon">✅</div>
+          <div class="step-title">Confirm & Pay</div>
+          <div class="step-desc">Pay via UPI, Razorpay, or COD. Package subscribers get FREE delivery always. One-time orders above ₹299 also get free delivery.</div>
+        </div>
+        <div class="step-card">
+          <div class="step-num">3</div>
+          <div class="step-icon">🌿</div>
+          <div class="step-title">We Prep at Dawn</div>
+          <div class="step-desc">Our team reaches the wholesale market by 4 AM, handpicks the freshest flowers and packs each order individually.</div>
+        </div>
+        <div class="step-card">
+          <div class="step-num">4</div>
+          <div class="step-icon">🚪</div>
+          <div class="step-title">Doorstep by 6 AM</div>
+          <div class="step-desc">Your rider covers the cluster route. Flowers are placed at your door or with security before sunrise — ready for morning pooja.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Detailed Timeline -->
+  <section class="section" style="background:var(--blush);">
+    <div class="container" style="max-width:800px;">
+      <div class="text-center" style="margin-bottom:50px;">
+        <span class="section-kicker">Behind the Scenes</span>
+        <h2>A Day in the Life of a FreshPetal Order</h2>
+      </div>
+      <div class="timeline">
+        <div class="timeline-item">
+          <div class="timeline-dot" style="background:linear-gradient(135deg,var(--rose),var(--rose-light));">🌙</div>
+          <div class="timeline-content">
+            <div class="timeline-time">Previous Evening — by 8 PM</div>
+            <div class="timeline-title">Orders Cut Off</div>
+            <div class="timeline-desc">All orders placed before 8 PM are confirmed for next-morning delivery. Our system groups them by cluster area and generates a picking list automatically.</div>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-dot" style="background:linear-gradient(135deg,#7C3AED,#A855F7);">🌃</div>
+          <div class="timeline-content">
+            <div class="timeline-time">3:30 AM</div>
+            <div class="timeline-title">Team Heads to the Wholesale Market</div>
+            <div class="timeline-desc">Our sourcing team reaches Uppal Wholesale Flower Market and Begum Bazar by 3:30–4:00 AM — when the freshest stock arrives from farms in Coimbatore, Bangalore & local Ranga Reddy growers.</div>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-dot" style="background:linear-gradient(135deg,var(--saffron),#FBB040);">🌅</div>
+          <div class="timeline-content">
+            <div class="timeline-time">4:00 AM – 5:00 AM</div>
+            <div class="timeline-title">Picking, Packing & Weighing</div>
+            <div class="timeline-desc">Each order is individually weighed (50g accuracy), packed in fresh moisture bags, and labeled with the customer's flat number. Pooja essentials (coconut, agarbatti, etc.) are added as a bundle.</div>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-dot" style="background:linear-gradient(135deg,var(--sage),var(--sage-light));">🛵</div>
+          <div class="timeline-content">
+            <div class="timeline-time">5:00 AM – 7:00 AM</div>
+            <div class="timeline-title">Cluster Delivery Route</div>
+            <div class="timeline-desc">Riders depart with sorted bags for each cluster. Each rider covers 8–12 societies on a tight loop — up to 4 deliveries per minute during the route. Flowers left at your door, letterbox, or with the society guard desk.</div>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-dot" style="background:linear-gradient(135deg,var(--rose),var(--sage));">🌸</div>
+          <div class="timeline-content">
+            <div class="timeline-time">By 6:00–7:00 AM</div>
+            <div class="timeline-title">Fresh Flowers at Your Door</div>
+            <div class="timeline-desc">You open your door to find your fragrant blooms waiting. Still dewy-fresh from the market. Your mandir is ready, your morning pooja can begin — no trip needed.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Delivery Rules Clarified -->
+  <section class="section">
+    <div class="container" style="max-width:900px;">
+      <div class="text-center" style="margin-bottom:40px;">
+        <span class="section-kicker">Delivery Charges</span>
+        <h2>Simple, Transparent Pricing</h2>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:20px;">
+        <div style="background:var(--sage-pale);border:2px solid var(--sage-light);border-radius:var(--radius-md);padding:28px;text-align:center;">
+          <div style="font-size:2.5rem;margin-bottom:12px;">📦</div>
+          <div style="font-family:var(--font-head);font-size:1.1rem;font-weight:800;color:var(--sage);margin-bottom:8px;">Subscription Package</div>
+          <div style="font-size:2.2rem;font-weight:900;font-family:var(--font-head);color:var(--sage);">₹0</div>
+          <div style="font-size:0.85rem;color:var(--sage);margin-top:6px;">FREE delivery, every day, always</div>
+        </div>
+        <div style="background:var(--blush);border:2px solid var(--blush-mid);border-radius:var(--radius-md);padding:28px;text-align:center;">
+          <div style="font-size:2.5rem;margin-bottom:12px;">🛒</div>
+          <div style="font-family:var(--font-head);font-size:1.1rem;font-weight:800;color:var(--rose);margin-bottom:8px;">One-Time Order</div>
+          <div style="font-size:2.2rem;font-weight:900;font-family:var(--font-head);color:var(--rose);">₹40</div>
+          <div style="font-size:0.85rem;color:var(--rose);margin-top:6px;">Waived if order total ≥ ₹299</div>
+        </div>
+        <div style="background:var(--saffron-pale);border:2px solid var(--saffron-light);border-radius:var(--radius-md);padding:28px;text-align:center;">
+          <div style="font-size:2.5rem;margin-bottom:12px;">🎊</div>
+          <div style="font-family:var(--font-head);font-size:1.1rem;font-weight:800;color:var(--saffron);margin-bottom:8px;">Event / Bulk Order</div>
+          <div style="font-size:2.2rem;font-weight:900;font-family:var(--font-head);color:var(--saffron);">Free</div>
+          <div style="font-size:0.85rem;color:var(--saffron);margin-top:6px;">On orders above ₹499</div>
+        </div>
+      </div>
+
+      <!-- Savings Calculator -->
+      <div class="card" style="padding:32px;margin-top:40px;text-align:center;">
+        <h3 style="margin-bottom:8px;">💡 Should You Subscribe?</h3>
+        <p style="color:var(--text-muted);margin-bottom:24px;font-size:0.9rem;">See how much you save with a subscription vs ordering one-time</p>
+        <div style="display:flex;align-items:center;justify-content:center;gap:16px;flex-wrap:wrap;margin-bottom:24px;">
+          <label style="font-family:var(--font-head);font-weight:700;font-size:0.9rem;">Orders per week:</label>
+          <select class="form-control" id="calc-freq" style="width:auto;" onchange="calcSavings()">
+            <option value="7">Daily (7 days/week)</option>
+            <option value="5">5 days/week</option>
+            <option value="3">3 days/week</option>
+            <option value="1">Once a week</option>
+          </select>
+          <label style="font-family:var(--font-head);font-weight:700;font-size:0.9rem;">Avg. order size:</label>
+          <select class="form-control" id="calc-size" style="width:auto;" onchange="calcSavings()">
+            <option value="49">₹49 (small)</option>
+            <option value="79">₹79 (medium)</option>
+            <option value="150">₹150 (large)</option>
+          </select>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;" id="calc-result">
+          <div style="background:var(--blush);border-radius:var(--radius-md);padding:20px;">
+            <div style="font-size:0.8rem;font-family:var(--font-head);font-weight:700;color:var(--rose);margin-bottom:4px;">WITHOUT SUBSCRIPTION / month</div>
+            <div style="font-size:2rem;font-weight:900;font-family:var(--font-head);color:var(--rose);" id="without-sub">₹1,736</div>
+            <div style="font-size:0.78rem;color:var(--text-muted);">Including ₹40 delivery each time</div>
+          </div>
+          <div style="background:var(--sage-pale);border-radius:var(--radius-md);padding:20px;">
+            <div style="font-size:0.8rem;font-family:var(--font-head);font-weight:700;color:var(--sage);margin-bottom:4px;">WITH SUBSCRIPTION / month</div>
+            <div style="font-size:2rem;font-weight:900;font-family:var(--font-head);color:var(--sage);" id="with-sub">₹1,099</div>
+            <div style="font-size:0.78rem;color:var(--sage);font-weight:700;" id="savings-label">Save ₹637 every month!</div>
+          </div>
+        </div>
+        <a href="subscriptions.html" class="btn btn-rose btn-lg mt-3">View Subscription Plans →</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ snippet -->
+  <section class="section" style="background:var(--sage-pale);">
+    <div class="container" style="max-width:760px;">
+      <div class="text-center" style="margin-bottom:36px;">
+        <h2>Quick Answers</h2>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:14px;">
+        <div class="card" style="padding:20px;"><strong>Can I order individual flowers by weight?</strong> <p style="color:var(--text-muted);font-size:0.9rem;margin-top:6px;">Yes! Every flower is available from 50g. You set the quantity on the Shop page and price is shown live before adding to cart.</p></div>
+        <div class="card" style="padding:20px;"><strong>What happens if I miss the order cutoff?</strong> <p style="color:var(--text-muted);font-size:0.9rem;margin-top:6px;">Orders placed after 8 PM are scheduled for the day after tomorrow. You can also WhatsApp us for urgent same-day arrangements (subject to stock).</p></div>
+        <div class="card" style="padding:20px;"><strong>What if nobody is home for delivery?</strong> <p style="color:var(--text-muted);font-size:0.9rem;margin-top:6px;">We leave the flowers at your door or hand them to the security desk. You can also leave delivery instructions in your account settings.</p></div>
+        <div class="card" style="padding:20px;"><strong>Can I subscribe to a custom mix of flowers?</strong> <p style="color:var(--text-muted);font-size:0.9rem;margin-top:6px;">Absolutely! Use the Custom Plan Builder on the Subscriptions page to pick exactly which flowers and pooja items you want on your schedule.</p></div>
+      </div>
+      <div style="text-align:center;margin-top:32px;">
+        <a href="contact.html" class="btn btn-sage">💬 Ask Us Anything →</a>
+      </div>
+    </div>
+  </section>
+
+  <div id="footer-mount"></div>
+  <script src="../js/app.js"></script>
+  <script>
+    function calcSavings() {
+      const perWeek = parseInt(document.getElementById('calc-freq').value);
+      const size    = parseInt(document.getElementById('calc-size').value);
+      const perMonth = Math.round(perWeek * 4.33);
+      const withoutSub = perMonth * (size + 40);
+      // Subscription price: closest plan
+      const subPrice = size <= 49 ? 1099 : size <= 79 ? 1699 : 2199;
+      const savings = withoutSub - subPrice;
+      document.getElementById('without-sub').textContent = `₹${withoutSub.toLocaleString('en-IN')}`;
+      document.getElementById('with-sub').textContent    = `₹${subPrice.toLocaleString('en-IN')}`;
+      document.getElementById('savings-label').textContent = savings > 0 ? `Save ₹${savings.toLocaleString('en-IN')} every month!` : 'Great value!';
+    }
+    calcSavings();
+    initPage('how-it-works');
+  </script>
+</body>
+</html>

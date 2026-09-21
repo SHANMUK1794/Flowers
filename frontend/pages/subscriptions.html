@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Subscription Plans — FreshPetal Hyderabad</title>
+  <meta name="description" content="Daily, weekly and monthly flower & pooja subscription plans. Free delivery on all plans. Roses, banti, chamanti, coconut & all essentials from ₹49/day." />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg'><text y='32' font-size='32'>🌸</text></svg>" />
+  <link rel="stylesheet" href="../css/global.css" />
+  <style>
+    .compare-table { width:100%; border-collapse:collapse; margin-top:40px; }
+    .compare-table th, .compare-table td { padding:14px 16px; text-align:left; border-bottom:1px solid var(--border-light); }
+    .compare-table th { background:var(--blush); font-family:var(--font-head); font-size:0.8rem; font-weight:800; text-transform:uppercase; letter-spacing:.06em; color:var(--rose); }
+    .compare-table td { font-size:0.88rem; }
+    .compare-table tr:hover td { background:var(--cream); }
+    .check { color:var(--sage); font-weight:800; }
+    .cross { color:#EF4444; }
+    .custom-builder { background:white; border-radius:var(--radius-lg); padding:36px; border:2px dashed var(--border); margin-top:40px; }
+    .faq-item { border-bottom:1px solid var(--border-light); padding:20px 0; cursor:pointer; }
+    .faq-question { display:flex; align-items:center; justify-content:space-between; font-family:var(--font-head); font-weight:700; font-size:0.95rem; }
+    .faq-answer { color:var(--text-muted); font-size:0.9rem; margin-top:12px; display:none; line-height:1.65; }
+    .faq-item.open .faq-answer { display:block; }
+    .faq-item.open .faq-chevron { transform:rotate(180deg); }
+    .faq-chevron { transition:var(--transition); }
+  </style>
+</head>
+<body>
+  <div id="page-loader" class="page-loader"><div class="loader-petal"></div></div>
+  <div id="header-mount"></div>
+
+  <!-- Hero -->
+  <section style="background:linear-gradient(135deg,var(--cream),var(--blush));padding:70px 0;">
+    <div class="container text-center">
+      <span class="section-kicker">Subscribe & Save</span>
+      <h1>Fresh Flowers, Every Day.<br>Zero Effort.</h1>
+      <p style="color:var(--text-muted);font-size:1.05rem;max-width:560px;margin:14px auto 0;">
+        Choose a plan that fits your routine — skip the morning market runs. All subscriptions come with <strong>FREE delivery</strong> and <strong>pause/cancel anytime</strong>.
+      </p>
+      <div style="display:flex;gap:24px;justify-content:center;margin-top:32px;flex-wrap:wrap;">
+        <div style="text-align:center;"><div style="font-size:1.6rem;font-weight:900;font-family:var(--font-head);color:var(--rose);">FREE</div><div style="font-size:0.82rem;color:var(--text-muted);">Delivery always</div></div>
+        <div style="text-align:center;border-left:1px solid var(--border);padding-left:24px;"><div style="font-size:1.6rem;font-weight:900;font-family:var(--font-head);color:var(--rose);">Pause</div><div style="font-size:0.82rem;color:var(--text-muted);">Anytime, no charges</div></div>
+        <div style="text-align:center;border-left:1px solid var(--border);padding-left:24px;"><div style="font-size:1.6rem;font-weight:900;font-family:var(--font-head);color:var(--rose);">6 AM</div><div style="font-size:0.82rem;color:var(--text-muted);">Daily doorstep</div></div>
+        <div style="text-align:center;border-left:1px solid var(--border);padding-left:24px;"><div style="font-size:1.6rem;font-weight:900;font-family:var(--font-head);color:var(--rose);">Fresh</div><div style="font-size:0.82rem;color:var(--text-muted);">Farm-sourced daily</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Freq Toggle -->
+  <section class="section">
+    <div class="container text-center">
+      <div style="display:flex;justify-content:center;gap:12px;margin-bottom:50px;flex-wrap:wrap;">
+        <button class="btn btn-rose" data-freq="all" onclick="filterByFreq('all', this)">All Plans</button>
+        <button class="btn btn-rose-outline" data-freq="daily" onclick="filterByFreq('daily', this)">📅 Daily</button>
+        <button class="btn btn-rose-outline" data-freq="weekly" onclick="filterByFreq('weekly', this)">🗓️ Weekly</button>
+        <button class="btn btn-rose-outline" data-freq="monthly" onclick="filterByFreq('monthly', this)">📆 Monthly</button>
+      </div>
+      <div class="subs-grid" id="plans-grid">
+        <div style="grid-column:1/-1;padding:60px;color:var(--text-muted);">Loading plans...</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Delivery Rules Banner -->
+  <section style="background:var(--sage);padding:40px 0;">
+    <div class="container">
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:30px;color:white;text-align:center;" id="delivery-rules-grid">
+        <div>
+          <div style="font-size:2rem;margin-bottom:10px;">📦</div>
+          <h4 style="color:white;margin-bottom:8px;">Package Subscription</h4>
+          <p style="opacity:0.85;font-size:0.9rem;">Always FREE delivery, every day. No minimum order needed.</p>
+          <div style="font-size:1.4rem;font-weight:900;font-family:var(--font-head);margin-top:12px;">₹0 delivery</div>
+        </div>
+        <div>
+          <div style="font-size:2rem;margin-bottom:10px;">🛒</div>
+          <h4 style="color:white;margin-bottom:8px;">One-Time Order</h4>
+          <p style="opacity:0.85;font-size:0.9rem;">₹40 delivery charge. Order above ₹299 and delivery is FREE!</p>
+          <div style="font-size:1.4rem;font-weight:900;font-family:var(--font-head);margin-top:12px;">₹40 or FREE</div>
+        </div>
+        <div>
+          <div style="font-size:2rem;margin-bottom:10px;">🎊</div>
+          <h4 style="color:white;margin-bottom:8px;">Event / Function</h4>
+          <p style="opacity:0.85;font-size:0.9rem;">Bulk orders above ₹499 get free delivery. Book 24h in advance.</p>
+          <div style="font-size:1.4rem;font-weight:900;font-family:var(--font-head);margin-top:12px;">Free above ₹499</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Compare Table -->
+  <section class="section" style="background:var(--cream-deep);">
+    <div class="container">
+      <div class="text-center" style="margin-bottom:30px;">
+        <span class="section-kicker">Compare Plans</span>
+        <h2>What's Included in Each Plan</h2>
+      </div>
+      <div style="overflow-x:auto;">
+        <table class="compare-table">
+          <thead>
+            <tr>
+              <th>Feature</th>
+              <th>Daily Starter<br><span style="color:var(--text-muted);font-size:0.72rem;">₹49/day</span></th>
+              <th>Daily Premium<br><span style="color:var(--text-muted);font-size:0.72rem;">₹79/day</span></th>
+              <th>Weekly Pack<br><span style="color:var(--text-muted);font-size:0.72rem;">₹299/week</span></th>
+              <th>Monthly Saver<br><span style="color:var(--text-muted);font-size:0.72rem;">₹999/month</span></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>Mixed Flowers</td><td>50g</td><td>100g</td><td>500g (weekly)</td><td>2kg (monthly)</td></tr>
+            <tr><td>Coconut</td><td><span class="check">✓ 1 piece</span></td><td><span class="check">✓ 1 piece</span></td><td><span class="check">✓ 4 pieces</span></td><td><span class="check">✓ 20 pieces</span></td></tr>
+            <tr><td>Agarbatti</td><td><span class="check">✓ 1 pack</span></td><td><span class="check">✓ 1 pack</span></td><td><span class="check">✓ 7 packs</span></td><td><span class="check">✓ 30 packs</span></td></tr>
+            <tr><td>Camphor</td><td><span class="cross">—</span></td><td><span class="check">✓ Included</span></td><td><span class="check">✓ Included</span></td><td><span class="check">✓ Included</span></td></tr>
+            <tr><td>Turmeric / Kumkum</td><td><span class="cross">—</span></td><td><span class="cross">—</span></td><td><span class="cross">—</span></td><td><span class="check">✓ Monthly refill</span></td></tr>
+            <tr><td>Free Delivery</td><td><span class="check">✓ Always</span></td><td><span class="check">✓ Always</span></td><td><span class="check">✓ Always</span></td><td><span class="check">✓ Always</span></td></tr>
+            <tr><td>Pause Anytime</td><td><span class="check">✓</span></td><td><span class="check">✓</span></td><td><span class="check">✓</span></td><td><span class="check">✓</span></td></tr>
+            <tr><td>Cancel Anytime</td><td><span class="check">✓</span></td><td><span class="check">✓</span></td><td><span class="check">✓</span></td><td><span class="check">✓</span></td></tr>
+            <tr><td>Delivery Time</td><td>By 6 AM</td><td>By 6 AM</td><td>Friday by 6 AM</td><td>1st of month by 6 AM</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- Custom Plan Builder -->
+  <section class="section">
+    <div class="container">
+      <div class="text-center" style="margin-bottom:30px;">
+        <span class="section-kicker">Build Your Own</span>
+        <h2>Create a Custom Subscription</h2>
+        <p class="section-sub">Choose exactly which flowers & pooja items you want — delivered on your schedule.</p>
+      </div>
+      <div class="custom-builder">
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:40px;" id="custom-builder-inner">
+          <div>
+            <h4 style="margin-bottom:20px;">1. Choose Your Items</h4>
+            <div id="custom-items-list" style="display:flex;flex-direction:column;gap:12px;"></div>
+          </div>
+          <div>
+            <h4 style="margin-bottom:20px;">2. Your Custom Plan</h4>
+            <div id="custom-summary" style="background:var(--cream);border-radius:var(--radius-md);padding:20px;">
+              <p style="color:var(--text-muted);font-size:0.9rem;">Add items from the left to build your plan.</p>
+            </div>
+            <div class="form-group mt-3">
+              <label class="form-label">Delivery Frequency</label>
+              <select class="form-control" id="custom-freq">
+                <option value="daily">Daily</option>
+                <option value="weekly">Weekly</option>
+                <option value="monthly">Monthly</option>
+              </select>
+            </div>
+            <button class="btn btn-rose w-full mt-2" onclick="subscribeCustom()">Subscribe to Custom Plan →</button>
+            <p style="font-size:0.78rem;color:var(--text-muted);margin-top:8px;text-align:center;">FREE delivery on all custom subscriptions too!</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="section" style="background:var(--blush);">
+    <div class="container" style="max-width:760px;">
+      <div class="text-center" style="margin-bottom:40px;">
+        <span class="section-kicker">FAQ</span>
+        <h2>Common Questions</h2>
+      </div>
+      <div class="faq-item" onclick="toggleFaq(this)">
+        <div class="faq-question">Can I pause my subscription for a holiday? <span class="faq-chevron">▼</span></div>
+        <div class="faq-answer">Yes! You can pause your subscription for any number of days from your dashboard. No charges during the pause period and no deliveries will happen.</div>
+      </div>
+      <div class="faq-item" onclick="toggleFaq(this)">
+        <div class="faq-question">What if I want a different mix of flowers? <span class="faq-chevron">▼</span></div>
+        <div class="faq-answer">Use our Custom Plan Builder above! You can select exactly which flowers and pooja items you want, in the exact quantities — all with free delivery.</div>
+      </div>
+      <div class="faq-item" onclick="toggleFaq(this)">
+        <div class="faq-question">What time does delivery happen? <span class="faq-chevron">▼</span></div>
+        <div class="faq-answer">Daily deliveries are done between 5:30 AM and 7:00 AM, so your flowers are fresh for morning pooja. We leave them at your door or with your security desk.</div>
+      </div>
+      <div class="faq-item" onclick="toggleFaq(this)">
+        <div class="faq-question">How do I pay? Can I use UPI? <span class="faq-chevron">▼</span></div>
+        <div class="faq-answer">We accept UPI, Razorpay (credit/debit cards, net banking), WhatsApp Pay, and Cash on Delivery. Monthly subscriptions are auto-debited on the 1st of each month.</div>
+      </div>
+      <div class="faq-item" onclick="toggleFaq(this)">
+        <div class="faq-question">What if the flowers are not fresh or I get wrong items? <span class="faq-chevron">▼</span></div>
+        <div class="faq-answer">Call or WhatsApp us immediately. We'll replace the order same day or give you a full refund — no questions asked. Our quality promise!</div>
+      </div>
+      <div class="faq-item" onclick="toggleFaq(this)">
+        <div class="faq-question">Can I cancel anytime? <span class="faq-chevron">▼</span></div>
+        <div class="faq-answer">Yes, cancel from your dashboard at any time. No lock-in, no cancellation fees. Refunds for unused days are processed within 5 working days.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section style="background:linear-gradient(135deg,var(--rose),var(--rose-dark));padding:70px 0;text-align:center;color:white;">
+    <div class="container">
+      <h2 style="color:white;margin-bottom:14px;">Ready to Start? ₹49 / Day.</h2>
+      <p style="color:rgba(255,255,255,0.85);margin-bottom:30px;">Free delivery. Fresh flowers. No hassle. Cancel anytime.</p>
+      <a href="signup.html" class="btn btn-white btn-lg">Get Started Free →</a>
+    </div>
+  </section>
+
+  <div id="footer-mount"></div>
+
+  <script src="../js/app.js"></script>
+  <script>
+    const CUSTOM_PRODUCTS = [
+      { id:1, name:'Rose (Gulab)', emoji:'🌹', unit:'50g block', price:30, is_by_weight:true },
+      { id:2, name:'Jasmine Banti', emoji:'🤍', unit:'50g block', price:25, is_by_weight:true },
+      { id:3, name:'Chamanti', emoji:'🌼', unit:'50g block', price:15, is_by_weight:true },
+      { id:4, name:'Genda (Marigold)', emoji:'🟡', unit:'100g', price:22, is_by_weight:true },
+      { id:5, name:'Kanakambaram', emoji:'🟠', unit:'50g block', price:35, is_by_weight:true },
+      { id:10, name:'Coconut', emoji:'🥥', unit:'piece', price:20 },
+      { id:11, name:'Agarbatti', emoji:'🕯️', unit:'pack', price:25 },
+      { id:12, name:'Camphor', emoji:'⚪', unit:'pack', price:15 },
+    ];
+
+    const customSel = {};
+
+    function renderCustomItems() {
+      const list = document.getElementById('custom-items-list');
+      list.innerHTML = CUSTOM_PRODUCTS.map(p => `
+        <div style="display:flex;align-items:center;justify-content:space-between;padding:12px;background:var(--cream);border-radius:var(--radius-sm);">
+          <div style="display:flex;align-items:center;gap:10px;">
+            <span>${p.emoji}</span>
+            <div>
+              <div style="font-family:var(--font-head);font-weight:700;font-size:0.88rem;">${p.name}</div>
+              <div style="font-size:0.75rem;color:var(--text-muted);">₹${p.price}/${p.unit}</div>
+            </div>
+          </div>
+          <div style="display:flex;align-items:center;gap:8px;">
+            <button class="qty-btn" onclick="changeCustomQty(${p.id}, -1)">−</button>
+            <span id="cq-${p.id}" style="font-family:var(--font-head);font-weight:800;min-width:20px;text-align:center;font-size:0.9rem;">0</span>
+            <button class="qty-btn" onclick="changeCustomQty(${p.id}, 1)">+</button>
+          </div>
+        </div>`).join('');
+    }
+
+    function changeCustomQty(id, dir) {
+      const prev = customSel[id] || 0;
+      customSel[id] = Math.max(0, prev + dir);
+      document.getElementById(`cq-${id}`).textContent = customSel[id];
+      if (customSel[id] === 0) delete customSel[id];
+      updateCustomSummary();
+    }
+
+    function updateCustomSummary() {
+      const sumEl = document.getElementById('custom-summary');
+      const entries = Object.entries(customSel);
+      if (!entries.length) {
+        sumEl.innerHTML = '<p style="color:var(--text-muted);font-size:0.9rem;">Add items from the left to build your plan.</p>';
+        return;
+      }
+      let total = 0;
+      const lines = entries.map(([id, qty]) => {
+        const prod = CUSTOM_PRODUCTS.find(p => p.id === parseInt(id));
+        const lineTotal = qty * prod.price;
+        total += lineTotal;
+        return `<div style="display:flex;justify-content:space-between;font-size:0.88rem;margin-bottom:8px;">
+          <span>${prod.emoji} ${prod.name} ×${qty}</span>
+          <strong>₹${lineTotal}</strong>
+        </div>`;
+      }).join('');
+
+      const freq = document.getElementById('custom-freq').value;
+      const freqLabel = freq === 'daily' ? '/day' : freq === 'weekly' ? '/week' : '/month';
+      sumEl.innerHTML = `
+        ${lines}
+        <div style="border-top:2px solid var(--border);margin-top:12px;padding-top:12px;display:flex;justify-content:space-between;font-family:var(--font-head);font-weight:800;font-size:1.05rem;">
+          <span>Total</span><span style="color:var(--rose);">₹${total}${freqLabel}</span>
+        </div>
+        <div style="background:var(--sage-pale);color:var(--sage);padding:8px 12px;border-radius:var(--radius-sm);font-size:0.8rem;font-weight:700;margin-top:10px;text-align:center;">
+          🚚 FREE delivery always on subscriptions
+        </div>`;
+    }
+
+    async function subscribeCustom() {
+      const entries = Object.entries(customSel);
+      if (!entries.length) { showToast('Please select at least one item!', 'error'); return; }
+      if (!Auth.isLoggedIn()) {
+        window.location.href = 'login.html?redirect=subscriptions.html';
+        return;
+      }
+      const freq = document.getElementById('custom-freq').value;
+      const customItems = entries.map(([id, qty]) => ({ product_id: parseInt(id), qty }));
+      try {
+        await api.post('/subscriptions', { custom_items: customItems, delivery_notes: `Custom plan - ${freq}` });
+        showToast('🌸 Custom subscription created! First delivery tomorrow at 6 AM.', 'success');
+        setTimeout(() => window.location.href = 'dashboard.html', 2000);
+      } catch (err) {
+        showToast(err.message, 'error');
+      }
+    }
+
+    let allPlans = [];
+    async function loadPlans() {
+      try {
+        const data = await api.get('/products/packages');
+        allPlans = data.packages || [];
+      } catch {
+        allPlans = [
+          { id:1, slug:'daily-starter',  name:'Daily Starter',   description:'50g mixed flowers + 1 coconut + agarbatti. Perfect for daily mandir.', frequency:'daily',   price:49,  original_price:65,  badge:'Most Popular', icon:'🌅', items:['50g mixed flowers','1 coconut','Agarbatti'] },
+          { id:2, slug:'daily-premium',  name:'Daily Premium',   description:'100g premium mixed flowers + coconut + agarbatti + camphor.', frequency:'daily',   price:79,  original_price:99,  badge:'Best Value',  icon:'✨', items:['100g premium flowers','1 coconut','Agarbatti','Camphor'] },
+          { id:3, slug:'weekly-pooja',   name:'Weekly Pooja Pack',description:'500g mixed + 4 coconuts + 7 agarbatti + camphor + turmeric.',  frequency:'weekly',  price:299, original_price:380, badge:'Save 21%',    icon:'📅', items:['500g mixed flowers','4 coconuts','7 Agarbatti packs','Camphor','Turmeric'] },
+          { id:4, slug:'weekly-premium', name:'Weekly Premium',  description:'750g premium blooms + complete pooja kit + door toran.',       frequency:'weekly',  price:499, original_price:649, badge:'Premium',     icon:'👑', items:['750g premium flowers','4 coconuts','Full pooja kit','Door toran'] },
+          { id:5, slug:'monthly-saver',  name:'Monthly Saver',   description:'2kg mixed flowers + all pooja essentials for the month.',      frequency:'monthly', price:999, original_price:1399, badge:'Best Price',  icon:'🏷️', items:['2kg mixed flowers','20 coconuts','All essentials','Monthly kit'] },
+          { id:6, slug:'monthly-grand',  name:'Monthly Grand',   description:'3kg premium blooms + complete monthly kit + festival flowers.', frequency:'monthly', price:1499, original_price:1999, badge:'Grand Value', icon:'🌺', items:['3kg premium flowers','Festival specials','Complete monthly kit'] },
+        ];
+      }
+      filterByFreq('all', document.querySelector('[data-freq="all"]'));
+    }
+
+    function filterByFreq(freq, btn) {
+      document.querySelectorAll('[data-freq]').forEach(b => {
+        b.className = b.dataset.freq === freq ? 'btn btn-rose' : 'btn btn-rose-outline';
+      });
+      const plans = freq === 'all' ? allPlans : allPlans.filter(p => p.frequency === freq);
+      const grid = document.getElementById('plans-grid');
+      grid.innerHTML = plans.map((pkg, i) => {
+        const isPopular = pkg.badge === 'Most Popular';
+        const period    = pkg.frequency === 'daily' ? '/day' : pkg.frequency === 'weekly' ? '/week' : '/month';
+        const items     = Array.isArray(pkg.items) ? pkg.items : (pkg.items || []).map(it => it.name || it);
+        const savings   = pkg.original_price ? Math.round(100 - (pkg.price / pkg.original_price * 100)) : 0;
+        return `
+          <div class="sub-card${isPopular ? ' popular' : ''}" id="pkg-${pkg.id}">
+            ${pkg.badge ? `<div class="popular-ribbon">${pkg.badge}</div>` : ''}
+            <div class="sub-icon">${pkg.icon || '📦'}</div>
+            <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px;">
+              <div class="sub-name">${pkg.name}</div>
+              ${savings > 0 ? `<span class="badge badge-sage">Save ${savings}%</span>` : ''}
+            </div>
+            <div class="sub-desc">${pkg.description}</div>
+            <div class="sub-price">
+              <span class="currency">₹</span>
+              <span class="amount">${Math.floor(pkg.price)}</span>
+              <span class="period">${period}</span>
+              ${pkg.original_price ? `<span style="text-decoration:line-through;color:var(--text-muted);font-size:0.9rem;margin-left:4px;">₹${pkg.original_price}</span>` : ''}
+            </div>
+            <ul class="sub-features">
+              ${items.slice(0,5).map(item => `<li>${typeof item === 'string' ? item : item.name}</li>`).join('')}
+              <li>🚚 FREE delivery always</li>
+              <li>⏸️ Pause or cancel anytime</li>
+            </ul>
+            <button class="btn ${isPopular ? 'btn-rose' : 'btn-rose-outline'} w-full" onclick="subscribeToPlan(${pkg.id}, '${pkg.name}', ${pkg.price})">
+              Subscribe Now →
+            </button>
+          </div>`;
+      }).join('');
+    }
+
+    async function subscribeToPlan(packageId, name, price) {
+      if (!Auth.isLoggedIn()) {
+        window.location.href = `login.html?redirect=subscriptions.html%23pkg-${packageId}`;
+        return;
+      }
+      try {
+        await api.post('/subscriptions', { package_id: packageId });
+        showToast(`🌸 Subscribed to ${name}! First delivery tomorrow at 6 AM.`, 'success');
+        setTimeout(() => window.location.href = 'dashboard.html', 2000);
+      } catch (err) {
+        showToast(err.message, 'error');
+      }
+    }
+
+    function toggleFaq(el) { el.classList.toggle('open'); }
+
+    initPage('subscriptions');
+    loadPlans();
+    renderCustomItems();
+    document.getElementById('custom-freq').addEventListener('change', updateCustomSummary);
+
+    // Check URL anchor
+    const hash = window.location.hash;
+    if (hash && hash.startsWith('#pkg-')) {
+      setTimeout(() => document.querySelector(hash)?.scrollIntoView({ behavior: 'smooth' }), 1000);
+    }
+  </script>
+</body>
+</html>

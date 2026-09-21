@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Contact Us — FreshPetal Hyderabad</title>
+  <meta name="description" content="Contact FreshPetal for flower orders, subscriptions or RWA partnerships in Hyderabad. WhatsApp, call or email us." />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg'><text y='32' font-size='32'>🌸</text></svg>" />
+  <link rel="stylesheet" href="../css/global.css" />
+</head>
+<body>
+  <div id="page-loader" class="page-loader"><div class="loader-petal"></div></div>
+  <div id="header-mount"></div>
+
+  <section style="background:linear-gradient(135deg,var(--cream),var(--sage-pale));padding:70px 0;">
+    <div class="container text-center">
+      <span class="section-kicker">Get in Touch</span>
+      <h1>Contact FreshPetal</h1>
+      <p style="color:var(--text-muted);font-size:1.05rem;max-width:500px;margin:14px auto 0;">Questions, bulk orders, RWA partnerships or just want to say hi — we're here!</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="contact-grid">
+        <div>
+          <h3 style="margin-bottom:28px;">Talk to Us Directly</h3>
+          <div class="contact-info-item">
+            <div class="contact-info-icon">📞</div>
+            <div>
+              <div class="contact-info-label">Phone / WhatsApp</div>
+              <div class="contact-info-val"><a href="tel:+919000000000">+91 90000 00000</a></div>
+              <div style="font-size:0.82rem;color:var(--text-muted);">Open 5 AM – 8 PM daily</div>
+            </div>
+          </div>
+          <div class="contact-info-item">
+            <div class="contact-info-icon">💬</div>
+            <div>
+              <div class="contact-info-label">WhatsApp Order</div>
+              <div class="contact-info-val"><a href="https://wa.me/919000000000?text=Hi FreshPetal!" target="_blank">Chat on WhatsApp →</a></div>
+              <div style="font-size:0.82rem;color:var(--text-muted);">Fastest way to order</div>
+            </div>
+          </div>
+          <div class="contact-info-item">
+            <div class="contact-info-icon">✉️</div>
+            <div>
+              <div class="contact-info-label">Email</div>
+              <div class="contact-info-val"><a href="mailto:hello@freshpetal.in">hello@freshpetal.in</a></div>
+              <div style="font-size:0.82rem;color:var(--text-muted);">Reply within 4 hours</div>
+            </div>
+          </div>
+          <div class="contact-info-item">
+            <div class="contact-info-icon">📍</div>
+            <div>
+              <div class="contact-info-label">Service Area</div>
+              <div class="contact-info-val">Uppal to Shamshabad, Hyderabad</div>
+              <div style="font-size:0.82rem;color:var(--text-muted);">16 areas currently served</div>
+            </div>
+          </div>
+
+          <div style="margin-top:36px;background:var(--sage-pale);border-radius:var(--radius-md);padding:24px;">
+            <h4 style="color:var(--sage);margin-bottom:14px;">🤝 RWA / Society Partnership</h4>
+            <p style="font-size:0.9rem;color:var(--sage);margin-bottom:16px;">If you're a Resident Welfare Association or apartment manager, we offer exclusive bulk rates and dedicated delivery slots for your community.</p>
+            <a href="https://wa.me/919000000000?text=Hi! I'm from an RWA and want to discuss a partnership with FreshPetal." class="btn btn-sage" target="_blank">💬 Discuss Partnership</a>
+          </div>
+        </div>
+
+        <div>
+          <div class="card" style="padding:32px;">
+            <h3 style="margin-bottom:24px;">Send a Message</h3>
+            <div id="contact-success" style="display:none;background:var(--sage-pale);color:var(--sage);padding:16px;border-radius:var(--radius-sm);margin-bottom:20px;font-weight:700;text-align:center;">
+              🎉 Message received! We'll get back to you within 4 hours on WhatsApp.
+            </div>
+            <form id="contact-form" onsubmit="handleContact(event)">
+              <div class="form-row-2">
+                <div class="form-group">
+                  <label class="form-label">Name *</label>
+                  <input type="text" class="form-control" id="c-name" required placeholder="Your name" />
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Mobile</label>
+                  <input type="tel" class="form-control" id="c-phone" placeholder="9876543210" />
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="form-label">Email</label>
+                <input type="email" class="form-control" id="c-email" placeholder="you@example.com" />
+              </div>
+              <div class="form-group">
+                <label class="form-label">Enquiry Type</label>
+                <select class="form-control" id="c-type">
+                  <option value="general">General Enquiry</option>
+                  <option value="subscription">Subscription Question</option>
+                  <option value="event">Event / Bulk Order</option>
+                  <option value="rwa">RWA Partnership</option>
+                  <option value="complaint">Complaint / Feedback</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label class="form-label">Message *</label>
+                <textarea class="form-control" id="c-message" rows="5" required placeholder="Tell us how we can help..."></textarea>
+              </div>
+              <div class="form-error" id="c-err" style="margin-bottom:12px;padding:10px;background:#FEE2E2;border-radius:var(--radius-sm);"></div>
+              <button type="submit" class="btn btn-rose w-full" id="btn-contact">Send Message →</button>
+            </form>
+          </div>
+
+          <!-- Society Nomination -->
+          <div class="card" style="padding:28px;margin-top:24px;border-style:dashed;">
+            <h4 style="margin-bottom:12px;">📍 Nominate Your Society</h4>
+            <p style="font-size:0.88rem;color:var(--text-muted);margin-bottom:16px;">Your society not on our list? Nominate it! Get 10 residents to register and we'll launch the route.</p>
+            <form id="nominate-form" onsubmit="nominateSociety(event)">
+              <div class="form-row-2">
+                <div class="form-group">
+                  <label class="form-label">Society Name *</label>
+                  <input type="text" class="form-control" id="n-society" placeholder="e.g. My Home Avenue" required />
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Your Phone *</label>
+                  <input type="tel" class="form-control" id="n-phone" placeholder="9876543210" required />
+                </div>
+              </div>
+              <div id="nominate-msg" style="display:none;background:var(--sage-pale);color:var(--sage);padding:10px;border-radius:var(--radius-sm);margin-bottom:10px;font-weight:700;font-size:0.88rem;"></div>
+              <button type="submit" class="btn btn-sage w-full" id="btn-nominate">🗳️ Nominate My Society</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div id="footer-mount"></div>
+
+  <script src="../js/app.js"></script>
+  <script>
+    async function handleContact(e) {
+      e.preventDefault();
+      const btn = document.getElementById('btn-contact');
+      const errEl = document.getElementById('c-err');
+      btn.disabled = true;
+      btn.textContent = 'Sending...';
+      errEl.style.display = 'none';
+      try {
+        await api.post('/contact', {
+          name: document.getElementById('c-name').value.trim(),
+          phone: document.getElementById('c-phone').value.trim(),
+          email: document.getElementById('c-email').value.trim(),
+          enquiry_type: document.getElementById('c-type').value,
+          message: document.getElementById('c-message').value.trim(),
+        });
+        document.getElementById('contact-success').style.display = 'block';
+        document.getElementById('contact-form').reset();
+      } catch (err) {
+        errEl.textContent = err.message || 'Could not send. Please WhatsApp us.';
+        errEl.style.display = 'block';
+      } finally {
+        btn.disabled = false;
+        btn.textContent = 'Send Message →';
+      }
+    }
+
+    async function nominateSociety(e) {
+      e.preventDefault();
+      const btn = document.getElementById('btn-nominate');
+      const msgEl = document.getElementById('nominate-msg');
+      btn.disabled = true;
+      try {
+        const data = await api.post('/societies/nominate', {
+          society_name: document.getElementById('n-society').value.trim(),
+          nominator_phone: document.getElementById('n-phone').value.trim(),
+        });
+        msgEl.textContent = data.message;
+        msgEl.style.display = 'block';
+        document.getElementById('nominate-form').reset();
+      } catch (err) {
+        msgEl.style.background = '#FEE2E2';
+        msgEl.style.color = '#DC2626';
+        msgEl.textContent = err.message;
+        msgEl.style.display = 'block';
+      } finally {
+        btn.disabled = false;
+      }
+    }
+
+    initPage('contact');
+  </script>
+</body>
+</html>

@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Checkout — FreshPetal Hyderabad</title>
+  <meta name="description" content="Complete your FreshPetal flower order. Pay via UPI, Razorpay, or Cash on Delivery. Free delivery on packages and orders above ₹299." />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg'><text y='32' font-size='32'>🌸</text></svg>" />
+  <link rel="stylesheet" href="../css/global.css" />
+  <style>
+    .checkout-layout { display:grid; grid-template-columns:1fr 380px; gap:30px; margin-top:40px; align-items:start; }
+    .checkout-section { background:white; border-radius:var(--radius-md); border:1px solid var(--border-light); padding:28px; margin-bottom:20px; }
+    .checkout-section h4 { margin-bottom:20px; font-size:1.05rem; border-bottom:1px solid var(--border-light); padding-bottom:12px; }
+    .payment-option { display:flex; align-items:center; gap:14px; padding:14px 16px; border:2px solid var(--border); border-radius:var(--radius-sm); cursor:pointer; transition:var(--transition); }
+    .payment-option:hover, .payment-option.selected { border-color:var(--rose); background:var(--blush); }
+    .payment-option input[type=radio] { accent-color:var(--rose); width:18px; height:18px; }
+    .order-summary-item { display:flex; justify-content:space-between; font-size:0.88rem; padding:8px 0; border-bottom:1px solid var(--border-light); }
+    .order-summary-item:last-of-type { border-bottom:none; }
+    @media(max-width:768px) { .checkout-layout { grid-template-columns:1fr; } }
+  </style>
+</head>
+<body>
+  <div id="page-loader" class="page-loader"><div class="loader-petal"></div></div>
+  <div id="header-mount"></div>
+
+  <section style="background:linear-gradient(135deg,var(--cream),var(--blush));padding:40px 0 20px;">
+    <div class="container">
+      <h1 style="font-size:1.8rem;">Checkout</h1>
+      <p style="color:var(--text-muted);margin-top:4px;">Review your order and complete payment</p>
+    </div>
+  </section>
+
+  <div id="empty-cart-msg" style="display:none;text-align:center;padding:100px 24px;">
+    <div style="font-size:3rem;margin-bottom:16px;">🧺</div>
+    <h2 style="margin-bottom:12px;">Your cart is empty</h2>
+    <p style="color:var(--text-muted);margin-bottom:24px;">Add some fresh flowers or pooja items first!</p>
+    <a href="shop.html" class="btn btn-rose btn-lg">🌸 Shop Now →</a>
+  </div>
+
+  <section style="padding:30px 0 80px;" id="checkout-main">
+    <div class="container">
+      <div class="checkout-layout">
+
+        <!-- LEFT COLUMN -->
+        <div>
+          <!-- Address -->
+          <div class="checkout-section" id="address-section">
+            <h4>📍 Delivery Address</h4>
+            <div id="address-loaded" style="display:none;">
+              <div style="background:var(--sage-pale);border-radius:var(--radius-sm);padding:16px;margin-bottom:16px;">
+                <div style="font-family:var(--font-head);font-weight:700;" id="addr-name">—</div>
+                <div style="font-size:0.88rem;color:var(--text-muted);" id="addr-detail">—</div>
+              </div>
+            </div>
+            <div id="address-form">
+              <div class="form-row-2">
+                <div class="form-group">
+                  <label class="form-label">Society / Area *</label>
+                  <input type="text" class="form-control" id="addr-society" placeholder="e.g. Aparna Sarovar, Nagole" required />
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Tower / Block</label>
+                  <input type="text" class="form-control" id="addr-tower" placeholder="e.g. Tower A" />
+                </div>
+              </div>
+              <div class="form-row-2">
+                <div class="form-group">
+                  <label class="form-label">Flat / Door No. *</label>
+                  <input type="text" class="form-control" id="addr-apt" placeholder="e.g. 403" required />
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Delivery Date</label>
+                  <input type="date" class="form-control" id="delivery-date" />
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="form-label">Special Instructions (optional)</label>
+                <input type="text" class="form-control" id="delivery-notes" placeholder="e.g. Leave at door, call before delivery" />
+              </div>
+            </div>
+          </div>
+
+          <!-- Payment -->
+          <div class="checkout-section">
+            <h4>💳 Payment Method</h4>
+            <div style="display:flex;flex-direction:column;gap:12px;" id="payment-options">
+              <label class="payment-option selected" onclick="selectPayment('razorpay', this)">
+                <input type="radio" name="payment" value="razorpay" checked />
+                <span style="font-size:1.5rem;">💳</span>
+                <div>
+                  <div style="font-family:var(--font-head);font-weight:700;">Razorpay</div>
+                  <div style="font-size:0.78rem;color:var(--text-muted);">UPI, Debit/Credit Card, Net Banking</div>
+                </div>
+              </label>
+              <label class="payment-option" onclick="selectPayment('whatsapp', this)">
+                <input type="radio" name="payment" value="whatsapp" />
+                <span style="font-size:1.5rem;">💬</span>
+                <div>
+                  <div style="font-family:var(--font-head);font-weight:700;">WhatsApp Order</div>
+                  <div style="font-size:0.78rem;color:var(--text-muted);">Send your order via WhatsApp & pay on delivery</div>
+                </div>
+              </label>
+              <label class="payment-option" onclick="selectPayment('cod', this)">
+                <input type="radio" name="payment" value="cod" />
+                <span style="font-size:1.5rem;">💵</span>
+                <div>
+                  <div style="font-family:var(--font-head);font-weight:700;">Cash on Delivery</div>
+                  <div style="font-size:0.78rem;color:var(--text-muted);">Pay cash when flowers arrive</div>
+                </div>
+              </label>
+            </div>
+          </div>
+
+          <!-- Coupon -->
+          <div class="checkout-section">
+            <h4>🏷️ Coupon Code</h4>
+            <div style="display:flex;gap:10px;">
+              <input type="text" class="form-control" id="coupon-input" placeholder="Enter coupon code" style="text-transform:uppercase;" />
+              <button class="btn btn-rose-outline" onclick="applyCoupon()">Apply</button>
+            </div>
+            <div id="coupon-msg" style="display:none;margin-top:10px;font-size:0.85rem;font-weight:700;"></div>
+            <p style="font-size:0.78rem;color:var(--text-muted);margin-top:8px;">Try <strong>FRESH10</strong> for 10% off your first order!</p>
+          </div>
+        </div>
+
+        <!-- RIGHT COLUMN: Order Summary -->
+        <div style="position:sticky;top:calc(var(--nav-h) + 20px);">
+          <div class="checkout-section">
+            <h4>🛒 Order Summary</h4>
+            <div id="order-items-list"></div>
+            <div style="border-top:1px solid var(--border-light);margin:16px 0;padding-top:16px;">
+              <div class="order-summary-item">
+                <span>Subtotal</span><span id="ck-subtotal">₹0</span>
+              </div>
+              <div class="order-summary-item" id="coupon-row" style="display:none;">
+                <span style="color:var(--sage);">Coupon Discount</span>
+                <span style="color:var(--sage);" id="ck-discount">-₹0</span>
+              </div>
+              <div class="order-summary-item">
+                <span>Delivery</span>
+                <span id="ck-delivery" style="color:var(--sage);font-weight:700;">₹40</span>
+              </div>
+            </div>
+            <div style="display:flex;justify-content:space-between;font-family:var(--font-head);font-size:1.2rem;font-weight:900;margin-bottom:20px;">
+              <span>Total</span><span style="color:var(--rose);" id="ck-total">₹0</span>
+            </div>
+
+            <div id="free-delivery-notice" style="display:none;background:var(--sage-pale);color:var(--sage);padding:10px 14px;border-radius:var(--radius-sm);font-size:0.82rem;font-weight:700;margin-bottom:16px;text-align:center;">
+              🎉 Free delivery applied!
+            </div>
+            <div id="free-delivery-nudge" style="background:var(--saffron-pale);color:var(--saffron);padding:10px 14px;border-radius:var(--radius-sm);font-size:0.82rem;font-weight:700;margin-bottom:16px;text-align:center;"></div>
+
+            <div id="checkout-error" style="display:none;background:#FEE2E2;color:#DC2626;padding:12px;border-radius:var(--radius-sm);font-size:0.88rem;margin-bottom:16px;"></div>
+            <div id="checkout-success" style="display:none;background:var(--sage-pale);color:var(--sage);padding:16px;border-radius:var(--radius-sm);text-align:center;font-weight:700;margin-bottom:16px;">
+              🎉 Order placed successfully! We'll deliver by 6 AM.
+            </div>
+
+            <button class="btn btn-rose w-full btn-lg" id="btn-place-order" onclick="placeOrder()">Place Order →</button>
+            <a href="shop.html" class="btn btn-rose-outline w-full mt-2" style="display:flex;align-items:center;justify-content:center;">← Continue Shopping</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div id="footer-mount"></div>
+
+  <script src="../js/app.js"></script>
+  <script>
+    let selectedPayment = 'razorpay';
+    let appliedCoupon   = null;
+    let appliedDiscount = 0;
+
+    function selectPayment(method, el) {
+      selectedPayment = method;
+      document.querySelectorAll('.payment-option').forEach(e => e.classList.remove('selected'));
+      el.classList.add('selected');
+    }
+
+    function renderCheckout() {
+      const items = Cart.getAll();
+      if (!items.length) {
+        document.getElementById('checkout-main').style.display = 'none';
+        document.getElementById('empty-cart-msg').style.display = 'block';
+        return;
+      }
+
+      const listEl = document.getElementById('order-items-list');
+      listEl.innerHTML = items.map(item => {
+        const line = parseFloat(item.qty) * parseFloat(item.price_per_unit);
+        const qtyLabel = item.is_by_weight ? `${item.qty}g` : `${item.qty} ${item.unit_label}`;
+        return `<div class="order-summary-item">
+          <span>${item.emoji} ${item.name} <span style="color:var(--text-muted);font-size:0.78rem;">(${qtyLabel})</span></span>
+          <span style="font-weight:700;">₹${line.toFixed(2)}</span>
+        </div>`;
+      }).join('');
+
+      updateTotals();
+    }
+
+    function updateTotals() {
+      const subtotal  = Cart.getSubtotal();
+      const discountAmt = appliedDiscount;
+      const discounted  = subtotal - discountAmt;
+      const delivery  = discounted >= 299 ? 0 : 40;
+      const total     = discounted + delivery;
+
+      document.getElementById('ck-subtotal').textContent  = `₹${subtotal.toFixed(2)}`;
+      document.getElementById('ck-delivery').innerHTML    = delivery === 0 ? '<span style="color:var(--sage)">FREE 🎉</span>' : `₹${delivery}`;
+      document.getElementById('ck-total').textContent     = `₹${total.toFixed(2)}`;
+
+      if (discountAmt > 0) {
+        document.getElementById('coupon-row').style.display = 'flex';
+        document.getElementById('ck-discount').textContent  = `-₹${discountAmt.toFixed(2)}`;
+      }
+
+      const freeNotice = document.getElementById('free-delivery-notice');
+      const nudge      = document.getElementById('free-delivery-nudge');
+      if (delivery === 0) {
+        freeNotice.style.display = 'block';
+        nudge.style.display = 'none';
+      } else {
+        freeNotice.style.display = 'none';
+        const remaining = 299 - discounted;
+        nudge.textContent = remaining > 0 ? `Add ₹${remaining.toFixed(0)} more for FREE delivery!` : '';
+        nudge.style.display = remaining > 0 ? 'block' : 'none';
+      }
+    }
+
+    function applyCoupon() {
+      const code = document.getElementById('coupon-input').value.trim().toUpperCase();
+      const msgEl = document.getElementById('coupon-msg');
+      if (code === 'FRESH10') {
+        appliedCoupon   = 'FRESH10';
+        appliedDiscount = Cart.getSubtotal() * 0.10;
+        msgEl.textContent = '✅ FRESH10 applied — 10% off!';
+        msgEl.style.color = 'var(--sage)';
+        msgEl.style.display = 'block';
+        updateTotals();
+      } else if (code === 'FIRST50') {
+        appliedCoupon   = 'FIRST50';
+        appliedDiscount = 50;
+        msgEl.textContent = '✅ FIRST50 applied — ₹50 off!';
+        msgEl.style.color = 'var(--sage)';
+        msgEl.style.display = 'block';
+        updateTotals();
+      } else {
+        msgEl.textContent = '❌ Invalid coupon code.';
+        msgEl.style.color = '#DC2626';
+        msgEl.style.display = 'block';
+      }
+    }
+
+    async function placeOrder() {
+      const btn = document.getElementById('btn-place-order');
+      const errEl = document.getElementById('checkout-error');
+      const successEl = document.getElementById('checkout-success');
+      errEl.style.display = 'none';
+
+      // Validate address
+      const society = document.getElementById('addr-society').value.trim();
+      const apt     = document.getElementById('addr-apt').value.trim();
+      if (!society || !apt) {
+        errEl.textContent = 'Please enter your society name and flat number.';
+        errEl.style.display = 'block';
+        document.getElementById('address-section').scrollIntoView({ behavior:'smooth' });
+        return;
+      }
+
+      if (!Auth.isLoggedIn()) {
+        window.location.href = 'login.html?redirect=checkout.html';
+        return;
+      }
+
+      // WhatsApp order
+      if (selectedPayment === 'whatsapp') {
+        const items = Cart.getAll();
+        const total = Cart.getSubtotal() + Cart.getDeliveryCharge() - appliedDiscount;
+        const text  = `Hi FreshPetal! I want to order:\n` +
+                      items.map(i => `• ${i.name}: ${i.qty}${i.unit_label}`).join('\n') +
+                      `\n\nDelivery: ${society}, Flat ${apt}` +
+                      `\nTotal: ₹${total.toFixed(2)}`;
+        window.open(`https://wa.me/919000000000?text=${encodeURIComponent(text)}`, '_blank');
+        return;
+      }
+
+      btn.disabled = true;
+      btn.textContent = 'Placing order...';
+
+      try {
+        const items = Cart.getAll().map(i => ({ product_id: i.product_id, qty: i.qty }));
+        const delivDate = document.getElementById('delivery-date').value;
+        const notes = document.getElementById('delivery-notes').value.trim();
+        const data = await api.post('/orders', {
+          items,
+          delivery_date: delivDate || null,
+          payment_method: selectedPayment,
+          special_instructions: notes || null,
+          coupon_code: appliedCoupon,
+        });
+
+        successEl.innerHTML = `🎉 Order #${data.order.id} placed! ${data.message}`;
+        successEl.style.display = 'block';
+        Cart.clear();
+        btn.style.display = 'none';
+
+        setTimeout(() => window.location.href = 'dashboard.html', 3000);
+      } catch (err) {
+        errEl.textContent = err.message || 'Order failed. Please try again or order via WhatsApp.';
+        errEl.style.display = 'block';
+        btn.disabled = false;
+        btn.textContent = 'Place Order →';
+      }
+    }
+
+    // Pre-fill address from user profile
+    async function prefillAddress() {
+      if (!Auth.isLoggedIn()) return;
+      try {
+        const data = await api.get('/auth/me');
+        const u = data.user;
+        if (u.society_name || u.tower || u.apt_number) {
+          document.getElementById('addr-society').value = `${u.society_name || ''} ${u.society_area || ''}`.trim();
+          document.getElementById('addr-tower').value   = u.tower || '';
+          document.getElementById('addr-apt').value     = u.apt_number || '';
+        }
+      } catch {}
+    }
+
+    // Set min date
+    const tmr = new Date(); tmr.setDate(tmr.getDate() + 1);
+    document.getElementById('delivery-date').min = tmr.toISOString().split('T')[0];
+    document.getElementById('delivery-date').value = tmr.toISOString().split('T')[0];
+
+    initPage();
+    renderCheckout();
+    prefillAddress();
+  </script>
+</body>
+</html>

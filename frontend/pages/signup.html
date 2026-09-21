@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Create Account — FreshPetal Hyderabad</title>
+  <meta name="description" content="Sign up for FreshPetal and get fresh flowers & pooja essentials delivered to your door every morning in Hyderabad." />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg'><text y='32' font-size='32'>🌸</text></svg>" />
+  <link rel="stylesheet" href="../css/global.css" />
+</head>
+<body>
+  <div id="page-loader" class="page-loader"><div class="loader-petal"></div></div>
+
+  <div class="auth-page">
+    <!-- Visual Panel -->
+    <div class="auth-visual">
+      <div class="auth-visual-emoji">🌹</div>
+      <h2 class="auth-visual-title">Join FreshPetal</h2>
+      <p class="auth-visual-sub">Fresh blooms at your door every morning. Start with ₹49/day — no contracts, cancel anytime.</p>
+      <div class="auth-visual-points">
+        <div class="auth-point">🌸 Choose your own flowers by weight</div>
+        <div class="auth-point">🥥 Coconut, agarbatti & pooja essentials</div>
+        <div class="auth-point">🚚 FREE delivery on all packages</div>
+        <div class="auth-point">📱 Manage everything from your dashboard</div>
+      </div>
+    </div>
+
+    <!-- Form Panel -->
+    <div class="auth-form-panel">
+      <div class="auth-form-card">
+        <a href="../index.html" class="auth-logo-link">
+          <div class="logo-icon">🌸</div>
+          <span class="logo-text">FreshPetal</span>
+        </a>
+
+        <h1 class="auth-page-title">Create Account</h1>
+        <p class="auth-page-sub">Already have one? <a href="login.html" style="color:var(--rose);font-weight:700;">Sign in →</a></p>
+
+        <!-- Step Progress -->
+        <div class="signup-steps" id="signup-steps">
+          <div class="signup-step">
+            <div class="step-circle active" id="sc-1">1</div>
+            <span class="step-label">You</span>
+          </div>
+          <div class="step-line" id="sl-1"></div>
+          <div class="signup-step">
+            <div class="step-circle" id="sc-2">2</div>
+            <span class="step-label">Address</span>
+          </div>
+          <div class="step-line" id="sl-2"></div>
+          <div class="signup-step">
+            <div class="step-circle" id="sc-3">3</div>
+            <span class="step-label">Done</span>
+          </div>
+        </div>
+
+        <!-- Google Signup -->
+        <button class="btn-google" id="btn-google" onclick="googleSignUp()">
+          <svg width="20" height="20" viewBox="0 0 48 48"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/><path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/></svg>
+          Continue with Google
+        </button>
+        <div class="or-divider">or sign up with email</div>
+
+        <!-- STEP 1: Personal Details -->
+        <div id="step-1">
+          <div class="form-row-2">
+            <div class="form-group">
+              <label class="form-label" for="first-name">First Name</label>
+              <input type="text" class="form-control" id="first-name" placeholder="Ravi" required />
+              <div class="form-error" id="err-fname"></div>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="last-name">Last Name</label>
+              <input type="text" class="form-control" id="last-name" placeholder="Kumar" />
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="email">Email Address</label>
+            <input type="email" class="form-control" id="email" placeholder="you@example.com" required autocomplete="email" />
+            <div class="form-error" id="err-email"></div>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="phone">Mobile Number</label>
+            <input type="tel" class="form-control" id="phone" placeholder="9876543210" maxlength="10" pattern="[6-9][0-9]{9}" required />
+            <div class="form-hint">WhatsApp number preferred — we'll send delivery updates here.</div>
+            <div class="form-error" id="err-phone"></div>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="password">Password</label>
+            <div class="password-field">
+              <input type="password" class="form-control" id="password" placeholder="Min 6 characters" required />
+              <button type="button" class="toggle-password" onclick="togglePwd('password')">👁️</button>
+            </div>
+            <div class="form-error" id="err-password"></div>
+          </div>
+          <div class="form-error" id="err-step1" style="margin-bottom:14px;padding:10px;border-radius:var(--radius-sm);background:#FEE2E2;"></div>
+          <button class="btn btn-rose w-full" onclick="goStep2()">Next: Your Address →</button>
+        </div>
+
+        <!-- STEP 2: Address -->
+        <div id="step-2" style="display:none;">
+          <div class="form-group">
+            <label class="form-label" for="society-select">Your Society / Apartment</label>
+            <select class="form-control" id="society-select">
+              <option value="">-- Select your society --</option>
+            </select>
+            <div class="form-hint">Not listed? We'll nominate it soon!</div>
+          </div>
+          <div class="form-row-2">
+            <div class="form-group">
+              <label class="form-label" for="tower">Tower / Block</label>
+              <input type="text" class="form-control" id="tower" placeholder="e.g. Tower A" />
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="apt-number">Flat / Door No.</label>
+              <input type="text" class="form-control" id="apt-number" placeholder="e.g. 403" />
+            </div>
+          </div>
+          <div style="background:var(--sage-pale);border-radius:var(--radius-sm);padding:14px;margin-bottom:20px;">
+            <p style="font-size:0.85rem;color:var(--sage);font-weight:700;margin-bottom:6px;">📍 We currently deliver in:</p>
+            <p style="font-size:0.82rem;color:var(--sage);">Uppal, Nagole, LB Nagar, Vanasthalipuram, Dilsukhnagar, Attapur, Rajendranagar, Shamshabad & more.</p>
+          </div>
+          <div class="form-error" id="err-step2" style="margin-bottom:14px;padding:10px;border-radius:var(--radius-sm);background:#FEE2E2;"></div>
+          <div style="display:flex;gap:10px;">
+            <button class="btn btn-rose-outline" onclick="goStep(1)">← Back</button>
+            <button class="btn btn-rose w-full" id="btn-signup" onclick="handleSignup()">Create My Account 🌸</button>
+          </div>
+        </div>
+
+        <!-- STEP 3: Success -->
+        <div id="step-3" style="display:none;text-align:center;padding:20px 0;">
+          <div style="font-size:4rem;margin-bottom:16px;">🎉</div>
+          <h3>Welcome to FreshPetal!</h3>
+          <p style="color:var(--text-muted);margin:10px 0 24px;">Your account is ready. Let's set up your first subscription!</p>
+          <a href="subscriptions.html" class="btn btn-rose btn-lg w-full">View Subscription Plans →</a>
+          <a href="dashboard.html" class="btn btn-rose-outline w-full mt-2" style="display:flex;align-items:center;justify-content:center;">Go to My Dashboard</a>
+        </div>
+
+        <div class="auth-terms">
+          By creating an account, you agree to our <a href="#">Terms</a> & <a href="#">Privacy Policy</a>.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="../js/app.js"></script>
+  <script>
+    if (Auth.isLoggedIn()) window.location.href = 'dashboard.html';
+    hideLoader();
+
+    let currentStep = 1;
+    let societiesList = [];
+
+    async function loadSocieties() {
+      try {
+        const data = await api.get('/societies');
+        societiesList = data.societies || [];
+      } catch {
+        societiesList = [
+          { id:1, name:'Aparna Sarovar', area:'Nagole' },
+          { id:2, name:'NSL Nakshatra', area:'Uppal' },
+          { id:3, name:'Hallmark Sathvika', area:'Uppal' },
+          { id:4, name:'Sri Aditya Windsor', area:'LB Nagar' },
+          { id:5, name:'Vasavi MPM Grand', area:'Vanasthalipuram' },
+          { id:6, name:'Fortune Grandiose', area:'Rajendranagar' },
+          { id:7, name:'Rainbow Vistas', area:'Attapur' },
+        ];
+      }
+      const sel = document.getElementById('society-select');
+      societiesList.forEach(s => {
+        const opt = document.createElement('option');
+        opt.value = s.id;
+        opt.textContent = `${s.name} — ${s.area}`;
+        sel.appendChild(opt);
+      });
+      // Add "other"
+      const other = document.createElement('option');
+      other.value = '0'; other.textContent = 'My society is not listed';
+      sel.appendChild(other);
+    }
+
+    function goStep(n) {
+      document.getElementById(`step-${currentStep}`).style.display = 'none';
+      currentStep = n;
+      document.getElementById(`step-${n}`).style.display = 'block';
+      ['sc-1','sc-2','sc-3'].forEach((id, i) => {
+        const el = document.getElementById(id);
+        el.className = i + 1 < n ? 'step-circle done' : i + 1 === n ? 'step-circle active' : 'step-circle';
+      });
+      ['sl-1','sl-2'].forEach((id, i) => {
+        document.getElementById(id).className = i + 1 < n ? 'step-line done' : 'step-line';
+      });
+    }
+
+    function goStep2() {
+      // Validate step 1
+      const fname = document.getElementById('first-name').value.trim();
+      const email = document.getElementById('email').value.trim();
+      const phone = document.getElementById('phone').value.trim();
+      const pwd   = document.getElementById('password').value;
+      const errEl = document.getElementById('err-step1');
+
+      if (!fname) { errEl.textContent = 'Please enter your first name.'; errEl.style.display = 'block'; return; }
+      if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { errEl.textContent = 'Please enter a valid email.'; errEl.style.display = 'block'; return; }
+      if (!phone || !/^[6-9]\d{9}$/.test(phone)) { errEl.textContent = 'Enter a valid 10-digit mobile number.'; errEl.style.display = 'block'; return; }
+      if (pwd.length < 6) { errEl.textContent = 'Password must be at least 6 characters.'; errEl.style.display = 'block'; return; }
+      errEl.style.display = 'none';
+      goStep(2);
+    }
+
+    async function handleSignup() {
+      const btn    = document.getElementById('btn-signup');
+      const errEl  = document.getElementById('err-step2');
+      btn.disabled = true;
+      btn.textContent = 'Creating account...';
+      errEl.style.display = 'none';
+
+      const fname     = document.getElementById('first-name').value.trim();
+      const lname     = document.getElementById('last-name').value.trim();
+      const email     = document.getElementById('email').value.trim();
+      const phone     = document.getElementById('phone').value.trim();
+      const pwd       = document.getElementById('password').value;
+      const socId     = document.getElementById('society-select').value;
+      const tower     = document.getElementById('tower').value.trim();
+      const aptNum    = document.getElementById('apt-number').value.trim();
+
+      try {
+        const data = await api.post('/auth/signup', {
+          name: `${fname} ${lname}`.trim(),
+          email, phone, password: pwd,
+          society_id: socId && socId !== '0' ? parseInt(socId) : null,
+          tower, apt_number: aptNum
+        });
+        Auth.setSession(data.token, data.user);
+        goStep(3);
+      } catch (err) {
+        errEl.textContent = err.message || 'Signup failed. Please try again.';
+        errEl.style.display = 'block';
+        btn.disabled = false;
+        btn.textContent = 'Create My Account 🌸';
+      }
+    }
+
+    function googleSignUp() {
+      showToast('Google Sign-Up coming soon! Please use email signup for now.', 'info');
+    }
+
+    function togglePwd(id) {
+      const i = document.getElementById(id);
+      i.type = i.type === 'password' ? 'text' : 'password';
+    }
+
+    loadSocieties();
+  </script>
+</body>
+</html>

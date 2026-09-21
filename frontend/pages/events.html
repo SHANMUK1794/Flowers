@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Events & Functions — FreshPetal Hyderabad</title>
+  <meta name="description" content="Book bulk fresh flowers for weddings, housewarming, Satyanarayan puja, birthdays & all events in Hyderabad. Book 24h in advance. Free delivery above ₹499." />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg'><text y='32' font-size='32'>🌸</text></svg>" />
+  <link rel="stylesheet" href="../css/global.css" />
+</head>
+<body>
+  <div id="page-loader" class="page-loader"><div class="loader-petal"></div></div>
+  <div id="header-mount"></div>
+
+  <!-- Hero -->
+  <section class="event-hero">
+    <div class="container event-hero-inner">
+      <div>
+        <div class="cutoff-timer">
+          ⏰ Book by 6 PM for <span class="countdown" id="cutoff-countdown">—</span> next-day delivery
+        </div>
+        <span class="section-kicker">Events & Functions</span>
+        <h1 style="margin:10px 0 16px;">Flowers for Every<br>Occasion in Hyderabad</h1>
+        <p style="color:var(--text-muted);font-size:1.05rem;max-width:480px;margin-bottom:28px;">
+          Weddings, house warmings, Satyanarayan puja, namkaran, birthdays or any function — we supply bulk fresh flowers to your venue or doorstep.
+        </p>
+        <div style="display:flex;gap:12px;flex-wrap:wrap;">
+          <a href="#booking-form" class="btn btn-saffron btn-lg">📋 Book Now</a>
+          <a href="https://wa.me/919000000000?text=Hi! I need flowers for an event." class="btn btn-whatsapp" target="_blank">💬 WhatsApp Us</a>
+        </div>
+        <div style="margin-top:28px;padding:16px;background:var(--saffron-pale);border-radius:var(--radius-md);display:flex;align-items:center;gap:12px;max-width:420px;">
+          <span style="font-size:1.5rem;">🚚</span>
+          <div>
+            <div style="font-family:var(--font-head);font-weight:800;color:var(--saffron);">Free delivery above ₹499</div>
+            <div style="font-size:0.82rem;color:var(--saffron);">₹40 delivery on smaller orders</div>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class="card" style="padding:28px;">
+          <h3 style="margin-bottom:20px;">Popular Occasions</h3>
+          <div style="display:flex;flex-direction:column;gap:12px;">
+            <div style="display:flex;align-items:center;gap:14px;padding:12px;background:var(--cream);border-radius:var(--radius-sm);cursor:pointer;" onclick="selectOccasion(this, 'Griha Pravesh')">
+              <span style="font-size:1.8rem;">🏠</span>
+              <div>
+                <div style="font-family:var(--font-head);font-weight:700;">Griha Pravesh</div>
+                <div style="font-size:0.8rem;color:var(--text-muted);">House warming ceremony</div>
+              </div>
+            </div>
+            <div style="display:flex;align-items:center;gap:14px;padding:12px;background:var(--cream);border-radius:var(--radius-sm);cursor:pointer;" onclick="selectOccasion(this, 'Satyanarayan Puja')">
+              <span style="font-size:1.8rem;">🪔</span>
+              <div>
+                <div style="font-family:var(--font-head);font-weight:700;">Satyanarayan Puja</div>
+                <div style="font-size:0.8rem;color:var(--text-muted);">Complete pooja setup</div>
+              </div>
+            </div>
+            <div style="display:flex;align-items:center;gap:14px;padding:12px;background:var(--cream);border-radius:var(--radius-sm);cursor:pointer;" onclick="selectOccasion(this, 'Birthday / Anniversary')">
+              <span style="font-size:1.8rem;">🎂</span>
+              <div>
+                <div style="font-family:var(--font-head);font-weight:700;">Birthday / Anniversary</div>
+                <div style="font-size:0.8rem;color:var(--text-muted);">Bouquets, decor, garlands</div>
+              </div>
+            </div>
+            <div style="display:flex;align-items:center;gap:14px;padding:12px;background:var(--cream);border-radius:var(--radius-sm);cursor:pointer;" onclick="selectOccasion(this, 'Navratri / Festival')">
+              <span style="font-size:1.8rem;">🎊</span>
+              <div>
+                <div style="font-family:var(--font-head);font-weight:700;">Navratri / Festival</div>
+                <div style="font-size:0.8rem;color:var(--text-muted);">Bulk flowers & decor</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Occasion Packages -->
+  <section class="section">
+    <div class="container">
+      <div class="text-center" style="margin-bottom:50px;">
+        <span class="section-kicker">Ready Packs</span>
+        <h2>Event Flower Packages</h2>
+        <p class="section-sub">Pre-designed packages for common occasions — or build your own below</p>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:24px;">
+        <div class="card" style="padding:28px;text-align:center;">
+          <div style="font-size:3rem;margin-bottom:14px;">🏠</div>
+          <h3>Griha Pravesh Bundle</h3>
+          <div style="font-size:1.8rem;font-weight:900;font-family:var(--font-head);color:var(--rose);margin:12px 0;">₹1,499</div>
+          <ul style="text-align:left;list-style:none;display:flex;flex-direction:column;gap:8px;margin-bottom:20px;font-size:0.88rem;">
+            <li>✓ 1kg mixed flower garlands</li>
+            <li>✓ 500g loose flowers (rose+genda)</li>
+            <li>✓ 6 feet door toran (mango+genda)</li>
+            <li>✓ 2 coconuts + complete pooja kit</li>
+            <li>✓ 5 ft marigold garland for deity</li>
+          </ul>
+          <button class="btn btn-rose w-full" onclick="document.getElementById('occasion-input').value='Griha Pravesh';document.getElementById('booking-form').scrollIntoView({behavior:'smooth'})">Book This Pack</button>
+        </div>
+        <div class="card" style="padding:28px;text-align:center;border-color:var(--saffron);box-shadow:0 8px 32px rgba(232,136,42,0.15);">
+          <div style="font-size:3rem;margin-bottom:14px;">🪔</div>
+          <h3>Satyanarayan Puja Kit</h3>
+          <div style="font-size:1.8rem;font-weight:900;font-family:var(--font-head);color:var(--saffron);margin:12px 0;">₹899</div>
+          <ul style="text-align:left;list-style:none;display:flex;flex-direction:column;gap:8px;margin-bottom:20px;font-size:0.88rem;">
+            <li>✓ 500g mixed sacred flowers</li>
+            <li>✓ 3 coconuts</li>
+            <li>✓ 4 ft jasmine garland</li>
+            <li>✓ Agarbatti, camphor, turmeric</li>
+            <li>✓ Banana leaf, mango leaves</li>
+            <li>✓ Doob grass, kumkum pack</li>
+          </ul>
+          <button class="btn btn-saffron w-full" onclick="document.getElementById('occasion-input').value='Satyanarayan Puja';document.getElementById('booking-form').scrollIntoView({behavior:'smooth'})">Book This Pack</button>
+        </div>
+        <div class="card" style="padding:28px;text-align:center;">
+          <div style="font-size:3rem;margin-bottom:14px;">💐</div>
+          <h3>Custom Event Bundle</h3>
+          <div style="font-size:1.8rem;font-weight:900;font-family:var(--font-head);color:var(--sage);margin:12px 0;">Custom</div>
+          <ul style="text-align:left;list-style:none;display:flex;flex-direction:column;gap:8px;margin-bottom:20px;font-size:0.88rem;">
+            <li>✓ You choose the flowers</li>
+            <li>✓ Any quantity from 50g</li>
+            <li>✓ Pooja items optional</li>
+            <li>✓ Garlands by foot</li>
+            <li>✓ Free delivery above ₹499</li>
+          </ul>
+          <a href="shop.html" class="btn btn-sage w-full">Build in Shop →</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Booking Form -->
+  <section class="section" style="background:var(--blush);" id="booking-form">
+    <div class="container" style="max-width:720px;">
+      <div class="text-center" style="margin-bottom:40px;">
+        <span class="section-kicker">Book Your Event</span>
+        <h2>Request Event Flowers</h2>
+        <p class="section-sub">Fill this out or WhatsApp us directly. We'll confirm within 2 hours.</p>
+      </div>
+      <div class="card" style="padding:36px;">
+        <form id="event-form" onsubmit="submitEventBooking(event)">
+          <div class="form-row-2">
+            <div class="form-group">
+              <label class="form-label">Your Name *</label>
+              <input type="text" class="form-control" id="evt-name" required placeholder="Sunitha Reddy" />
+            </div>
+            <div class="form-group">
+              <label class="form-label">Mobile / WhatsApp *</label>
+              <input type="tel" class="form-control" id="evt-phone" required placeholder="9876543210" />
+            </div>
+          </div>
+          <div class="form-row-2">
+            <div class="form-group">
+              <label class="form-label">Occasion *</label>
+              <input type="text" class="form-control" id="occasion-input" required placeholder="e.g. Griha Pravesh, Birthday" />
+            </div>
+            <div class="form-group">
+              <label class="form-label">Event Date *</label>
+              <input type="date" class="form-control" id="evt-date" required />
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Delivery Location / Society</label>
+            <input type="text" class="form-control" id="evt-location" placeholder="e.g. Aparna Sarovar, Nagole" />
+          </div>
+          <div class="form-group">
+            <label class="form-label">What flowers & items do you need?</label>
+            <textarea class="form-control" id="evt-message" rows="4" placeholder="e.g. 2kg rose + 1kg genda + 10ft marigold garland + 5 coconuts + agarbatti..."></textarea>
+          </div>
+          <div style="background:var(--saffron-pale);border-radius:var(--radius-sm);padding:12px 16px;margin-bottom:20px;font-size:0.85rem;color:var(--saffron);font-weight:700;">
+            ⏰ Please book at least <strong>24 hours in advance</strong>. Same-day orders available on WhatsApp subject to stock.
+          </div>
+          <div id="event-form-err" class="form-error" style="margin-bottom:12px;padding:10px;background:#FEE2E2;border-radius:var(--radius-sm);"></div>
+          <div id="event-form-success" style="display:none;background:var(--sage-pale);color:var(--sage);padding:16px;border-radius:var(--radius-sm);margin-bottom:12px;font-weight:700;text-align:center;">
+            🎉 Booking received! We'll WhatsApp you a confirmation within 2 hours.
+          </div>
+          <button type="submit" class="btn btn-rose w-full btn-lg" id="btn-event-submit">Send Booking Request →</button>
+          <div style="text-align:center;margin-top:16px;font-size:0.88rem;color:var(--text-muted);">
+            Or call us directly: <a href="tel:+919000000000" style="color:var(--rose);font-weight:700;">+91 90000 00000</a>
+          </div>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <div id="footer-mount"></div>
+
+  <script src="../js/app.js"></script>
+  <script>
+    // Cutoff countdown
+    function updateCutoff() {
+      const now = new Date();
+      const cutoff = new Date();
+      cutoff.setHours(18, 0, 0, 0);
+      if (now > cutoff) cutoff.setDate(cutoff.getDate() + 1);
+      const diff = cutoff - now;
+      const h = Math.floor(diff / 3600000);
+      const m = Math.floor((diff % 3600000) / 60000);
+      document.getElementById('cutoff-countdown').textContent = `${h}h ${m}m`;
+    }
+    updateCutoff();
+    setInterval(updateCutoff, 60000);
+
+    // Set min date for event to tomorrow
+    const tomorrow = new Date(); tomorrow.setDate(tomorrow.getDate() + 1);
+    document.getElementById('evt-date').min = tomorrow.toISOString().split('T')[0];
+
+    function selectOccasion(el, name) {
+      document.getElementById('occasion-input').value = name;
+      document.getElementById('booking-form').scrollIntoView({ behavior:'smooth' });
+    }
+
+    async function submitEventBooking(e) {
+      e.preventDefault();
+      const btn = document.getElementById('btn-event-submit');
+      const errEl = document.getElementById('event-form-err');
+      const successEl = document.getElementById('event-form-success');
+      btn.disabled = true;
+      btn.textContent = 'Sending...';
+      errEl.style.display = 'none';
+
+      const name     = document.getElementById('evt-name').value.trim();
+      const phone    = document.getElementById('evt-phone').value.trim();
+      const occasion = document.getElementById('occasion-input').value.trim();
+      const date     = document.getElementById('evt-date').value;
+      const location = document.getElementById('evt-location').value.trim();
+      const message  = document.getElementById('evt-message').value.trim();
+
+      try {
+        await api.post('/contact', {
+          name, phone,
+          enquiry_type: 'event',
+          message: `Event: ${occasion} | Date: ${date} | Location: ${location} | Details: ${message}`
+        });
+        successEl.style.display = 'block';
+        document.getElementById('event-form').reset();
+      } catch (err) {
+        errEl.textContent = err.message || 'Could not send. Please WhatsApp us directly.';
+        errEl.style.display = 'block';
+      } finally {
+        btn.disabled = false;
+        btn.textContent = 'Send Booking Request →';
+      }
+    }
+
+    initPage('events');
+  </script>
+</body>
+</html>

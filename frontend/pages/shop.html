@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Shop Fresh Flowers & Pooja Essentials — FreshPetal Hyderabad</title>
+  <meta name="description" content="Buy fresh roses, jasmine banti, chamanti, genda, pooja essentials & garlands online. Order from 50g. Delivery to Uppal, LB Nagar, Dilsukhnagar & more in Hyderabad." />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg'><text y='32' font-size='32'>🌸</text></svg>" />
+  <link rel="stylesheet" href="../css/global.css" />
+  <style>
+    .mobile-filter-toggle { display: none; }
+    @media(max-width:768px) {
+      .shop-layout { grid-template-columns: 1fr; }
+      .shop-sidebar { display: none; position: fixed; inset: 0; z-index: 900; background: white; overflow-y: auto; padding: 24px; border-radius: 0; }
+      .shop-sidebar.mobile-open { display: block; }
+      .mobile-filter-toggle { display: flex; align-items: center; gap: 8px; }
+    }
+    .search-bar { position: relative; margin-bottom: 20px; }
+    .search-bar input { padding-left: 40px; }
+    .search-bar::before { content: '🔍'; position: absolute; left: 14px; top: 50%; transform: translateY(-50%); font-size: 0.9rem; }
+    .product-empty { text-align: center; padding: 80px 20px; color: var(--text-muted); }
+    .sticky-bar {
+      position: fixed; bottom: 0; left: 0; right: 0;
+      background: white; border-top: 2px solid var(--border-light);
+      padding: 12px 20px; z-index: 800;
+      display: none; align-items: center; justify-content: space-between;
+      gap: 12px; box-shadow: 0 -4px 20px rgba(0,0,0,0.1);
+    }
+    .sticky-bar.visible { display: flex; }
+    .free-delivery-banner {
+      background: var(--sage);
+      color: white;
+      text-align: center;
+      padding: 10px;
+      font-family: var(--font-head);
+      font-size: 0.85rem;
+      font-weight: 700;
+    }
+    .free-delivery-banner.earned {
+      background: var(--rose);
+    }
+  </style>
+</head>
+<body>
+  <div id="page-loader" class="page-loader"><div class="loader-petal"></div></div>
+  <div id="header-mount"></div>
+
+  <!-- Shop Free Delivery Bar -->
+  <div class="free-delivery-banner" id="shop-delivery-bar">
+    🚚 Free delivery on orders above ₹299 · One-time orders: ₹40 delivery
+  </div>
+
+  <!-- ===================== SHOP HERO ===================== -->
+  <section style="background:linear-gradient(135deg,var(--cream),var(--blush));padding:40px 0 20px;">
+    <div class="container">
+      <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px;">
+        <div>
+          <span class="section-kicker">FreshPetal Shop</span>
+          <h1 style="font-size:1.9rem;margin-top:4px;">Fresh Flowers & Pooja Essentials</h1>
+          <p style="color:var(--text-muted);font-size:0.92rem;margin-top:6px;">Sourced daily · Order from 50g · Delivered by 6 AM</p>
+        </div>
+        <button class="btn btn-rose mobile-filter-toggle" id="mobile-filter-btn" onclick="toggleMobileFilter()">
+          🔧 Filters
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== SHOP LAYOUT ===================== -->
+  <section style="padding:30px 0 80px;">
+    <div class="container">
+      <div class="shop-layout">
+
+        <!-- Sidebar Filters -->
+        <aside class="shop-sidebar" id="shop-sidebar">
+          <button class="btn btn-rose-outline btn-sm" style="display:none;margin-bottom:20px;" id="close-filter-btn" onclick="toggleMobileFilter()">✕ Close Filters</button>
+
+          <div class="search-bar">
+            <input type="text" class="form-control" id="search-input" placeholder="Search flowers, pooja items..." oninput="handleSearch(this.value)" />
+          </div>
+
+          <div style="margin-bottom:24px;">
+            <div class="sidebar-title">Categories</div>
+            <div class="sidebar-filter-list">
+              <button class="sidebar-filter-btn active" data-cat="all" onclick="filterByCat(this, 'all')">
+                All Products <span class="filter-count" id="count-all">0</span>
+              </button>
+              <button class="sidebar-filter-btn" data-cat="fresh-flowers" onclick="filterByCat(this, 'fresh-flowers')">
+                🌸 Fresh Flowers <span class="filter-count" id="count-fresh-flowers">0</span>
+              </button>
+              <button class="sidebar-filter-btn" data-cat="pooja-essentials" onclick="filterByCat(this, 'pooja-essentials')">
+                🪔 Pooja Essentials <span class="filter-count" id="count-pooja-essentials">0</span>
+              </button>
+              <button class="sidebar-filter-btn" data-cat="garlands" onclick="filterByCat(this, 'garlands')">
+                💐 Garlands <span class="filter-count" id="count-garlands">0</span>
+              </button>
+              <button class="sidebar-filter-btn" data-cat="bundles" onclick="filterByCat(this, 'bundles')">
+                📦 Bundles <span class="filter-count" id="count-bundles">0</span>
+              </button>
+            </div>
+          </div>
+
+          <div style="margin-bottom:24px;">
+            <div class="sidebar-title">Quick Qty Filter</div>
+            <div style="display:flex;flex-direction:column;gap:8px;">
+              <label style="display:flex;align-items:center;gap:10px;font-size:0.88rem;cursor:pointer;">
+                <input type="radio" name="qty-filter" value="all" checked onchange="filterByQty(this.value)" /> All quantities
+              </label>
+              <label style="display:flex;align-items:center;gap:10px;font-size:0.88rem;cursor:pointer;">
+                <input type="radio" name="qty-filter" value="50" onchange="filterByQty(this.value)" /> Min 50g / 1 piece
+              </label>
+              <label style="display:flex;align-items:center;gap:10px;font-size:0.88rem;cursor:pointer;">
+                <input type="radio" name="qty-filter" value="100" onchange="filterByQty(this.value)" /> 100g+
+              </label>
+            </div>
+          </div>
+
+          <div>
+            <div class="sidebar-title">Sort By</div>
+            <select class="form-control" id="sort-select" onchange="sortProducts(this.value)">
+              <option value="default">Default</option>
+              <option value="price-asc">Price: Low to High</option>
+              <option value="price-desc">Price: High to Low</option>
+              <option value="name-asc">Name: A to Z</option>
+            </select>
+          </div>
+        </aside>
+
+        <!-- Products Area -->
+        <div>
+          <div class="shop-header">
+            <span class="shop-result-count" id="result-count">Loading...</span>
+            <select class="shop-sort-select" onchange="sortProducts(this.value)">
+              <option value="default">Sort: Default</option>
+              <option value="price-asc">Price ↑</option>
+              <option value="price-desc">Price ↓</option>
+            </select>
+          </div>
+          <div class="products-grid" id="products-grid">
+            <div style="grid-column:1/-1;text-align:center;padding:60px;color:var(--text-muted);">
+              <div style="font-size:2rem;margin-bottom:12px;">🌸</div>Loading fresh flowers...
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Sticky Cart Bar -->
+  <div class="sticky-bar" id="sticky-bar">
+    <div>
+      <div style="font-family:var(--font-head);font-size:0.9rem;font-weight:800;" id="sticky-subtotal">Cart: ₹0</div>
+      <div style="font-size:0.78rem;color:var(--text-muted);" id="sticky-delivery-label">+ ₹40 delivery</div>
+    </div>
+    <a href="../frontend/pages/checkout.html" class="btn btn-rose">Checkout →</a>
+  </div>
+
+  <div id="footer-mount"></div>
+
+  <script src="../js/app.js"></script>
+  <script>
+    let allProducts = [];
+    let filteredProducts = [];
+    let currentCat = 'all';
+    let searchTerm = '';
+
+    async function loadProducts() {
+      try {
+        const data = await api.get('/products');
+        allProducts = data.products || [];
+      } catch (err) {
+        // Fallback data if backend not running
+        allProducts = [
+          { id:1, name:'Rose (Gulab)', name_telugu:'గులాబీ', image_emoji:'🌹', price_per_unit:0.60, unit_label:'g', is_by_weight:true, min_qty:50, step_qty:50, max_qty:2000, category_slug:'fresh-flowers', description:'Fresh red/pink roses. Perfect for mandir & pooja.', in_stock:true },
+          { id:2, name:'Jasmine Banti (Mogra)', name_telugu:'మొగర', image_emoji:'🤍', price_per_unit:0.50, unit_label:'g', is_by_weight:true, min_qty:50, step_qty:50, max_qty:2000, category_slug:'fresh-flowers', description:'Fragrant white mogra, ideal for hair & pooja.', in_stock:true },
+          { id:3, name:'Chamanti (Chrysanthemum)', name_telugu:'చామంతి', image_emoji:'🌼', price_per_unit:0.30, unit_label:'g', is_by_weight:true, min_qty:50, step_qty:50, max_qty:2000, category_slug:'fresh-flowers', description:'Fresh yellow/white chamanti. Daily pooja staple.', in_stock:true },
+          { id:4, name:'Genda (Marigold)', name_telugu:'బంతి', image_emoji:'🟡', price_per_unit:0.22, unit_label:'g', is_by_weight:true, min_qty:50, step_qty:50, max_qty:5000, category_slug:'fresh-flowers', description:'Bright marigold. Festival favorite.', in_stock:true },
+          { id:5, name:'Kanakambaram', name_telugu:'కనకాంబరం', image_emoji:'🟠', price_per_unit:0.70, unit_label:'g', is_by_weight:true, min_qty:50, step_qty:50, max_qty:2000, category_slug:'fresh-flowers', description:'Bright orange kanakambaram. Highly fragrant.', in_stock:true },
+          { id:6, name:'Tuberose (Sugandhrajam)', name_telugu:'సుగంధరాజం', image_emoji:'🕊️', price_per_unit:0.40, unit_label:'g', is_by_weight:true, min_qty:50, step_qty:50, max_qty:2000, category_slug:'fresh-flowers', description:'Tall white tuberose. Heavenly fragrance.', in_stock:true },
+          { id:7, name:'Lotus (Kamal)', name_telugu:'కమలం', image_emoji:'🪷', price_per_unit:15.00, unit_label:'piece', is_by_weight:false, min_qty:1, step_qty:1, max_qty:50, category_slug:'fresh-flowers', description:'Sacred pink lotus. Auspicious for all poojas.', in_stock:true },
+          { id:8, name:'Lily', name_telugu:'లిల్లీ', image_emoji:'🌷', price_per_unit:12.00, unit_label:'piece', is_by_weight:false, min_qty:1, step_qty:1, max_qty:20, category_slug:'fresh-flowers', description:'Exotic white lilies for home decor.', in_stock:true },
+          { id:9, name:'Gerbera', name_telugu:'జర్బెరా', image_emoji:'🌸', price_per_unit:8.00, unit_label:'piece', is_by_weight:false, min_qty:1, step_qty:1, max_qty:50, category_slug:'fresh-flowers', description:'Vibrant gerberas in mixed colours.', in_stock:true },
+          { id:10, name:'Coconut (Kobbari)', name_telugu:'కొబ్బరికాయ', image_emoji:'🥥', price_per_unit:20.00, unit_label:'piece', is_by_weight:false, min_qty:1, step_qty:1, max_qty:20, category_slug:'pooja-essentials', description:'Fresh whole coconut. Essential for all rituals.', in_stock:true },
+          { id:11, name:'Agarbatti (Incense)', name_telugu:'అగరబత్తి', image_emoji:'🕯️', price_per_unit:25.00, unit_label:'pack', is_by_weight:false, min_qty:1, step_qty:1, max_qty:10, category_slug:'pooja-essentials', description:'Premium flora incense sticks (20 sticks/pack).', in_stock:true },
+          { id:12, name:'Camphor (Kapoor)', name_telugu:'కర్పూరం', image_emoji:'⚪', price_per_unit:15.00, unit_label:'pack', is_by_weight:false, min_qty:1, step_qty:1, max_qty:10, category_slug:'pooja-essentials', description:'Pure camphor tablets (10/pack).', in_stock:true },
+          { id:13, name:'Turmeric Powder', name_telugu:'పసుపు', image_emoji:'🟡', price_per_unit:20.00, unit_label:'pack', is_by_weight:false, min_qty:1, step_qty:1, max_qty:10, category_slug:'pooja-essentials', description:'Pure haldi powder (100g pack).', in_stock:true },
+          { id:14, name:'Kumkum (Sindoor)', name_telugu:'కుంకుమ', image_emoji:'🔴', price_per_unit:10.00, unit_label:'pack', is_by_weight:false, min_qty:1, step_qty:1, max_qty:10, category_slug:'pooja-essentials', description:'Auspicious red kumkum (20g pack).', in_stock:true },
+          { id:15, name:'Mango Leaves', name_telugu:'మామిడి ఆకులు', image_emoji:'🌿', price_per_unit:10.00, unit_label:'bunch', is_by_weight:false, min_qty:1, step_qty:1, max_qty:10, category_slug:'pooja-essentials', description:'Fresh mango leaves — 12 leaves/bunch.', in_stock:true },
+          { id:16, name:'Banana Leaf', name_telugu:'అరటి ఆకు', image_emoji:'🍃', price_per_unit:5.00, unit_label:'piece', is_by_weight:false, min_qty:1, step_qty:1, max_qty:10, category_slug:'pooja-essentials', description:'Fresh banana leaf for rituals.', in_stock:true },
+          { id:17, name:'Doob Grass (Durva)', name_telugu:'గరిక', image_emoji:'🌱', price_per_unit:15.00, unit_label:'50g', is_by_weight:false, min_qty:1, step_qty:1, max_qty:10, category_slug:'pooja-essentials', description:'Fresh durva grass for Ganesha pooja.', in_stock:true },
+          { id:18, name:'Marigold Garland', name_telugu:'గెండాపూల దండ', image_emoji:'🔆', price_per_unit:15.00, unit_label:'foot', is_by_weight:false, min_qty:1, step_qty:1, max_qty:50, category_slug:'garlands', description:'Hand-stitched marigold garland.', in_stock:true },
+          { id:19, name:'Jasmine Veni', name_telugu:'మొగర వేణి', image_emoji:'🤍', price_per_unit:25.00, unit_label:'foot', is_by_weight:false, min_qty:1, step_qty:1, max_qty:20, category_slug:'garlands', description:'Traditional jasmine veni. Fragrant & fresh.', in_stock:true },
+          { id:20, name:'Mixed Flower Garland', name_telugu:'మిశ్రమ దండ', image_emoji:'🌺', price_per_unit:20.00, unit_label:'foot', is_by_weight:false, min_qty:1, step_qty:1, max_qty:50, category_slug:'garlands', description:'Rose + chamanti + marigold garland.', in_stock:true },
+          { id:21, name:'Door Toran', name_telugu:'తోరణం', image_emoji:'🎋', price_per_unit:30.00, unit_label:'foot', is_by_weight:false, min_qty:3, step_qty:1, max_qty:20, category_slug:'garlands', description:'Auspicious mango leaf + genda door toran.', in_stock:true },
+        ];
+      }
+      // Count categories
+      updateCategoryCounts();
+      applyFilters();
+    }
+
+    function updateCategoryCounts() {
+      document.getElementById('count-all').textContent = allProducts.length;
+      ['fresh-flowers','pooja-essentials','garlands','bundles'].forEach(cat => {
+        const el = document.getElementById(`count-${cat}`);
+        if (el) el.textContent = allProducts.filter(p => p.category_slug === cat).length;
+      });
+    }
+
+    function filterByCat(btn, cat) {
+      currentCat = cat;
+      document.querySelectorAll('.sidebar-filter-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      applyFilters();
+    }
+
+    function handleSearch(val) {
+      searchTerm = val.toLowerCase().trim();
+      applyFilters();
+    }
+
+    function filterByQty(val) { applyFilters(); }
+    function sortProducts(val) { applyFilters(val); }
+
+    function applyFilters(sort = 'default') {
+      let result = [...allProducts];
+      if (currentCat !== 'all') result = result.filter(p => p.category_slug === currentCat);
+      if (searchTerm) result = result.filter(p =>
+        p.name.toLowerCase().includes(searchTerm) || (p.name_telugu || '').includes(searchTerm)
+      );
+      const sortVal = sort || document.getElementById('sort-select')?.value || 'default';
+      if (sortVal === 'price-asc')  result.sort((a, b) => a.price_per_unit - b.price_per_unit);
+      if (sortVal === 'price-desc') result.sort((a, b) => b.price_per_unit - a.price_per_unit);
+      if (sortVal === 'name-asc')   result.sort((a, b) => a.name.localeCompare(b.name));
+
+      filteredProducts = result;
+      renderProducts(result);
+    }
+
+    const cartQtys = {}; // track current qty in UI per product
+
+    function renderProducts(products) {
+      const grid = document.getElementById('products-grid');
+      const countEl = document.getElementById('result-count');
+      countEl.textContent = `${products.length} product${products.length !== 1 ? 's' : ''}`;
+
+      if (!products.length) {
+        grid.innerHTML = `<div class="product-empty" style="grid-column:1/-1">
+          <div style="font-size:3rem;margin-bottom:12px;">🔍</div>
+          <p>No products found. Try a different search or category.</p>
+        </div>`;
+        return;
+      }
+
+      grid.innerHTML = products.map(p => {
+        const priceLabel = p.is_by_weight
+          ? `₹${(p.price_per_unit * 50).toFixed(0)} / 50g`
+          : `₹${p.price_per_unit} / ${p.unit_label}`;
+        const minLabel = p.is_by_weight ? `Min: ${p.min_qty}g` : `Min: ${p.min_qty} ${p.unit_label}`;
+        const savedQty = cartQtys[p.id] || p.min_qty;
+
+        return `
+          <div class="product-card" id="pcard-${p.id}">
+            <div class="product-thumb">
+              <span>${p.image_emoji || '🌸'}</span>
+              ${p.is_by_weight ? `<span class="badge badge-rose product-badge">By Weight</span>` : ''}
+            </div>
+            <div class="product-body">
+              <div class="product-title">${p.name}</div>
+              ${p.name_telugu ? `<div style="font-size:0.78rem;color:var(--text-muted);margin-bottom:4px;">${p.name_telugu}</div>` : ''}
+              <div class="product-desc">${p.description || ''}</div>
+
+              ${p.is_by_weight ? `
+              <div style="margin-bottom:10px;">
+                <div style="font-size:0.75rem;color:var(--text-muted);margin-bottom:6px;font-family:var(--font-head);font-weight:700;">SELECT QUANTITY</div>
+                <div class="weight-selector" id="ws-${p.id}">
+                  ${[50,100,250,500,1000].filter(w => w <= p.max_qty).map(w =>
+                    `<button class="weight-btn${w === p.min_qty ? ' active' : ''}" data-w="${w}" onclick="selectWeight(${p.id}, ${w}, this)">${w}g</button>`
+                  ).join('')}
+                </div>
+              </div>` : `
+              <div class="qty-selector" style="margin-bottom:10px;">
+                <button class="qty-btn" onclick="changeProductQty(${p.id}, ${p.step_qty}, -1, ${p.min_qty})">−</button>
+                <input type="number" class="qty-input" id="qty-${p.id}" value="${p.min_qty}" min="${p.min_qty}" step="${p.step_qty}" style="width:60px;"/>
+                <button class="qty-btn" onclick="changeProductQty(${p.id}, ${p.step_qty}, 1, ${p.min_qty})">+</button>
+              </div>`}
+
+              <div class="product-footer">
+                <div>
+                  <div class="product-price" id="price-display-${p.id}">${priceLabel}</div>
+                  <div class="product-unit">${minLabel}</div>
+                </div>
+                <button class="btn-add-cart" onclick="addToCartProduct(${p.id})" id="add-btn-${p.id}">+ Cart</button>
+              </div>
+            </div>
+          </div>`;
+      }).join('');
+    }
+
+    function selectWeight(id, w, btn) {
+      document.querySelectorAll(`#ws-${id} .weight-btn`).forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      cartQtys[id] = w;
+      const prod = allProducts.find(p => p.id === id);
+      if (prod) {
+        const total = w * prod.price_per_unit;
+        document.getElementById(`price-display-${id}`).textContent = `₹${total.toFixed(0)} / ${w}g`;
+      }
+    }
+
+    function changeProductQty(id, step, dir, min) {
+      const input = document.getElementById(`qty-${id}`);
+      const newVal = Math.max(min, parseInt(input.value) + dir * step);
+      input.value = newVal;
+      cartQtys[id] = newVal;
+      const prod = allProducts.find(p => p.id === id);
+      if (prod) {
+        document.getElementById(`price-display-${id}`).textContent = `₹${(newVal * prod.price_per_unit).toFixed(0)} for ${newVal} ${prod.unit_label}`;
+      }
+    }
+
+    function addToCartProduct(id) {
+      const prod = allProducts.find(p => p.id === id);
+      if (!prod) return;
+      const qty = cartQtys[id] || prod.min_qty;
+      Cart.add(prod, qty, prod.unit_label);
+
+      const btn = document.getElementById(`add-btn-${id}`);
+      btn.textContent = '✓ Added!';
+      btn.style.background = 'var(--rose)';
+      btn.style.color = 'white';
+      setTimeout(() => { btn.textContent = '+ Cart'; btn.style.background = ''; btn.style.color = ''; }, 1500);
+
+      updateStickyBar();
+    }
+
+    function updateStickyBar() {
+      const subtotal = Cart.getSubtotal();
+      const delivery = Cart.getDeliveryCharge();
+      const bar = document.getElementById('sticky-bar');
+      document.getElementById('sticky-subtotal').textContent = `Cart: ₹${subtotal.toFixed(2)}`;
+      document.getElementById('sticky-delivery-label').textContent = delivery === 0 ? '🎉 FREE delivery!' : `+ ₹${delivery} delivery`;
+      bar.classList.toggle('visible', Cart.getCount() > 0);
+
+      // Update top bar
+      const topBar = document.getElementById('shop-delivery-bar');
+      if (subtotal > 0 && delivery === 0) {
+        topBar.classList.add('earned');
+        topBar.textContent = '🎉 You qualify for FREE delivery on this order!';
+      } else if (subtotal > 0) {
+        topBar.classList.remove('earned');
+        topBar.textContent = `🚚 Add ₹${(299 - subtotal).toFixed(0)} more for FREE delivery!`;
+      }
+    }
+
+    function toggleMobileFilter() {
+      const sidebar = document.getElementById('shop-sidebar');
+      sidebar.classList.toggle('mobile-open');
+      document.getElementById('close-filter-btn').style.display = sidebar.classList.contains('mobile-open') ? 'block' : 'none';
+    }
+
+    // Init page from URL params
+    const urlCat = new URLSearchParams(window.location.search).get('cat');
+
+    document.addEventListener('cartUpdated', updateStickyBar);
+    initPage('shop');
+    loadProducts().then(() => {
+      if (urlCat) {
+        const btn = document.querySelector(`[data-cat="${urlCat}"]`);
+        if (btn) filterByCat(btn, urlCat);
+      }
+      updateStickyBar();
+    });
+  </script>
+</body>
+</html>
