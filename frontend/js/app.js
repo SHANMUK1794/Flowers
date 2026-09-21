@@ -1,6 +1,9 @@
 /* FreshPetal — Shared Frontend Utilities */
 
-const API_BASE = window.location.hostname === 'localhost' ? 'http://localhost:5000/api' : '/api';
+const LIVE_API_URL = 'https://freshpetal-api-production.up.railway.app/api';
+const API_BASE = (window.location.hostname === 'localhost' && window.location.port === '5000')
+  ? 'http://localhost:5000/api'
+  : LIVE_API_URL;
 
 /* ===================== AUTH HELPERS ===================== */
 const Auth = {
