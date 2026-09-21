@@ -48,7 +48,7 @@ const GoogleAuth = {
         return;
       }
 
-      const redirect = new URLSearchParams(window.location.search).get('redirect') || '/pages/dashboard.html';
+      const redirect = new URLSearchParams(window.location.search).get('redirect') || '/index.html';
       setTimeout(() => window.location.href = redirect, 700);
     } catch (err) {
       console.error('Google login error:', err);
@@ -144,6 +144,7 @@ const api = {
   },
   get(path)         { return this.request('GET',    path); },
   post(path, body)  { return this.request('POST',   path, body); },
+  put(path, body)   { return this.request('PUT',    path, body); },
   patch(path, body) { return this.request('PATCH',  path, body); },
   delete(path)      { return this.request('DELETE', path); },
 };

@@ -135,9 +135,9 @@
         <div id="step-3" style="display:none;text-align:center;padding:20px 0;">
           <div style="font-size:4rem;margin-bottom:16px;">🎉</div>
           <h3>Welcome to FreshPetal!</h3>
-          <p style="color:var(--text-muted);margin:10px 0 24px;">Your account is ready. Let's set up your first subscription!</p>
-          <a href="subscriptions.html" class="btn btn-rose btn-lg w-full">View Subscription Plans →</a>
-          <a href="dashboard.html" class="btn btn-rose-outline w-full mt-2" style="display:flex;align-items:center;justify-content:center;">Go to My Dashboard</a>
+          <p style="color:var(--text-muted);margin:10px 0 24px;">Your account is ready! Taking you to the fresh blooms...</p>
+          <a href="../index.html" class="btn btn-rose btn-lg w-full">Explore Fresh Flowers →</a>
+          <a href="subscriptions.html" class="btn btn-rose-outline w-full mt-2" style="display:flex;align-items:center;justify-content:center;">View Subscription Plans</a>
         </div>
 
         <div class="auth-terms">
@@ -236,7 +236,9 @@
           tower, apt_number: aptNum
         });
         Auth.setSession(data.token, data.user);
-        goStep(3);
+        showToast('Account created successfully! 🌸', 'success');
+        const redirect = new URLSearchParams(window.location.search).get('redirect') || '../index.html';
+        setTimeout(() => window.location.href = redirect, 800);
       } catch (err) {
         errEl.textContent = err.message || 'Signup failed. Please try again.';
         errEl.style.display = 'block';

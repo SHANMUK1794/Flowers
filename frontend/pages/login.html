@@ -92,7 +92,7 @@
     </div>
   </div>
 
-  <script src="/js/app.js?v=20260922_auth2"></script>
+  <script src="/js/app.js?v=20260922_home"></script>
   <script>
     // Redirect if already logged in
     if (Auth.isLoggedIn()) window.location.href = 'dashboard.html';
@@ -137,7 +137,7 @@
           return;
         }
 
-        const redirect = new URLSearchParams(window.location.search).get('redirect') || 'dashboard.html';
+        const redirect = new URLSearchParams(window.location.search).get('redirect') || '../index.html';
         setTimeout(() => window.location.href = redirect, 700);
       } catch (err) {
         errGeneral.textContent = err.message || 'Login failed. Please check your credentials.';

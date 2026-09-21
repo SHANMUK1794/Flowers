@@ -107,6 +107,7 @@
             <div style="margin-top:24px;display:flex;gap:12px;flex-wrap:wrap;">
               <a href="shop.html" class="btn btn-rose">🌸 Shop Flowers</a>
               <a href="subscriptions.html" class="btn btn-rose-outline">📦 Manage Plans</a>
+              <button onclick="showTab('profile', document.querySelectorAll('.dash-nav-item')[3])" class="btn btn-rose-outline">✏️ Edit Delivery Details</button>
               <a href="events.html" class="btn btn-sage">🎊 Book Event</a>
             </div>
           </div>
@@ -132,34 +133,41 @@
 
           <!-- PROFILE TAB -->
           <div class="dash-tab" id="tab-profile">
-            <div class="dash-section-title">My Profile</div>
+            <div class="dash-section-title">My Profile & Delivery Details</div>
             <div style="background:white;border-radius:var(--radius-md);padding:28px;border:1px solid var(--border-light);">
               <form id="profile-form" onsubmit="saveProfile(event)">
                 <div class="form-row-2">
                   <div class="form-group">
-                    <label class="form-label">Full Name</label>
-                    <input type="text" class="form-control" id="p-name" />
+                    <label class="form-label">Full Name *</label>
+                    <input type="text" class="form-control" id="p-name" required placeholder="Your full name" />
                   </div>
                   <div class="form-group">
-                    <label class="form-label">Mobile Number</label>
-                    <input type="tel" class="form-control" id="p-phone" />
+                    <label class="form-label">Mobile Number *</label>
+                    <input type="tel" class="form-control" id="p-phone" required placeholder="10-digit mobile (e.g. 9949054899)" maxlength="10" />
                   </div>
                 </div>
                 <div class="form-group">
-                  <label class="form-label">Email</label>
-                  <input type="email" class="form-control" id="p-email" disabled style="opacity:0.6;" />
+                  <label class="form-label">Registered Email</label>
+                  <input type="email" class="form-control" id="p-email" disabled style="opacity:0.7;background:#f8fafc;" />
+                  <div style="font-size:0.75rem;color:var(--text-muted);margin-top:4px;">Email is linked to your authentication credentials.</div>
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Gated Community / Society *</label>
+                  <select class="form-control" id="p-society" required>
+                    <option value="">Select your community...</option>
+                  </select>
                 </div>
                 <div class="form-row-2">
                   <div class="form-group">
-                    <label class="form-label">Tower / Block</label>
-                    <input type="text" class="form-control" id="p-tower" />
+                    <label class="form-label">Tower / Block / Phase</label>
+                    <input type="text" class="form-control" id="p-tower" placeholder="e.g. Tower 3, Block B" />
                   </div>
                   <div class="form-group">
-                    <label class="form-label">Flat / Door No.</label>
-                    <input type="text" class="form-control" id="p-apt" />
+                    <label class="form-label">Flat / Door / Villa No. *</label>
+                    <input type="text" class="form-control" id="p-apt" required placeholder="e.g. Flat 1204, Villa 18" />
                   </div>
                 </div>
-                <button type="submit" class="btn btn-rose">Save Changes →</button>
+                <button type="submit" id="btn-save-profile" class="btn btn-rose btn-lg">Save Delivery Details →</button>
               </form>
             </div>
           </div>
@@ -170,7 +178,7 @@
 
   <div id="footer-mount"></div>
 
-  <script src="/js/app.js"></script>
+  <script src="/js/app.js?v=20260922_home"></script>
   <script>
     // Guard: must be logged in
     if (!Auth.isLoggedIn()) window.location.href = 'login.html?redirect=dashboard.html';
@@ -183,6 +191,19 @@
     }
 
     async function loadDashboard() {
+      // Load societies for profile dropdown
+      try {
+        const socRes = await api.get('/societies');
+        const societies = socRes.societies || [];
+        const sSelect = document.getElementById('p-society');
+        if (sSelect) {
+          sSelect.innerHTML = '<option value="">Select your community...</option>' +
+            societies.map(s => `<option value="${s.id}">${s.name} (${s.area || 'Hyderabad'})</option>`).join('');
+        }
+      } catch (e) {
+        console.warn('Could not load societies for profile:', e);
+      }
+
       // Load user
       try {
         const data = await api.get('/auth/me');
@@ -196,6 +217,9 @@
         document.getElementById('p-email').value = user.email || '';
         document.getElementById('p-tower').value = user.tower || '';
         document.getElementById('p-apt').value   = user.apt_number || '';
+        if (user.society_id && document.getElementById('p-society')) {
+          document.getElementById('p-society').value = user.society_id;
+        }
 
         const hour = new Date().getHours();
         const greet = hour < 12 ? 'Good morning' : hour < 17 ? 'Good afternoon' : 'Good evening';
@@ -313,15 +337,47 @@
 
     async function saveProfile(e) {
       e.preventDefault();
+      const btn = document.getElementById('btn-save-profile');
+      btn.disabled = true;
+      btn.textContent = 'Saving details...';
+
+      const name = document.getElementById('p-name').value.trim();
+      const phone = document.getElementById('p-phone').value.trim();
+      const socId = document.getElementById('p-society').value;
+      const tower = document.getElementById('p-tower').value.trim();
+      const apt = document.getElementById('p-apt').value.trim();
+
       try {
-        await api.patch('/auth/profile', {
-          name:       document.getElementById('p-name').value,
-          phone:      document.getElementById('p-phone').value,
-          tower:      document.getElementById('p-tower').value,
-          apt_number: document.getElementById('p-apt').value,
-        });
-        showToast('Profile updated! 🌸', 'success');
-      } catch (err) { showToast(err.message, 'error'); }
+        const payload = {
+          name,
+          phone,
+          society_id: socId ? parseInt(socId) : null,
+          tower: tower || null,
+          apt_number: apt || null,
+        };
+
+        let data;
+        if (api.put) {
+          data = await api.put('/auth/profile', payload);
+        } else {
+          data = await api.patch('/auth/profile', payload);
+        }
+
+        const user = data.user;
+        if (user) {
+          Auth.setSession(Auth.getToken(), user);
+          const initials = user.name.split(' ').map(n => n[0]).join('').substring(0,2).toUpperCase();
+          document.getElementById('dash-avatar').textContent = initials;
+          document.getElementById('dash-username').textContent = user.name;
+          document.getElementById('dash-society').textContent = user.society_name ? `${user.society_name}, ${user.society_area || ''}` : 'No society linked';
+        }
+        showToast('Profile & delivery details updated! 🌸', 'success');
+      } catch (err) {
+        showToast(err.message || 'Failed to update profile.', 'error');
+      } finally {
+        btn.disabled = false;
+        btn.textContent = 'Save Delivery Details →';
+      }
     }
 
     initPage();

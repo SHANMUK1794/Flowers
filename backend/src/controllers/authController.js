@@ -122,7 +122,7 @@ const updateProfile = async (req, res) => {
   const cleanPhone = phone ? normalizePhone(phone) : null;
 
   try {
-    const { rows } = await pool.query(
+    await pool.query(
       `UPDATE users
        SET name = COALESCE($1, name),
            phone = COALESCE($2, phone),
@@ -130,12 +130,27 @@ const updateProfile = async (req, res) => {
            tower = COALESCE($4, tower),
            apt_number = COALESCE($5, apt_number),
            updated_at = NOW()
-       WHERE id = $6
-       RETURNING id, name, email, phone, role, society_id, tower, apt_number`,
-      [name ? name.trim() : null, cleanPhone, society_id || null, tower || null, apt_number || null, req.user.id]
+       WHERE id = $6`,
+      [
+        name ? name.trim() : null,
+        cleanPhone,
+        society_id !== undefined && society_id !== '' ? parseInt(society_id) : null,
+        tower !== undefined ? tower.trim() : null,
+        apt_number !== undefined ? apt_number.trim() : null,
+        req.user.id
+      ]
     );
 
-    return sendSuccess(res, { user: rows[0] }, 'Profile updated successfully.');
+    const { rows } = await pool.query(
+      `SELECT u.id, u.name, u.email, u.phone, u.role, u.society_id, u.tower, u.apt_number,
+              s.name as society_name, s.area as society_area
+       FROM users u
+       LEFT JOIN societies s ON u.society_id = s.id
+       WHERE u.id = $1`,
+      [req.user.id]
+    );
+
+    return sendSuccess(res, { user: rows[0] }, 'Profile updated successfully! 🌸');
   } catch (err) {
     console.error('updateProfile error:', err);
     return sendError(res, 'Failed to update profile.', 500);

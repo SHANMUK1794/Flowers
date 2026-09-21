@@ -59,5 +59,6 @@ router.get('/me', authenticate, authController.getMe);
 
 /* ---- Update Profile ---- */
 router.put('/profile', authenticate, authController.updateProfile);
+router.patch('/profile', authenticate, authController.updateProfile);
 
 module.exports = router;
