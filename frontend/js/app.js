@@ -255,6 +255,7 @@ function renderFooter() {
         <div class="footer-bottom">
           <span>© 2026 FreshPetal. Made with 🌸 in Hyderabad.</span>
           <div class="footer-bottom-links">
+            <a href="/frontend/pages/admin.html" style="color: #fbbf24; font-weight: 600;">🔐 Admin Portal</a>
             <a href="#">Privacy Policy</a>
             <a href="#">Terms of Service</a>
             <a href="#">Refund Policy</a>

@@ -14,6 +14,7 @@ const subscriptionRoutes  = require('./src/routes/subscriptions');
 const societyRoutes       = require('./src/routes/societies');
 const contactRoutes       = require('./src/routes/contact');
 const cartRoutes          = require('./src/routes/cart');
+const adminRoutes         = require('./src/routes/admin');
 const { initDB }          = require('./src/models/db');
 
 const app  = express();
@@ -54,16 +55,22 @@ app.use('/api/subscriptions', subscriptionRoutes);
 app.use('/api/societies',     societyRoutes);
 app.use('/api/contact',       contactRoutes);
 app.use('/api/cart',          cartRoutes);
+app.use('/api/admin',         adminRoutes);
 
 /* ---- Health Check ---- */
 app.get('/api/health', (_req, res) => {
   res.json({ status: 'ok', service: 'FreshPetal API', timestamp: new Date().toISOString() });
 });
 
-/* ---- Catch-All: Serve Frontend SPA pages ---- */
-app.get('*', (req, res) => {
-  if (req.path.startsWith('/api/')) return res.status(404).json({ error: 'API route not found' });
-  res.sendFile(path.join(__dirname, '../frontend/index.html'));
+/* ---- Catch-All: Serve Frontend or 404 ---- */
+app.use((req, res, next) => {
+  if (req.path.startsWith('/api/')) {
+    return res.status(404).json({ error: 'API route not found' });
+  }
+  const indexPath = path.join(__dirname, '../frontend/index.html');
+  res.sendFile(indexPath, (err) => {
+    if (err) next();
+  });
 });
 
 /* ---- Global Error Handler ---- */
@@ -74,7 +81,11 @@ app.use((err, _req, res, _next) => {
 
 /* ---- Start ---- */
 (async () => {
-  await initDB();
+  try {
+    await initDB();
+  } catch (dbErr) {
+    console.warn('⚠️ Database connection warning:', dbErr.message);
+  }
   app.listen(PORT, () => {
     console.log(`\n🌸 FreshPetal API running on port ${PORT}`);
     console.log(`📦 Environment: ${process.env.NODE_ENV || 'development'}\n`);
