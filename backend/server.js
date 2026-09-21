@@ -80,14 +80,10 @@ app.use((err, _req, res, _next) => {
 });
 
 /* ---- Start ---- */
-(async () => {
-  try {
-    await initDB();
-  } catch (dbErr) {
-    console.warn('⚠️ Database connection warning:', dbErr.message);
-  }
-  app.listen(PORT, () => {
-    console.log(`\n🌸 FreshPetal API running on port ${PORT}`);
-    console.log(`📦 Environment: ${process.env.NODE_ENV || 'development'}\n`);
-  });
-})();
+app.listen(PORT, () => {
+  console.log(`\n🌸 FreshPetal API running on port ${PORT}`);
+  console.log(`📦 Environment: ${process.env.NODE_ENV || 'development'}\n`);
+  initDB()
+    .then(() => console.log('✅ PostgreSQL tables and seeds ready'))
+    .catch((err) => console.warn('⚠️ Database init warning:', err.message));
+});
