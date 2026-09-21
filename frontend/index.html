@@ -109,9 +109,9 @@
         <h2 class="section-title">Build Your Own Bouquet</h2>
         <p class="section-sub">Pick exactly what you want. Price updates live as you select.</p>
       </div>
-      <div style="display:grid;grid-template-columns:1fr 320px;gap:30px;align-items:start;">
+      <div class="build-layout">
         <div>
-          <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;" id="flower-picker-grid">
+          <div class="flower-picker-grid" id="flower-picker-grid">
             <!-- Rendered by JS -->
           </div>
         </div>
@@ -313,7 +313,7 @@
             <div style="font-size:2.8rem;margin-bottom:10px;">${p.image_emoji}</div>
             <div style="font-family:var(--font-head);font-weight:700;font-size:0.9rem;margin-bottom:4px;">${p.name}</div>
             <div style="font-size:0.8rem;color:var(--text-muted);margin-bottom:12px;">${priceLabel}</div>
-            <div class="qty-selector" style="justify-content:center;" id="qty-sel-${p.id}" style="display:none">
+            <div class="qty-selector" style="justify-content:center;display:none;" id="qty-sel-${p.id}">
               <button class="qty-btn" onclick="changeQty(${p.id}, -1)">−</button>
               <span id="qty-display-${p.id}" style="font-family:var(--font-head);font-weight:800;font-size:0.9rem;min-width:40px;text-align:center;">${p.min_qty}${p.is_by_weight ? 'g' : ''}</span>
               <button class="qty-btn" onclick="changeQty(${p.id}, 1)">+</button>
