@@ -142,10 +142,74 @@ const updateProfile = async (req, res) => {
   }
 };
 
+// POST /api/auth/google
+const googleLogin = async (req, res) => {
+  const { credential } = req.body;
+  if (!credential) {
+    return sendError(res, 'Google credential token is required.', 400);
+  }
+
+  try {
+    // Verify token with Google's public tokeninfo endpoint
+    const googleRes = await fetch(`https://oauth2.googleapis.com/tokeninfo?id_token=${encodeURIComponent(credential)}`);
+    if (!googleRes.ok) {
+      return sendError(res, 'Invalid or expired Google authentication token.', 401);
+    }
+
+    const payload = await googleRes.json();
+    const { email, name, sub: google_id } = payload;
+
+    if (!email) {
+      return sendError(res, 'No verified email address received from Google account.', 400);
+    }
+
+    // Check if user exists by email
+    let { rows } = await pool.query(
+      `SELECT u.id, u.name, u.email, u.phone, u.role, u.society_id, u.tower, u.apt_number,
+              s.name as society_name, s.area as society_area
+       FROM users u
+       LEFT JOIN societies s ON u.society_id = s.id
+       WHERE u.email = $1`,
+      [email.toLowerCase()]
+    );
+
+    let user;
+    if (rows.length > 0) {
+      user = rows[0];
+      // Update Google ID and verify email
+      await pool.query(
+        'UPDATE users SET google_id = COALESCE(google_id, $1), is_verified = TRUE, updated_at = NOW() WHERE id = $2',
+        [google_id, user.id]
+      );
+    } else {
+      // Create new customer account with verified Google email
+      const insertRes = await pool.query(
+        `INSERT INTO users (name, email, google_id, role, is_verified)
+         VALUES ($1, $2, $3, 'customer', TRUE)
+         RETURNING id, name, email, phone, role, society_id, tower, apt_number, created_at`,
+        [name || email.split('@')[0], email.toLowerCase(), google_id]
+      );
+      user = insertRes.rows[0];
+    }
+
+    const access = signAccess({ userId: user.id, role: user.role });
+    const refresh = signRefresh({ userId: user.id });
+
+    await pool.query('UPDATE users SET refresh_token = $1 WHERE id = $2', [refresh, user.id]);
+    res.cookie('access_token', access, COOKIE_OPTS);
+
+    return sendSuccess(res, { user, token: access }, 'Google Sign-In successful! 🌸');
+  } catch (err) {
+    console.error('Google Auth error:', err);
+    return sendError(res, 'Server error during Google authentication.', 500);
+  }
+};
+
 module.exports = {
   signup,
   login,
   logout,
   getMe,
-  updateProfile
+  updateProfile,
+  googleLogin
 };

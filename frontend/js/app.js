@@ -25,6 +25,92 @@ const Auth = {
   }
 };
 
+/* ===================== GOOGLE OAUTH CONFIG ===================== */
+const GoogleAuth = {
+  // Set your Google Cloud Client ID here or via localStorage
+  CLIENT_ID: localStorage.getItem('fp_google_client_id') || 'YOUR_GOOGLE_CLIENT_ID.apps.googleusercontent.com',
+
+  isConfigured() {
+    return this.CLIENT_ID && !this.CLIENT_ID.startsWith('YOUR_GOOGLE');
+  },
+
+  async handleCredential(response) {
+    try {
+      showToast('Verifying Google credentials... 🌸', 'info');
+      const data = await api.post('/auth/google', { credential: response.credential });
+      Auth.setSession(data.token, data.user);
+      showToast(`Welcome back, ${data.user.name.split(' ')[0]}! 🌸`, 'success');
+
+      if (data.user.role === 'admin') {
+        sessionStorage.setItem('fp_admin_auth', 'true');
+        sessionStorage.setItem('fp_admin_token', data.token);
+        sessionStorage.setItem('fp_admin_user', JSON.stringify(data.user));
+        setTimeout(() => window.location.href = '/pages/admin.html', 700);
+        return;
+      }
+
+      const redirect = new URLSearchParams(window.location.search).get('redirect') || '/pages/dashboard.html';
+      setTimeout(() => window.location.href = redirect, 700);
+    } catch (err) {
+      console.error('Google login error:', err);
+      showToast(err.message || 'Google Sign-In failed.', 'error');
+    }
+  },
+
+  init(containerId) {
+    if (typeof google === 'undefined' || !google.accounts) {
+      setTimeout(() => this.init(containerId), 250);
+      return;
+    }
+
+    if (!this.isConfigured()) return;
+
+    google.accounts.id.initialize({
+      client_id: this.CLIENT_ID,
+      callback: (res) => this.handleCredential(res),
+      auto_select: false
+    });
+
+    const container = document.getElementById(containerId);
+    if (container) {
+      container.innerHTML = '';
+      google.accounts.id.renderButton(container, {
+        theme: 'outline',
+        size: 'large',
+        width: 320,
+        text: 'continue_with',
+        shape: 'pill'
+      });
+    }
+  },
+
+  promptLogin() {
+    if (!this.isConfigured()) {
+      const cid = prompt(
+        '🌸 FreshPetal Google Sign-In Setup:\n\nPlease enter your Google Cloud OAuth Client ID:\n(e.g., 123456789-abcdef.apps.googleusercontent.com)\n\nOr create one at https://console.cloud.google.com/apis/credentials'
+      );
+      if (cid && cid.trim()) {
+        localStorage.setItem('fp_google_client_id', cid.trim());
+        this.CLIENT_ID = cid.trim();
+        showToast('Google Client ID saved! Initializing Google Sign-In...', 'success');
+        this.init('google-btn-container');
+        setTimeout(() => this.promptLogin(), 500);
+      }
+      return;
+    }
+
+    if (typeof google !== 'undefined' && google.accounts) {
+      google.accounts.id.initialize({
+        client_id: this.CLIENT_ID,
+        callback: (res) => this.handleCredential(res)
+      });
+      google.accounts.id.prompt();
+    } else {
+      showToast('Loading Google identity service...', 'info');
+    }
+  }
+};
+
 /* ===================== API WRAPPER ===================== */
 const api = {
   async request(method, path, body) {

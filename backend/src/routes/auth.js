@@ -41,6 +41,16 @@ router.post(
   authController.login
 );
 
+/* ---- Google Authentication ---- */
+router.post(
+  '/google',
+  [
+    body('credential').notEmpty().withMessage('Google credential is required'),
+  ],
+  handleValidation,
+  authController.googleLogin
+);
+
 /* ---- Logout ---- */
 router.post('/logout', authController.logout);
 
